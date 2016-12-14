@@ -5,7 +5,7 @@
  */
 package loansystem;
 
-import javax.swing.UIManager;
+import loansystem.visual.panel.Prestamo;
 
 /**
  *
@@ -21,6 +21,8 @@ public class Principal extends javax.swing.JFrame {
         initComponents();
         
         setExtendedState(MAXIMIZED_BOTH);
+        
+        tabPrincipal.add("Asignación de Préstamo", new Prestamo());
        
     }
 
@@ -35,6 +37,7 @@ public class Principal extends javax.swing.JFrame {
 
         pnelOpciones = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
+        pnelOpcionesColl = new javax.swing.JPanel();
         tskCliente = new com.l2fprod.common.swing.JTaskPaneGroup();
         lnkNuevoCliente = new com.l2fprod.common.swing.JLinkButton();
         lnkBuscarCliente = new com.l2fprod.common.swing.JLinkButton();
@@ -42,6 +45,8 @@ public class Principal extends javax.swing.JFrame {
         tskPrestamo = new com.l2fprod.common.swing.JTaskPaneGroup();
         lnkNuevoPrestamo = new com.l2fprod.common.swing.JLinkButton();
         lnkNuevoPago = new com.l2fprod.common.swing.JLinkButton();
+        tskReportes = new com.l2fprod.common.swing.JTaskPaneGroup();
+        lnkNuevoPrestamo1 = new com.l2fprod.common.swing.JLinkButton();
         tskEmpresa = new com.l2fprod.common.swing.JTaskPaneGroup();
         lnkEmpresa = new com.l2fprod.common.swing.JLinkButton();
         lnkUsuarios = new com.l2fprod.common.swing.JLinkButton();
@@ -49,7 +54,7 @@ public class Principal extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         lnkCargo = new com.l2fprod.common.swing.JLinkButton();
         lnkMonedas = new com.l2fprod.common.swing.JLinkButton();
-        jTabbedPane1 = new javax.swing.JTabbedPane();
+        tabPrincipal = new javax.swing.JTabbedPane();
         jToolBar1 = new javax.swing.JToolBar();
         jButton1 = new javax.swing.JButton();
         jSeparator2 = new javax.swing.JToolBar.Separator();
@@ -64,18 +69,19 @@ public class Principal extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Sistema de Administración de Prestamos");
 
-        pnelOpciones.setBackground(new java.awt.Color(255, 255, 255));
-        pnelOpciones.setPreferredSize(new java.awt.Dimension(220, 545));
+        pnelOpciones.setBackground(new java.awt.Color(0, 0, 102));
+        pnelOpciones.setPreferredSize(new java.awt.Dimension(230, 545));
+
+        jLabel2.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        jLabel2.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel2.setText("Loan System");
+
+        pnelOpcionesColl.setOpaque(false);
         com.l2fprod.common.swing.PercentLayout percentLayout3 = new com.l2fprod.common.swing.PercentLayout();
         percentLayout3.setOrientation(1);
         percentLayout3.setGap(20);
-        pnelOpciones.setLayout(percentLayout3);
-
-        jLabel2.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
-        jLabel2.setForeground(new java.awt.Color(0, 153, 255));
-        jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel2.setText("Loan System");
-        pnelOpciones.add(jLabel2);
+        pnelOpcionesColl.setLayout(percentLayout3);
 
         tskCliente.setIcon(new javax.swing.ImageIcon(getClass().getResource("/loansystem/recursos/cliente.png"))); // NOI18N
         tskCliente.setTitle("Clientes");
@@ -93,7 +99,7 @@ public class Principal extends javax.swing.JFrame {
         lnkModificarCliente.setText("Modificar Cliente");
         tskCliente.getContentPane().add(lnkModificarCliente);
 
-        pnelOpciones.add(tskCliente);
+        pnelOpcionesColl.add(tskCliente);
 
         tskPrestamo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/loansystem/recursos/prestamo.png"))); // NOI18N
         tskPrestamo.setTitle("Préstamo");
@@ -112,8 +118,25 @@ public class Principal extends javax.swing.JFrame {
         lnkNuevoPago.setText("Registrar Pago");
         tskPrestamo.getContentPane().add(lnkNuevoPago);
 
-        pnelOpciones.add(tskPrestamo);
+        pnelOpcionesColl.add(tskPrestamo);
 
+        tskReportes.setIcon(new javax.swing.ImageIcon(getClass().getResource("/loansystem/recursos/reportes.png"))); // NOI18N
+        tskReportes.setTitle("Reportes");
+        tskReportes.setToolTipText("Reportes");
+
+        lnkNuevoPrestamo1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/loansystem/recursos/registrar_prestamo.png"))); // NOI18N
+        lnkNuevoPrestamo1.setText("Registrar Préstamo");
+        lnkNuevoPrestamo1.setToolTipText("Registrar Nuevo Préstamo");
+        lnkNuevoPrestamo1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                lnkNuevoPrestamo1ActionPerformed(evt);
+            }
+        });
+        tskReportes.getContentPane().add(lnkNuevoPrestamo1);
+
+        pnelOpcionesColl.add(tskReportes);
+
+        tskEmpresa.setExpanded(false);
         tskEmpresa.setIcon(new javax.swing.ImageIcon(getClass().getResource("/loansystem/recursos/admin.png"))); // NOI18N
         tskEmpresa.setTitle("Administración");
 
@@ -140,10 +163,30 @@ public class Principal extends javax.swing.JFrame {
         lnkMonedas.setText("Monedas");
         tskEmpresa.getContentPane().add(lnkMonedas);
 
-        pnelOpciones.add(tskEmpresa);
+        pnelOpcionesColl.add(tskEmpresa);
+
+        javax.swing.GroupLayout pnelOpcionesLayout = new javax.swing.GroupLayout(pnelOpciones);
+        pnelOpciones.setLayout(pnelOpcionesLayout);
+        pnelOpcionesLayout.setHorizontalGroup(
+            pnelOpcionesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pnelOpcionesLayout.createSequentialGroup()
+                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
+            .addGroup(pnelOpcionesLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(pnelOpcionesColl, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGap(14, 14, 14))
+        );
+        pnelOpcionesLayout.setVerticalGroup(
+            pnelOpcionesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pnelOpcionesLayout.createSequentialGroup()
+                .addComponent(jLabel2)
+                .addGap(18, 18, 18)
+                .addComponent(pnelOpcionesColl, javax.swing.GroupLayout.DEFAULT_SIZE, 628, Short.MAX_VALUE))
+        );
 
         getContentPane().add(pnelOpciones, java.awt.BorderLayout.WEST);
-        getContentPane().add(jTabbedPane1, java.awt.BorderLayout.CENTER);
+        getContentPane().add(tabPrincipal, java.awt.BorderLayout.CENTER);
 
         jToolBar1.setRollover(true);
 
@@ -206,6 +249,10 @@ public class Principal extends javax.swing.JFrame {
        System.exit(0);
     }//GEN-LAST:event_mnuSalirActionPerformed
 
+    private void lnkNuevoPrestamo1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_lnkNuevoPrestamo1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_lnkNuevoPrestamo1ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -251,7 +298,6 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JToolBar.Separator jSeparator2;
-    private javax.swing.JTabbedPane jTabbedPane1;
     private javax.swing.JToolBar jToolBar1;
     private com.l2fprod.common.swing.JLinkButton lnkBuscarCliente;
     private com.l2fprod.common.swing.JLinkButton lnkCargo;
@@ -261,13 +307,17 @@ public class Principal extends javax.swing.JFrame {
     private com.l2fprod.common.swing.JLinkButton lnkNuevoCliente;
     private com.l2fprod.common.swing.JLinkButton lnkNuevoPago;
     private com.l2fprod.common.swing.JLinkButton lnkNuevoPrestamo;
+    private com.l2fprod.common.swing.JLinkButton lnkNuevoPrestamo1;
     private com.l2fprod.common.swing.JLinkButton lnkUsuarios;
     private javax.swing.JMenu mnuArchivo;
     private javax.swing.JMenu mnuClientes;
     private javax.swing.JMenuItem mnuSalir;
     private javax.swing.JPanel pnelOpciones;
+    private javax.swing.JPanel pnelOpcionesColl;
+    private javax.swing.JTabbedPane tabPrincipal;
     private com.l2fprod.common.swing.JTaskPaneGroup tskCliente;
     private com.l2fprod.common.swing.JTaskPaneGroup tskEmpresa;
     private com.l2fprod.common.swing.JTaskPaneGroup tskPrestamo;
+    private com.l2fprod.common.swing.JTaskPaneGroup tskReportes;
     // End of variables declaration//GEN-END:variables
 }
