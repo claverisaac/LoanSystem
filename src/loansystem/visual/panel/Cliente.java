@@ -5,17 +5,45 @@
  */
 package loansystem.visual.panel;
 
+import java.util.ArrayList;
+import javax.swing.JOptionPane;
+import loansystem.Principal;
+import loansystem.bd.Conexion;
+import loansystem.dao.ClienteDAO;
+import loansystem.entidad.ClienteEntidad;
+import loansystem.utilidades.MetodosGenerales;
+//import loansystem.utilidades.*;
+
 /**
  *
  * @author jechavarria
  */
 public class Cliente extends javax.swing.JPanel {
 
+    private Conexion con;
+    private ClienteEntidad clieEnti;
+    private ArrayList<ClienteEntidad> aClieEnti;
+    private ClienteDAO clieDAO;
+    private Principal prin;
+    private boolean nuevo = false, modificar = false;
+    private MetodosGenerales util;
+
     /**
      * Creates new form Cliente
+     *
+     * @param con
+     * @param prin
      */
-    public Cliente() {
+    public Cliente(Conexion con, Principal prin) {
         initComponents();
+        this.con = con;
+        this.prin = prin;
+        clieDAO = new ClienteDAO(con.getCon());
+
+        util = new MetodosGenerales();
+        util.soloNumeroSinPoint(txtId);
+        util.soloNumero(txtLimiteCredito);
+
     }
 
     /**
@@ -30,55 +58,58 @@ public class Cliente extends javax.swing.JPanel {
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
-        jTextField2 = new javax.swing.JTextField();
+        txtId2 = new javax.swing.JTextField();
+        txtNombres = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
-        jTextField3 = new javax.swing.JTextField();
+        txtApellidos = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
-        jFormattedTextField1 = new javax.swing.JFormattedTextField();
-        jComboBox1 = new javax.swing.JComboBox<>();
+        txtCedula = new javax.swing.JFormattedTextField();
+        cboSexo = new javax.swing.JComboBox<>();
         jLabel6 = new javax.swing.JLabel();
-        jComboBox2 = new javax.swing.JComboBox<>();
+        cboMunicipio = new javax.swing.JComboBox<>();
         jScrollPane2 = new javax.swing.JScrollPane();
-        jTextArea1 = new javax.swing.JTextArea();
+        txtDireSec = new javax.swing.JTextArea();
         jScrollPane3 = new javax.swing.JScrollPane();
-        jTextArea2 = new javax.swing.JTextArea();
+        txtDirePrin = new javax.swing.JTextArea();
         jLabel7 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
         jLabel9 = new javax.swing.JLabel();
-        jTextField4 = new javax.swing.JTextField();
-        jLabel10 = new javax.swing.JLabel();
-        jTextField5 = new javax.swing.JTextField();
+        txtLimiteCredito = new javax.swing.JTextField();
         jLabel11 = new javax.swing.JLabel();
-        jFormattedTextField2 = new javax.swing.JFormattedTextField();
+        txtTelefonoCasa = new javax.swing.JFormattedTextField();
         jLabel12 = new javax.swing.JLabel();
-        jFormattedTextField3 = new javax.swing.JFormattedTextField();
+        txtMovil = new javax.swing.JFormattedTextField();
         jLabel13 = new javax.swing.JLabel();
-        jFormattedTextField4 = new javax.swing.JFormattedTextField();
+        txtTelefUno = new javax.swing.JFormattedTextField();
         jLabel14 = new javax.swing.JLabel();
-        jFormattedTextField5 = new javax.swing.JFormattedTextField();
+        txtTelefoDos = new javax.swing.JFormattedTextField();
         jLabel17 = new javax.swing.JLabel();
-        jComboBox3 = new javax.swing.JComboBox<>();
+        cboRuta = new javax.swing.JComboBox<>();
         jLabel19 = new javax.swing.JLabel();
         jLabel20 = new javax.swing.JLabel();
         jLabel16 = new javax.swing.JLabel();
         jLabel15 = new javax.swing.JLabel();
-        jFormattedTextField6 = new javax.swing.JFormattedTextField();
+        txtTeleLabo = new javax.swing.JFormattedTextField();
         jLabel18 = new javax.swing.JLabel();
-        jTextField6 = new javax.swing.JTextField();
+        txtcentroLabo = new javax.swing.JTextField();
+        btnSave = new javax.swing.JButton();
+        btnModificar = new javax.swing.JButton();
+        btnNuevo = new javax.swing.JButton();
+        txtFecha = new javax.swing.JTextField();
         jPanel2 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        tabClientes = new javax.swing.JTable();
+        jPanel3 = new javax.swing.JPanel();
         jLabel21 = new javax.swing.JLabel();
+        txtId = new javax.swing.JTextField();
         jLabel22 = new javax.swing.JLabel();
+        txtNombre = new javax.swing.JTextField();
+        txtCed = new javax.swing.JFormattedTextField();
         jLabel23 = new javax.swing.JLabel();
-        jTextField7 = new javax.swing.JTextField();
-        jTextField8 = new javax.swing.JTextField();
-        jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
-        jFormattedTextField7 = new javax.swing.JFormattedTextField();
-        jButton3 = new javax.swing.JButton();
+        btnBuscar = new javax.swing.JButton();
+        btnLimpiar = new javax.swing.JButton();
+        btnBuscarTodos = new javax.swing.JButton();
 
         setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
@@ -91,44 +122,59 @@ public class Cliente extends javax.swing.JPanel {
 
         jLabel2.setText("Nombres:");
         jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 60, -1, -1));
-        jPanel1.add(jTextField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 30, 110, -1));
-        jPanel1.add(jTextField2, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 60, 250, -1));
+
+        txtId2.setEditable(false);
+        jPanel1.add(txtId2, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 30, 110, -1));
+
+        txtNombres.setEditable(false);
+        jPanel1.add(txtNombres, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 60, 250, -1));
 
         jLabel3.setText("Apellidos:");
         jPanel1.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 90, -1, -1));
-        jPanel1.add(jTextField3, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 90, 250, -1));
+
+        txtApellidos.setEditable(false);
+        jPanel1.add(txtApellidos, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 90, 250, -1));
 
         jLabel4.setText("Cedula:");
-        jPanel1.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 60, -1, -1));
+        jPanel1.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 30, -1, -1));
 
         jLabel5.setText("Sexo:");
-        jPanel1.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 90, -1, -1));
+        jPanel1.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 60, -1, -1));
 
-        jFormattedTextField1.setText("001-210488-0012C");
-        jFormattedTextField1.addActionListener(new java.awt.event.ActionListener() {
+        txtCedula.setEditable(false);
+        try {
+            txtCedula.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("###-######-####A")));
+        } catch (java.text.ParseException ex) {
+            ex.printStackTrace();
+        }
+        txtCedula.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jFormattedTextField1ActionPerformed(evt);
+                txtCedulaActionPerformed(evt);
             }
         });
-        jPanel1.add(jFormattedTextField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 60, 150, -1));
+        jPanel1.add(txtCedula, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 30, 150, -1));
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Femenino", "Masculino" }));
-        jPanel1.add(jComboBox1, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 90, 110, -1));
+        cboSexo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Femenino", "Masculino" }));
+        cboSexo.setEnabled(false);
+        jPanel1.add(cboSexo, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 60, 110, -1));
 
         jLabel6.setText("Municipio:");
         jPanel1.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 130, -1, -1));
 
-        jPanel1.add(jComboBox2, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 130, 250, -1));
+        cboMunicipio.setEnabled(false);
+        jPanel1.add(cboMunicipio, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 130, 250, -1));
 
-        jTextArea1.setColumns(20);
-        jTextArea1.setRows(5);
-        jScrollPane2.setViewportView(jTextArea1);
+        txtDireSec.setEditable(false);
+        txtDireSec.setColumns(20);
+        txtDireSec.setRows(5);
+        jScrollPane2.setViewportView(txtDireSec);
 
-        jPanel1.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 170, 250, -1));
+        jPanel1.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 170, 240, -1));
 
-        jTextArea2.setColumns(20);
-        jTextArea2.setRows(5);
-        jScrollPane3.setViewportView(jTextArea2);
+        txtDirePrin.setEditable(false);
+        txtDirePrin.setColumns(20);
+        txtDirePrin.setRows(5);
+        jScrollPane3.setViewportView(txtDirePrin);
 
         jPanel1.add(jScrollPane3, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 170, 250, -1));
 
@@ -139,36 +185,66 @@ public class Cliente extends javax.swing.JPanel {
         jPanel1.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 170, -1, -1));
 
         jLabel9.setText("Limite Crédito:");
-        jPanel1.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(680, 60, -1, -1));
-        jPanel1.add(jTextField4, new org.netbeans.lib.awtextra.AbsoluteConstraints(770, 60, 150, -1));
+        jPanel1.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(720, 60, -1, -1));
 
-        jLabel10.setText("Días Crédito:");
-        jPanel1.add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(680, 90, -1, -1));
-        jPanel1.add(jTextField5, new org.netbeans.lib.awtextra.AbsoluteConstraints(770, 90, 150, -1));
+        txtLimiteCredito.setEditable(false);
+        jPanel1.add(txtLimiteCredito, new org.netbeans.lib.awtextra.AbsoluteConstraints(810, 60, 150, -1));
 
         jLabel11.setText("Móvil:");
-        jPanel1.add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 130, -1, -1));
-        jPanel1.add(jFormattedTextField2, new org.netbeans.lib.awtextra.AbsoluteConstraints(770, 120, 150, -1));
+        jPanel1.add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 100, -1, -1));
+
+        txtTelefonoCasa.setEditable(false);
+        try {
+            txtTelefonoCasa.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("####-####")));
+        } catch (java.text.ParseException ex) {
+            ex.printStackTrace();
+        }
+        jPanel1.add(txtTelefonoCasa, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 140, 150, -1));
 
         jLabel12.setText("Telefono Casa:");
-        jPanel1.add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(680, 120, -1, -1));
+        jPanel1.add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 140, -1, -1));
 
-        jFormattedTextField3.setText("8888-888");
-        jPanel1.add(jFormattedTextField3, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 130, 150, -1));
+        txtMovil.setEditable(false);
+        try {
+            txtMovil.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("####-####")));
+        } catch (java.text.ParseException ex) {
+            ex.printStackTrace();
+        }
+        txtMovil.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtMovilActionPerformed(evt);
+            }
+        });
+        jPanel1.add(txtMovil, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 100, 150, -1));
 
         jLabel13.setText("Telefono #1:");
-        jPanel1.add(jLabel13, new org.netbeans.lib.awtextra.AbsoluteConstraints(680, 170, -1, -1));
-        jPanel1.add(jFormattedTextField4, new org.netbeans.lib.awtextra.AbsoluteConstraints(770, 170, 150, -1));
+        jPanel1.add(jLabel13, new org.netbeans.lib.awtextra.AbsoluteConstraints(720, 100, -1, -1));
+
+        txtTelefUno.setEditable(false);
+        try {
+            txtTelefUno.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("####-####")));
+        } catch (java.text.ParseException ex) {
+            ex.printStackTrace();
+        }
+        jPanel1.add(txtTelefUno, new org.netbeans.lib.awtextra.AbsoluteConstraints(810, 90, 150, -1));
 
         jLabel14.setText("Telefono #2:");
-        jPanel1.add(jLabel14, new org.netbeans.lib.awtextra.AbsoluteConstraints(680, 200, -1, -1));
-        jPanel1.add(jFormattedTextField5, new org.netbeans.lib.awtextra.AbsoluteConstraints(770, 200, 150, -1));
+        jPanel1.add(jLabel14, new org.netbeans.lib.awtextra.AbsoluteConstraints(720, 130, -1, -1));
+
+        txtTelefoDos.setEditable(false);
+        try {
+            txtTelefoDos.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("####-####")));
+        } catch (java.text.ParseException ex) {
+            ex.printStackTrace();
+        }
+        jPanel1.add(txtTelefoDos, new org.netbeans.lib.awtextra.AbsoluteConstraints(810, 130, 150, -1));
 
         jLabel17.setText("Ruta:");
-        jPanel1.add(jLabel17, new org.netbeans.lib.awtextra.AbsoluteConstraints(680, 240, -1, -1));
+        jPanel1.add(jLabel17, new org.netbeans.lib.awtextra.AbsoluteConstraints(720, 240, -1, -1));
 
-        jComboBox3.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Ruta1", "Ruta2" }));
-        jPanel1.add(jComboBox3, new org.netbeans.lib.awtextra.AbsoluteConstraints(770, 240, 150, -1));
+        cboRuta.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Ruta1", "Ruta2" }));
+        cboRuta.setEnabled(false);
+        jPanel1.add(cboRuta, new org.netbeans.lib.awtextra.AbsoluteConstraints(810, 240, 150, -1));
 
         jLabel19.setText("Principal:");
         jPanel1.add(jLabel19, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 190, -1, -1));
@@ -177,40 +253,69 @@ public class Cliente extends javax.swing.JPanel {
         jPanel1.add(jLabel20, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 190, -1, -1));
 
         jLabel16.setText("Centro  Laboral:");
-        jPanel1.add(jLabel16, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 290, -1, -1));
+        jPanel1.add(jLabel16, new org.netbeans.lib.awtextra.AbsoluteConstraints(720, 170, -1, -1));
 
         jLabel15.setText("Telefono Labo");
-        jPanel1.add(jLabel15, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 290, -1, -1));
+        jPanel1.add(jLabel15, new org.netbeans.lib.awtextra.AbsoluteConstraints(720, 210, -1, -1));
 
-        jFormattedTextField6.setText("jFormattedTextField2");
-        jPanel1.add(jFormattedTextField6, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 280, 170, -1));
+        txtTeleLabo.setEditable(false);
+        jPanel1.add(txtTeleLabo, new org.netbeans.lib.awtextra.AbsoluteConstraints(810, 210, 150, -1));
 
         jLabel18.setText("Fecha Alta:");
-        jPanel1.add(jLabel18, new org.netbeans.lib.awtextra.AbsoluteConstraints(680, 280, -1, -1));
-        jPanel1.add(jTextField6, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 290, 220, -1));
+        jPanel1.add(jLabel18, new org.netbeans.lib.awtextra.AbsoluteConstraints(720, 30, -1, -1));
 
-        add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 220, 940, 320));
+        txtcentroLabo.setEditable(false);
+        jPanel1.add(txtcentroLabo, new org.netbeans.lib.awtextra.AbsoluteConstraints(810, 170, 150, -1));
+
+        btnSave.setText("Guardar");
+        btnSave.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSaveActionPerformed(evt);
+            }
+        });
+        jPanel1.add(btnSave, new org.netbeans.lib.awtextra.AbsoluteConstraints(850, 340, -1, -1));
+
+        btnModificar.setText("Modificar");
+        btnModificar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnModificarActionPerformed(evt);
+            }
+        });
+        jPanel1.add(btnModificar, new org.netbeans.lib.awtextra.AbsoluteConstraints(750, 340, -1, -1));
+
+        btnNuevo.setText("Nuevo");
+        btnNuevo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnNuevoActionPerformed(evt);
+            }
+        });
+        jPanel1.add(btnNuevo, new org.netbeans.lib.awtextra.AbsoluteConstraints(670, 340, -1, -1));
+
+        txtFecha.setEditable(false);
+        jPanel1.add(txtFecha, new org.netbeans.lib.awtextra.AbsoluteConstraints(810, 30, 150, -1));
+
+        add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 240, 980, 380));
 
         jPanel2.setBackground(new java.awt.Color(255, 255, 255));
         jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Clientes Registrados", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Calibri", 1, 12))); // NOI18N
         jPanel2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        tabClientes.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null, null}
+                {null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null}
             },
             new String [] {
-                "ID", "Nombres", "Apellidos", "Cédula", "Sexo", "Municipio", "Movil", "Telefono", "Limite Credito", "Ruta"
+                "ID", "Nombres", "Apellidos", "Cédula", "Sexo", "Municipio", "Movil", "Telefono", "Ruta"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
+                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
             };
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false, false, false, false, false
+                false, false, false, false, false, false, false, false, false
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -221,61 +326,276 @@ public class Cliente extends javax.swing.JPanel {
                 return canEdit [columnIndex];
             }
         });
-        jScrollPane1.setViewportView(jTable1);
+        jScrollPane1.setViewportView(tabClientes);
 
-        jPanel2.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 20, 700, 170));
+        jPanel2.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 30, 720, 190));
+
+        jPanel3.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder("Búsqueda por:"));
+        jPanel3.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel21.setText("Id:");
-        jPanel2.add(jLabel21, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 30, 30, -1));
+        jPanel3.add(jLabel21, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 30, 30, -1));
+        jPanel3.add(txtId, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 30, 70, -1));
 
         jLabel22.setText("Nombres");
-        jPanel2.add(jLabel22, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 70, -1, -1));
-
-        jLabel23.setText("Cedula:");
-        jPanel2.add(jLabel23, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 110, -1, -1));
-        jPanel2.add(jTextField7, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 30, 70, -1));
-        jPanel2.add(jTextField8, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 70, 140, -1));
-
-        jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/loansystem/recursos/buscar_cliente.png"))); // NOI18N
-        jPanel2.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 140, 50, 50));
-
-        jButton2.setText("Limpiar");
-        jPanel2.add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 140, 50, 50));
+        jPanel3.add(jLabel22, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 70, -1, -1));
+        jPanel3.add(txtNombre, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 70, 140, -1));
 
         try {
-            jFormattedTextField7.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("###-######-####A")));
+            txtCed.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("###-######-####A")));
         } catch (java.text.ParseException ex) {
             ex.printStackTrace();
         }
-        jPanel2.add(jFormattedTextField7, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 110, 120, -1));
+        jPanel3.add(txtCed, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 110, 140, -1));
 
-        jButton3.setText("Todos");
-        jPanel2.add(jButton3, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 140, 60, 50));
+        jLabel23.setText("Cedula:");
+        jPanel3.add(jLabel23, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 110, -1, -1));
 
-        add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 940, 210));
+        btnBuscar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/loansystem/recursos/buscar_cliente.png"))); // NOI18N
+        btnBuscar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnBuscarActionPerformed(evt);
+            }
+        });
+        jPanel3.add(btnBuscar, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 140, 50, 50));
+
+        btnLimpiar.setText("Limpiar");
+        btnLimpiar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnLimpiarActionPerformed(evt);
+            }
+        });
+        jPanel3.add(btnLimpiar, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 140, 50, 50));
+
+        btnBuscarTodos.setText("Todos");
+        btnBuscarTodos.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnBuscarTodosActionPerformed(evt);
+            }
+        });
+        jPanel3.add(btnBuscarTodos, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 140, 60, 50));
+
+        jPanel2.add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 20, 220, 200));
+
+        add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 980, 240));
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jFormattedTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jFormattedTextField1ActionPerformed
+    private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jFormattedTextField1ActionPerformed
 
+        if (txtId.getText().length() > 0) {
+            //Buscar por ID
+            aClieEnti = clieDAO.obtenerXCliente(Integer.valueOf(txtId.getText()));
+
+        } else if (txtNombre.getText().length() > 0) {
+            //Buscar por nombre
+            aClieEnti = clieDAO.obtenereClientesNombre(txtNombre.getText());
+        } else if (txtCed.getText().length() > 0) {
+            //Buscar por cedula
+            aClieEnti = clieDAO.obtenerXCliente(txtCed.getText());
+        } else {
+            //NO hay parametros de busqueda
+            JOptionPane.showMessageDialog(null, "Debe indicar al menos un parámetro de búsqueda", "Loan System", JOptionPane.ERROR_MESSAGE);
+        }
+
+        cargarTablaClientes();
+    }//GEN-LAST:event_btnBuscarActionPerformed
+
+    private void btnBuscarTodosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarTodosActionPerformed
+        // TODO add your handling code here:
+
+        aClieEnti = clieDAO.obtenerTodosClientes();
+        cargarTablaClientes();
+
+    }//GEN-LAST:event_btnBuscarTodosActionPerformed
+
+    private void btnLimpiarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLimpiarActionPerformed
+        // TODO add your handling code here:
+        txtId.setText("");
+        txtCed.setText("");
+        txtNombre.setText("");
+        // util.limpiarTabla(tabClientes);
+
+    }//GEN-LAST:event_btnLimpiarActionPerformed
+
+    private void btnNuevoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNuevoActionPerformed
+        // TODO add your handling code here:
+        habilitar_form();
+        limpiar_form();
+        nuevo = true;
+        btnSave.setEnabled(true);
+        btnModificar.setEnabled(false);
+    }//GEN-LAST:event_btnNuevoActionPerformed
+
+    private void btnModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarActionPerformed
+        // TODO add your handling code here:
+        habilitar_form();
+        modificar = true;
+    }//GEN-LAST:event_btnModificarActionPerformed
+
+    private void btnSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaveActionPerformed
+        // TODO add your handling code here:
+        //System.out.println("********Valor " + txtTelefono.getText().substring(0,1)) ;
+       /* if (txtNombres.getText().length() < 0 || txtNombres.getText().equals("")
+                || txtApellidos.getText().length() < 0 || txtApellidos.getText().equals("")
+                || txtCedula.getText().length() < 0 || txtCedula.getText().equals("")
+                || txtMovil.getText().length() < 0 || txtMovil.getText().equals("")
+                || txtFecha.getText().length() < 0 || txtFecha.getText().equals("")
+                || txtDirePrin.getText().length() < 0 || txtDirePrin.getText().equals("")
+                || cboMunicipio.getSelectedItem().toString().length() < 0
+                || cboRuta.getSelectedItem().toString().length() < 0
+                || cboSexo.getSelectedItem().toString().length() < 0) {
+            JOptionPane.showMessageDialog(this, "Lo sentimos, debe ingresar datos obligatorios!!", "Catalogo de Clientes",
+                    JOptionPane.ERROR_MESSAGE);
+        } else {
+
+                /**
+                 * ******************************
+                 * insertar nuevo cliente
+                 *
+               
+                
+                if (nuevo) {
+                    save = daoClie.insertarCliente(setDatos());
+                    if (save) {
+
+                        entiClie = daoClie.obtenerUltimoIdInsertado();
+                        txtCod.setText(String.valueOf(entiClie.getId_cliente()));
+                        JOptionPane.showMessageDialog(this, "Cliente registrado exitosamente!!", "Catalogo de Clientes", JOptionPane.INFORMATION_MESSAGE);
+                        deshabilitar_form();
+                        nuevo = false;
+                        entiCliente = daoClie.obtenereTodosClientes();
+                        cargarTabla();
+                    } else {
+                        JOptionPane.showMessageDialog(this, "Lo sentimos no se regitró el cliente!!", "Catalogo de Clientes", JOptionPane.ERROR_MESSAGE);
+                    }
+
+                }
+
+                /**
+                 * ******************************
+                 * modificar cliente
+                 *
+                if (modificar) {
+                    System.out.println("*********************Entra la if de modificar");
+                    int id = Integer.parseInt(txtCod.getText());
+                    save = daoClie.updateCliente(setDatos(), id);
+                    if (save) {
+                        JOptionPane.showMessageDialog(this, "Cliente actualizado exitosamente!!", "Catalogo de Clientes", JOptionPane.INFORMATION_MESSAGE);
+                        deshabilitar_form();
+                        modificar = false;
+                        entiCliente = daoClie.obtenereTodosClientes();
+                        cargarTabla();
+                    }
+
+                }
+
+            }
+        */
+    }//GEN-LAST:event_btnSaveActionPerformed
+
+    private void txtCedulaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtCedulaActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtCedulaActionPerformed
+
+    private void txtMovilActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtMovilActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtMovilActionPerformed
+
+    public void cargarTablaClientes() {
+        if (aClieEnti.isEmpty() || aClieEnti == null) {
+
+        } else {
+            util.limpiarTabla(tabClientes);
+            String estado;
+            for (int i = 0; i < aClieEnti.size(); i++) {
+                util.agregarFila(tabClientes);
+                tabClientes.setValueAt(aClieEnti.get(i).getIdCliente(), i, 0); //ID
+                tabClientes.setValueAt(aClieEnti.get(i).getNombres(), i, 1); //nombres
+                tabClientes.setValueAt(aClieEnti.get(i).getApellidos(), i, 2); //apellidios
+                tabClientes.setValueAt(aClieEnti.get(i).getNumCedula(), i, 3); //cedula
+                tabClientes.setValueAt(aClieEnti.get(i).getSexo(), i, 4); //sexo
+                tabClientes.setValueAt(aClieEnti.get(i).getIdMunicipio(), i, 5); //municipio
+                tabClientes.setValueAt(aClieEnti.get(i).getTelefonoMovil(), i, 5); //movil
+                tabClientes.setValueAt(aClieEnti.get(i).getTelefonoCasa(), i, 5); //telefono
+                tabClientes.setValueAt(aClieEnti.get(i).getIdRutaVisita(), i, 5); //ruta
+
+            }
+
+        }
+    }
+
+    void deshabilitar_form() {
+        txtApellidos.setEditable(false);
+        txtCedula.setEditable(false);
+       
+        txtDirePrin.setEditable(false);
+        txtDireSec.setEditable(false);
+        txtLimiteCredito.setEditable(false);
+        txtMovil.setEditable(false);
+        txtNombres.setEditable(false);
+        txtTeleLabo.setEditable(false);
+        txtTelefUno.setEditable(false);
+        txtTelefoDos.setEditable(false);
+        txtTelefonoCasa.setEditable(false);
+        txtcentroLabo.setEditable(false);
+        cboMunicipio.setEditable(false);
+        cboRuta.setEditable(false);
+        cboSexo.setEditable(false);
+    }
+
+    void habilitar_form() {
+        txtApellidos.setEditable(true);
+        txtCedula.setEditable(true);
+        
+        txtDirePrin.setEditable(true);
+        txtDireSec.setEditable(true);
+        txtLimiteCredito.setEditable(true);
+        txtMovil.setEditable(true);
+        txtNombres.setEditable(true);
+        txtTeleLabo.setEditable(true);
+        txtTelefUno.setEditable(true);
+        txtTelefoDos.setEditable(true);
+        txtTelefonoCasa.setEditable(true);
+        txtcentroLabo.setEditable(true);
+        cboMunicipio.setEditable(false);
+        cboRuta.setEditable(true);
+        cboSexo.setEditable(true);
+
+    }
+
+    void limpiar_form() {
+        txtApellidos.setText("");
+        txtCedula.setText("");
+        
+        txtDirePrin.setText("");
+        txtDireSec.setText("");
+        txtLimiteCredito.setText("");
+        txtMovil.setText("");
+        txtNombres.setText("");
+        txtTeleLabo.setText("");
+        txtTelefUno.setText("");
+        txtTelefoDos.setText("");
+        txtTelefonoCasa.setText("");
+        txtcentroLabo.setText("");
+        /*cboMunicipio.setEditable(false);
+        cboRuta.setEditable(true);
+        cboSexo.setEditable(true);*/
+
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
-    private javax.swing.JComboBox<String> jComboBox1;
-    private javax.swing.JComboBox<String> jComboBox2;
-    private javax.swing.JComboBox<String> jComboBox3;
-    private javax.swing.JFormattedTextField jFormattedTextField1;
-    private javax.swing.JFormattedTextField jFormattedTextField2;
-    private javax.swing.JFormattedTextField jFormattedTextField3;
-    private javax.swing.JFormattedTextField jFormattedTextField4;
-    private javax.swing.JFormattedTextField jFormattedTextField5;
-    private javax.swing.JFormattedTextField jFormattedTextField6;
-    private javax.swing.JFormattedTextField jFormattedTextField7;
+    private javax.swing.JButton btnBuscar;
+    private javax.swing.JButton btnBuscarTodos;
+    private javax.swing.JButton btnLimpiar;
+    private javax.swing.JButton btnModificar;
+    private javax.swing.JButton btnNuevo;
+    private javax.swing.JButton btnSave;
+    private javax.swing.JComboBox<String> cboMunicipio;
+    private javax.swing.JComboBox<String> cboRuta;
+    private javax.swing.JComboBox<String> cboSexo;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;
@@ -299,19 +619,27 @@ public class Cliente extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
+    private javax.swing.JPanel jPanel3;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
-    private javax.swing.JTable jTable1;
-    private javax.swing.JTextArea jTextArea1;
-    private javax.swing.JTextArea jTextArea2;
-    private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField2;
-    private javax.swing.JTextField jTextField3;
-    private javax.swing.JTextField jTextField4;
-    private javax.swing.JTextField jTextField5;
-    private javax.swing.JTextField jTextField6;
-    private javax.swing.JTextField jTextField7;
-    private javax.swing.JTextField jTextField8;
+    private javax.swing.JTable tabClientes;
+    private javax.swing.JTextField txtApellidos;
+    private javax.swing.JFormattedTextField txtCed;
+    private javax.swing.JFormattedTextField txtCedula;
+    private javax.swing.JTextArea txtDirePrin;
+    private javax.swing.JTextArea txtDireSec;
+    private javax.swing.JTextField txtFecha;
+    private javax.swing.JTextField txtId;
+    private javax.swing.JTextField txtId2;
+    private javax.swing.JTextField txtLimiteCredito;
+    private javax.swing.JFormattedTextField txtMovil;
+    private javax.swing.JTextField txtNombre;
+    private javax.swing.JTextField txtNombres;
+    private javax.swing.JFormattedTextField txtTeleLabo;
+    private javax.swing.JFormattedTextField txtTelefUno;
+    private javax.swing.JFormattedTextField txtTelefoDos;
+    private javax.swing.JFormattedTextField txtTelefonoCasa;
+    private javax.swing.JTextField txtcentroLabo;
     // End of variables declaration//GEN-END:variables
 }

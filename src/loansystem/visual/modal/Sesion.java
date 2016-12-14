@@ -71,7 +71,7 @@ Conexion conexion;
         jLabel2.setText("Login:");
         panelSesion.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 80, -1, -1));
 
-        txtLogin.setText("USER");
+        txtLogin.setText("JEN");
         txtLogin.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtLoginActionPerformed(evt);
@@ -87,7 +87,7 @@ Conexion conexion;
         });
         panelSesion.add(txtLogin, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 80, 140, -1));
 
-        txtPass.setText("1");
+        txtPass.setText("123");
         panelSesion.add(txtPass, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 120, 140, -1));
 
         jLabel3.setText("Contraseña:");
@@ -125,7 +125,7 @@ Conexion conexion;
 
     private void btnIniciarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIniciarActionPerformed
     //Conectarse a la BD
-        Conexion con = new Conexion("root", "159951", "loan_system", "localhost");
+        Conexion con = new Conexion("root", "", "loan_system", "localhost");
         boolean conexion_abierta = con.abrirConeccion();
       
         //Verificamos si la conexion esta abierta
@@ -160,7 +160,7 @@ Conexion conexion;
                        
                                         
                         //Principal prin = new Principal(con,nom_completo, userEntidad.getLogin());
-                        Principal prin = new Principal();
+                        Principal prin = new Principal(conexion);
                         
                         prin.setVisible(true);
                         this.dispose();}

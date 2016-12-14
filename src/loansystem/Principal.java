@@ -6,18 +6,21 @@
 package loansystem;
 
 import javax.swing.UIManager;
+import loansystem.bd.Conexion;
+import loansystem.visual.panel.*;
 
 /**
  *
  * @author cgarcia
  */
 public class Principal extends javax.swing.JFrame {
-
+private static Conexion con;
     /**
      * Creates new form Principal
      * Otro comentario mas..
      */
-    public Principal() {
+    public Principal(Conexion con) {
+        this.con =con;
         initComponents();
         
         setExtendedState(MAXIMIZED_BOTH);
@@ -49,7 +52,7 @@ public class Principal extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         lnkCargo = new com.l2fprod.common.swing.JLinkButton();
         lnkMonedas = new com.l2fprod.common.swing.JLinkButton();
-        jTabbedPane1 = new javax.swing.JTabbedPane();
+        tabPane = new javax.swing.JTabbedPane();
         jToolBar1 = new javax.swing.JToolBar();
         jButton1 = new javax.swing.JButton();
         jSeparator2 = new javax.swing.JToolBar.Separator();
@@ -83,6 +86,11 @@ public class Principal extends javax.swing.JFrame {
 
         lnkNuevoCliente.setIcon(new javax.swing.ImageIcon(getClass().getResource("/loansystem/recursos/nuevo_cliente.png"))); // NOI18N
         lnkNuevoCliente.setText("Registrar Nuevo Ciente");
+        lnkNuevoCliente.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                lnkNuevoClienteActionPerformed(evt);
+            }
+        });
         tskCliente.getContentPane().add(lnkNuevoCliente);
 
         lnkBuscarCliente.setIcon(new javax.swing.ImageIcon(getClass().getResource("/loansystem/recursos/buscar_cliente.png"))); // NOI18N
@@ -143,7 +151,7 @@ public class Principal extends javax.swing.JFrame {
         pnelOpciones.add(tskEmpresa);
 
         getContentPane().add(pnelOpciones, java.awt.BorderLayout.WEST);
-        getContentPane().add(jTabbedPane1, java.awt.BorderLayout.CENTER);
+        getContentPane().add(tabPane, java.awt.BorderLayout.CENTER);
 
         jToolBar1.setRollover(true);
 
@@ -206,6 +214,15 @@ public class Principal extends javax.swing.JFrame {
        System.exit(0);
     }//GEN-LAST:event_mnuSalirActionPerformed
 
+    private void lnkNuevoClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_lnkNuevoClienteActionPerformed
+        // TODO add your handling code here:
+        
+        Cliente panelCliente = new Cliente(con, this);
+        tabPane.add(panelCliente);
+        panelCliente.setVisible(true);
+        
+    }//GEN-LAST:event_lnkNuevoClienteActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -236,7 +253,7 @@ public class Principal extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new Principal().setVisible(true);
+                new Principal(con).setVisible(true);
             }
         });
     }
@@ -251,7 +268,6 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JToolBar.Separator jSeparator2;
-    private javax.swing.JTabbedPane jTabbedPane1;
     private javax.swing.JToolBar jToolBar1;
     private com.l2fprod.common.swing.JLinkButton lnkBuscarCliente;
     private com.l2fprod.common.swing.JLinkButton lnkCargo;
@@ -266,6 +282,7 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JMenu mnuClientes;
     private javax.swing.JMenuItem mnuSalir;
     private javax.swing.JPanel pnelOpciones;
+    private javax.swing.JTabbedPane tabPane;
     private com.l2fprod.common.swing.JTaskPaneGroup tskCliente;
     private com.l2fprod.common.swing.JTaskPaneGroup tskEmpresa;
     private com.l2fprod.common.swing.JTaskPaneGroup tskPrestamo;
