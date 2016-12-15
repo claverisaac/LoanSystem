@@ -54,6 +54,7 @@ public class ClienteDAO {
 
             while (rs.next()) {
                 lista.add(this.convertir(rs));
+                
             }
 
         } catch (SQLException ex) {
