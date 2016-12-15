@@ -252,9 +252,7 @@ public class ClienteDAO {
                     + ","+obj.getPrecio()+","+obj.getCosto()+",'"+obj.getFecha_venc()+"','"+obj.getPresentacion()+"',"+obj.isActivo()+","
                     +obj.getConversion()+","+obj.getId_categoria()+","+obj.getId_unidad_mayor()+","+obj.getId_unidad_menor()+");"); */
 
-           /* exito = s.execute("INSERT INTO loan_system.cliente(\n"
-                    + "   idCliente\n"
-                    + "  ,nombres\n"
+            exito = s.execute("INSERT INTO loan_system.cliente(nombres\n"
                     + "  ,apellidos\n"
                     + "  ,numCedula\n"
                     + "  ,sexo\n"
@@ -272,8 +270,7 @@ public class ClienteDAO {
                     + "  ,telefonoLaboral\n"
                     + "  ,fechaAlta\n"
                     + "  ,idEmpresa\n"
-                    + ") VALUES ("
-                    + "   NULL, '"
+                    + ") VALUES ('"
                     + obj.getNombres() + "','"
                     + obj.getApellidos() + "','"
                     + obj.getNumCedula() + "','"
@@ -281,16 +278,16 @@ public class ClienteDAO {
                     + obj.getIdMunicipio() + ",'"
                     + obj.getDireccionPrincipal() + "','"
                     + obj.getDireccionSecundaria() + "',"
-                    + obj.getLimiteCredito() + ", null,'"
+                    + obj.getLimiteCredito() + ",'"
                     + obj.getTelefonoCasa() + "','"
                     + obj.getTelefonoMovil() + "','"
                     + obj.getTelefonoVario_uno() + "','"
-                    + obj.getTelefonoVario_dos()) + "',"
+                    + obj.getTelefonoVario_dos() + "',"
                     + obj.getIdRutaVisita() + ",'"
                     + obj.getCentroLaboral() + "','"
-                    + obj.getTelefonoLaboral() + "','"
-                    + obj.getFechaAlta() + "'," 
-                    + obj.getIdEmpresa() + ");");*/
+                    + obj.getTelefonoLaboral() + "',"
+                    + "CURDATE()," 
+                    + obj.getIdEmpresa() + ");");
 
             exito = true;
 
@@ -325,6 +322,39 @@ public class ClienteDAO {
         return exito;
     }
 
+        public ClienteEntidad obtenerUltimoIdInsertado() {
+        ClienteEntidad obj = null;
+        try {
+            //preparamos la ejecucion del query
+            s = con.createStatement();
+            //Ejecutamos el Query
+            System.out.println("SELECT last_insert_id() as id_cliente;");
+
+            rs = s.executeQuery("SELECT last_insert_id() as id_cliente;");
+
+            //Recorremos cada registro agregandolo al ArrayList
+            while (rs.next()) {
+                obj = this.convertirID(rs);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(ClienteDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        return obj;
+
+    }
+            private ClienteEntidad convertirID(ResultSet respuesta) {
+        ClienteEntidad obj = new ClienteEntidad();
+        try {
+
+            obj.setIdCliente(respuesta.getInt("idCliente"));
+        } catch (SQLException ex) {
+            Logger.getLogger(ClienteDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        return obj;
+    }
+            
      public ArrayList<ClienteEntidad> obtenerClientesXParametro(String nom) {
 
         ArrayList<ClienteEntidad> lista = new ArrayList<ClienteEntidad>();
