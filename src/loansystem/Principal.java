@@ -28,7 +28,7 @@ private static Conexion con;
         
         setExtendedState(MAXIMIZED_BOTH);
         
-        tabPrincipal.add("Asignación de Préstamo", new Prestamo());
+        tabPrincipal.add("Asignación de Préstamo", new Prestamo(con, this));
        
     }
 

@@ -325,6 +325,48 @@ public class ClienteDAO {
         return exito;
     }
 
+     public ArrayList<ClienteEntidad> obtenerClientesXParametro(String nom) {
+
+        ArrayList<ClienteEntidad> lista = new ArrayList<ClienteEntidad>();
+
+        try {
+            //preparamos la ejecucion del query
+            s = con.createStatement();
+            //Ejecutamos el Query
+            int id = 0;
+            try {
+                id = Integer.parseInt(nom);
+            } catch (Exception e) {
+                id = 0;
+            }
+            
+            
+            
+            StringBuilder query = new StringBuilder();           
+                    query.append("SELECT idCliente, nombres, apellidos, numCedula, sexo, idMunicipio, direccionPrincipal, direccionSecundaria, limiteCredito, diasCredito, ");
+                     query.append("telefonoCasa, telefonoMovil, telefonoVario_uno, telefonoVario_dos, idRutaVisita, centroLaboral, telefonoLaboral, fechaAlta, idEmpresa ");
+                     query.append("FROM cliente ");
+                     query.append("WHERE nombres like '%" + nom + "%' OR apellidos like '%" + nom + "%' ");
+                    if(id>0)   query.append(" OR idCliente = "+id);
+                     query.append(" OR numCedula like '%"+nom+"%';");
+                      
+                     System.out.println(query.toString());
+                     rs = s.executeQuery(query.toString());
+
+               
+            //Recorremos cada registro agregandolo al ArrayList
+            while (rs.next()) {
+                lista.add(this.convertir(rs));
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(ClienteDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        return lista;
+    }
+    
+    
+    
     private ClienteEntidad convertir(ResultSet respuesta) {
         ClienteEntidad obj = new ClienteEntidad();
         try {
