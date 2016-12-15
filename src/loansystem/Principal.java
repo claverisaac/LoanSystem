@@ -265,7 +265,7 @@ private static Conexion con;
         // TODO add your handling code here:
         
         Cliente panelCliente = new Cliente(con, this);
-        //tabPane.add(panelCliente);
+        tabPrincipal.add(panelCliente);
         panelCliente.setVisible(true);
         
     }//GEN-LAST:event_lnkNuevoClienteActionPerformed

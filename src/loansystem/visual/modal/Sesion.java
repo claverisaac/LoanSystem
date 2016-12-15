@@ -23,7 +23,7 @@ import loansystem.dao.*;
  * @author cgarcia
  */
 public class Sesion extends javax.swing.JFrame {
-Conexion conexion;
+Conexion con;
 //MetodosGenerales metodo;
 /*Comentarios de prueba*/
 
@@ -61,15 +61,12 @@ Conexion conexion;
         getContentPane().setLayout(new java.awt.GridLayout(1, 0));
 
         panelSesion.setBackground(new java.awt.Color(255, 255, 255));
-        panelSesion.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel1.setFont(new java.awt.Font("Cambria", 1, 14)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(0, 0, 51));
         jLabel1.setText("Bienvenido al Sistema Central de Distribución");
-        panelSesion.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 10, -1, -1));
 
         jLabel2.setText("Login:");
-        panelSesion.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 80, -1, -1));
 
         txtLogin.setText("JEN");
         txtLogin.addActionListener(new java.awt.event.ActionListener() {
@@ -85,16 +82,12 @@ Conexion conexion;
                 txtLoginKeyReleased(evt);
             }
         });
-        panelSesion.add(txtLogin, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 80, 140, -1));
 
         txtPass.setText("123");
-        panelSesion.add(txtPass, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 120, 140, -1));
 
         jLabel3.setText("Contraseña:");
-        panelSesion.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 130, -1, -1));
 
         jLabel4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/loansystem/recursos/sesion.png"))); // NOI18N
-        panelSesion.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 60, -1, -1));
 
         btnIniciar.setText("Iniciar");
         btnIniciar.addActionListener(new java.awt.event.ActionListener() {
@@ -102,7 +95,6 @@ Conexion conexion;
                 btnIniciarActionPerformed(evt);
             }
         });
-        panelSesion.add(btnIniciar, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 170, -1, -1));
 
         btnCancelar.setText("Cancelar");
         btnCancelar.addActionListener(new java.awt.event.ActionListener() {
@@ -110,7 +102,57 @@ Conexion conexion;
                 btnCancelarActionPerformed(evt);
             }
         });
-        panelSesion.add(btnCancelar, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 170, -1, -1));
+
+        javax.swing.GroupLayout panelSesionLayout = new javax.swing.GroupLayout(panelSesion);
+        panelSesion.setLayout(panelSesionLayout);
+        panelSesionLayout.setHorizontalGroup(
+            panelSesionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelSesionLayout.createSequentialGroup()
+                .addGap(20, 20, 20)
+                .addGroup(panelSesionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(panelSesionLayout.createSequentialGroup()
+                        .addComponent(jLabel4)
+                        .addGap(42, 42, 42)
+                        .addGroup(panelSesionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel2)
+                            .addComponent(jLabel3))
+                        .addGroup(panelSesionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(panelSesionLayout.createSequentialGroup()
+                                .addComponent(btnIniciar)
+                                .addGap(19, 19, 19)
+                                .addComponent(btnCancelar))
+                            .addGroup(panelSesionLayout.createSequentialGroup()
+                                .addGap(20, 20, 20)
+                                .addGroup(panelSesionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(txtLogin, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(txtPass, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                    .addComponent(jLabel1)))
+        );
+        panelSesionLayout.setVerticalGroup(
+            panelSesionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelSesionLayout.createSequentialGroup()
+                .addGap(10, 10, 10)
+                .addComponent(jLabel1)
+                .addGroup(panelSesionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(panelSesionLayout.createSequentialGroup()
+                        .addGap(52, 52, 52)
+                        .addGroup(panelSesionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(panelSesionLayout.createSequentialGroup()
+                                .addComponent(jLabel2)
+                                .addGap(36, 36, 36)
+                                .addComponent(jLabel3))
+                            .addGroup(panelSesionLayout.createSequentialGroup()
+                                .addComponent(txtLogin, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(20, 20, 20)
+                                .addComponent(txtPass, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(30, 30, 30)
+                                .addGroup(panelSesionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(btnIniciar)
+                                    .addComponent(btnCancelar)))))
+                    .addGroup(panelSesionLayout.createSequentialGroup()
+                        .addGap(29, 29, 29)
+                        .addComponent(jLabel4))))
+        );
 
         getContentPane().add(panelSesion);
 
@@ -160,7 +202,7 @@ Conexion conexion;
                        
                                         
                         //Principal prin = new Principal(con,nom_completo, userEntidad.getLogin());
-                        Principal prin = new Principal(conexion);
+                        Principal prin = new Principal(con);
                         
                         prin.setVisible(true);
                         this.dispose();}

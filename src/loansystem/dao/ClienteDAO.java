@@ -63,6 +63,42 @@ public class ClienteDAO {
 
         return lista;
     }
+ /**
+     * ** Lista clientes por id
+     *
+     * @param idcliente
+     * @return toda informacion del cliente
+     */
+    public ClienteEntidad obtenerCliente(int idCliente) {
+        ClienteEntidad lista = null;
+        try {
+            s = con.createStatement();
+            System.out.println("SELECT idCliente, nombres, apellidos, numCedula, sexo, idMunicipio, "
+                    + "direccionPrincipal, direccionSecundaria, limiteCredito, diasCredito,\n"
+                    + "telefonoCasa, telefonoMovil, telefonoVario_uno, telefonoVario_dos, idRutaVisita, "
+                    + "centroLaboral,"
+                    + " telefonoLaboral, fechaAlta, idEmpresa \n"
+                    + "FROM loan_system.cliente\n"
+                    + "WHERE idCliente =" + idCliente + ";");
+
+            rs = s.executeQuery("SELECT idCliente, nombres, apellidos, numCedula, sexo, idMunicipio, "
+                    + "direccionPrincipal, direccionSecundaria, limiteCredito, diasCredito,\n"
+                    + "telefonoCasa, telefonoMovil, telefonoVario_uno, telefonoVario_dos, idRutaVisita, "
+                    + "centroLaboral,"
+                    + " telefonoLaboral, fechaAlta, idEmpresa \n"
+                    + "FROM loan_system.cliente\n"
+                    + "WHERE idCliente =" + idCliente + ";");
+
+            while (rs.next()) {
+                lista=this.convertir(rs);
+            }
+
+        } catch (SQLException ex) {
+            Logger.getLogger(ClienteDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        return lista;
+    }
 
     /**
      * ** Lista clientes por id
@@ -156,6 +192,42 @@ public class ClienteDAO {
                     + "telefonoCasa, telefonoMovil, telefonoVario_uno, telefonoVario_dos, idRutaVisita, centroLaboral, telefonoLaboral, fechaAlta, idEmpresa \n"
                     + "FROM loan_system.cliente\n"
                     + "WHERE nombres like '%" + nom + "%' or apellidos like '%" + nom + "%';");
+
+            //   System.out.println("SELECT id_categoria, nombre_categoria,descripcion FROM producto_categoria;");
+            //Recorremos cada registro agregandolo al ArrayList
+            while (rs.next()) {
+                lista.add(this.convertir(rs));
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(ClienteDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        return lista;
+    }
+
+    /**
+     * ** Lista clientes por nombre
+     *
+     * @param nombres
+     * @return toda informacion del cliente
+     */
+    public ArrayList<ClienteEntidad> obtenereClientesNombreIDCed(String nom, String cedula, int id) {
+
+        ArrayList<ClienteEntidad> lista = new ArrayList<ClienteEntidad>();
+
+        try {
+            //preparamos la ejecucion del query
+            s = con.createStatement();
+            //Ejecutamos el Query
+            System.out.println("SELECT idCliente, nombres, apellidos, numCedula, sexo, idMunicipio, direccionPrincipal, direccionSecundaria, limiteCredito, diasCredito,\n"
+                    + "telefonoCasa, telefonoMovil, telefonoVario_uno, telefonoVario_dos, idRutaVisita, centroLaboral, telefonoLaboral, fechaAlta, idEmpresa \n"
+                    + "FROM loan_system.cliente\n"
+                    + "WHERE nombres like '%" + nom + "%' or apellidos like '%" + nom + "%' or numCedula ='" + cedula + "' or idCliente =" + id+ ";");
+            
+            rs = s.executeQuery("SELECT idCliente, nombres, apellidos, numCedula, sexo, idMunicipio, direccionPrincipal, direccionSecundaria, limiteCredito, diasCredito,\n"
+                    + "telefonoCasa, telefonoMovil, telefonoVario_uno, telefonoVario_dos, idRutaVisita, centroLaboral, telefonoLaboral, fechaAlta, idEmpresa \n"
+                    + "FROM loan_system.cliente\n"
+                    + "WHERE nombres like '%" + nom + "%' or apellidos like '%" + nom + "%' or numCedula ='" + cedula + "' or idCliente =" + id+ ";");
 
             //   System.out.println("SELECT id_categoria, nombre_categoria,descripcion FROM producto_categoria;");
             //Recorremos cada registro agregandolo al ArrayList
