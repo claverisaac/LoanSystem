@@ -16,6 +16,7 @@ public class Prestamo extends javax.swing.JPanel {
      */
     public Prestamo() {
         initComponents();
+        
     }
 
     /**
