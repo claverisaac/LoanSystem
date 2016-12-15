@@ -16,6 +16,8 @@ public class Prestamo extends javax.swing.JPanel {
      */
     public Prestamo() {
         initComponents();
+        
+        //Nuevo comentario
     }
 
     /**
@@ -98,8 +100,8 @@ public class Prestamo extends javax.swing.JPanel {
         jLabel7.setText("Municipio:");
 
         jPanel4.setBackground(new java.awt.Color(255, 255, 255));
-        jPanel4.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEtchedBorder(), "Teléfonos", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.ABOVE_TOP));
-        jPanel4.setLayout(new java.awt.GridLayout());
+        jPanel4.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEtchedBorder(), "Teléfonos", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.ABOVE_TOP, new java.awt.Font("Tahoma", 1, 11))); // NOI18N
+        jPanel4.setLayout(new java.awt.GridLayout(1, 0));
 
         jList1.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
         jScrollPane1.setViewportView(jList1);
@@ -129,7 +131,7 @@ public class Prestamo extends javax.swing.JPanel {
         jPanel5.setOpaque(false);
         jPanel5.setLayout(new java.awt.GridLayout(1, 2, 10, 10));
 
-        jScrollPane3.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEtchedBorder(), "Dirección Principal", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.ABOVE_TOP));
+        jScrollPane3.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEtchedBorder(), "Dirección Principal", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.ABOVE_TOP, new java.awt.Font("Tahoma", 1, 11))); // NOI18N
         jScrollPane3.setOpaque(false);
 
         jTextArea2.setEditable(false);
@@ -139,7 +141,7 @@ public class Prestamo extends javax.swing.JPanel {
 
         jPanel5.add(jScrollPane3);
 
-        jScrollPane2.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEtchedBorder(), "Dirección Secundaria", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.ABOVE_TOP));
+        jScrollPane2.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEtchedBorder(), "Dirección Secundaria", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.ABOVE_TOP, new java.awt.Font("Tahoma", 1, 11))); // NOI18N
         jScrollPane2.setOpaque(false);
 
         jTextArea1.setColumns(20);
