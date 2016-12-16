@@ -54,7 +54,7 @@ public class ClienteDAO {
 
             while (rs.next()) {
                 lista.add(this.convertir(rs));
-                
+
             }
 
         } catch (SQLException ex) {
@@ -63,7 +63,8 @@ public class ClienteDAO {
 
         return lista;
     }
- /**
+
+    /**
      * ** Lista clientes por id
      *
      * @param idcliente
@@ -90,7 +91,7 @@ public class ClienteDAO {
                     + "WHERE idCliente =" + idCliente + ";");
 
             while (rs.next()) {
-                lista=this.convertir(rs);
+                lista = this.convertir(rs);
             }
 
         } catch (SQLException ex) {
@@ -222,12 +223,12 @@ public class ClienteDAO {
             System.out.println("SELECT idCliente, nombres, apellidos, numCedula, sexo, idMunicipio, direccionPrincipal, direccionSecundaria, limiteCredito, diasCredito,\n"
                     + "telefonoCasa, telefonoMovil, telefonoVario_uno, telefonoVario_dos, idRutaVisita, centroLaboral, telefonoLaboral, fechaAlta, idEmpresa \n"
                     + "FROM loan_system.cliente\n"
-                    + "WHERE nombres like '%" + nom + "%' or apellidos like '%" + nom + "%' or numCedula ='" + cedula + "' or idCliente =" + id+ ";");
-            
+                    + "WHERE nombres like '%" + nom + "%' or apellidos like '%" + nom + "%' or numCedula ='" + cedula + "' or idCliente =" + id + ";");
+
             rs = s.executeQuery("SELECT idCliente, nombres, apellidos, numCedula, sexo, idMunicipio, direccionPrincipal, direccionSecundaria, limiteCredito, diasCredito,\n"
                     + "telefonoCasa, telefonoMovil, telefonoVario_uno, telefonoVario_dos, idRutaVisita, centroLaboral, telefonoLaboral, fechaAlta, idEmpresa \n"
                     + "FROM loan_system.cliente\n"
-                    + "WHERE nombres like '%" + nom + "%' or apellidos like '%" + nom + "%' or numCedula ='" + cedula + "' or idCliente =" + id+ ";");
+                    + "WHERE nombres like '%" + nom + "%' or apellidos like '%" + nom + "%' or numCedula ='" + cedula + "' or idCliente =" + id + ";");
 
             //   System.out.println("SELECT id_categoria, nombre_categoria,descripcion FROM producto_categoria;");
             //Recorremos cada registro agregandolo al ArrayList
@@ -246,13 +247,7 @@ public class ClienteDAO {
         boolean exito = false;
         try {
             s = con.createStatement();
-            /*  System.out.println("INSERT INTO distribution.productos_catalogo (nombre_producto,descripcion," +
-                    "precio,costo,fecha_vencimiento,presentacion,estado,conversion,id_categoria,"
-                    + "unid_medida_mayor,unid_medida_menor) VALUES ('"+obj.getNombre()+"','"+obj.getDescripcion()+"'"
-                    + ","+obj.getPrecio()+","+obj.getCosto()+",'"+obj.getFecha_venc()+"','"+obj.getPresentacion()+"',"+obj.isActivo()+","
-                    +obj.getConversion()+","+obj.getId_categoria()+","+obj.getId_unidad_mayor()+","+obj.getId_unidad_menor()+");"); */
-
-            exito = s.execute("INSERT INTO loan_system.cliente(nombres\n"
+            System.out.println("INSERT INTO loan_system.cliente(nombres\n"
                     + "  ,apellidos\n"
                     + "  ,numCedula\n"
                     + "  ,sexo\n"
@@ -279,6 +274,7 @@ public class ClienteDAO {
                     + obj.getDireccionPrincipal() + "','"
                     + obj.getDireccionSecundaria() + "',"
                     + obj.getLimiteCredito() + ",'"
+                    + obj.getDiasCredito() + ",'"
                     + obj.getTelefonoCasa() + "','"
                     + obj.getTelefonoMovil() + "','"
                     + obj.getTelefonoVario_uno() + "','"
@@ -286,7 +282,47 @@ public class ClienteDAO {
                     + obj.getIdRutaVisita() + ",'"
                     + obj.getCentroLaboral() + "','"
                     + obj.getTelefonoLaboral() + "',"
-                    + "CURDATE()," 
+                    + "CURDATE(),"
+                    + obj.getIdEmpresa() + ");");
+
+            exito = s.execute("INSERT INTO loan_system.cliente(nombres\n"
+                    + "  ,apellidos\n"
+                    + "  ,numCedula\n"
+                    + "  ,sexo\n"
+                    + "  ,idMunicipio\n"
+                    + "  ,idDepartamento\n"
+                    + "  ,direccionPrincipal\n"
+                    + "  ,direccionSecundaria\n"
+                    + "  ,limiteCredito\n"
+                    + "  ,diasCredito\n"
+                    + "  ,telefonoCasa\n"
+                    + "  ,telefonoMovil\n"
+                    + "  ,telefonoVario_uno\n"
+                    + "  ,telefonoVario_dos\n"
+                    + "  ,idRutaVisita\n"
+                    + "  ,centroLaboral\n"
+                    + "  ,telefonoLaboral\n"
+                    + "  ,fechaAlta\n"
+                    + "  ,idEmpresa\n"
+                    + ") VALUES ('"
+                    + obj.getNombres() + "','"
+                    + obj.getApellidos() + "','"
+                    + obj.getNumCedula() + "','"
+                    + obj.getSexo() + "',"
+                    + obj.getIdMunicipio() + ",'"
+                    + obj.getIdDepartamento() + ",'"
+                    + obj.getDireccionPrincipal() + "','"
+                    + obj.getDireccionSecundaria() + "',"
+                    + obj.getLimiteCredito() + ","
+                    + obj.getDiasCredito() + ",'"
+                    + obj.getTelefonoCasa() + "','"
+                    + obj.getTelefonoMovil() + "','"
+                    + obj.getTelefonoVario_uno() + "','"
+                    + obj.getTelefonoVario_dos() + "',"
+                    + obj.getIdRutaVisita() + ",'"
+                    + obj.getCentroLaboral() + "','"
+                    + obj.getTelefonoLaboral() + "',"
+                    + "CURDATE(),"
                     + obj.getIdEmpresa() + ");");
 
             exito = true;
@@ -306,13 +342,25 @@ public class ClienteDAO {
             s = con.createStatement();
             System.out.println("");
 
-          /*  exito = s.execute("UPDATE clientes set nombre_cliente = '" + obj.getNombre_cliente() + "', nombre_negocio = '" + obj.getNombre_negocio() + "', "
-                    + "telefono= '" + obj.getTelefono() + "'," + "ubicacion ='" + obj.getUbicacion() + "' , ubicacion2 ='" + obj.getUbicacion2()
-                    + "' , id_tipo_cliente=" + obj.getId_tipo_cliente() + " , id_departamento=" + obj.getId_departamento() + ","
-                    + "id_municipio=" + obj.getId_municipio() + ",barrio='" + obj.getBarrio() + "',id_ruta_entrega=" + obj.getId_ruta_entrega() + ","
-                    + "id_ruta_preventa=" + obj.getId_ruta_preventa() + ", credito =" + obj.getCredito() + ",limite_credito = " + obj.getLimite_credito() + ",\n"
-                    + "dias_credito=" + obj.getDias_credito() + ", secuencia=" + obj.getSecuencia() + ", frecuencia =" + obj.getFrecuencia() + " , estado=" + obj.getEstado() + " "
-                    + "where id_cliente= " + id + ";");*/
+            System.out.println("UPDATE cliente set nombres = '" + obj.getNombres() + "', apellidos = '" + obj.getApellidos()
+                    + "',numCedula= '" + obj.getNumCedula() + "'," + "sexo ='" + obj.getSexo() + "' , idMunicipio=" + obj.getIdMunicipio()
+                    + ",idDepartamento=" + obj.getIdDepartamento() + "," + "direccionPrincipal='" + obj.getDireccionPrincipal()
+                    + "',direccionSecundaria='" + obj.getDireccionSecundaria() + "'," + "limiteCredito=" + obj.getLimiteCredito()
+                    + ",diasCredito =" + obj.getDiasCredito() + ",telefonoCasa = '" + obj.getTelefonoCasa()
+                    + "',telefonoMovil = '" + obj.getTelefonoMovil() + "',telefonoVario_uno = '" + obj.getTelefonoVario_uno()
+                    + "',telefonoVario_dos = '" + obj.getTelefonoVario_dos() + "', IdRutaVisita=" + obj.getIdRutaVisita()
+                    + ", centroLaboral= '" + obj.getCentroLaboral() + "', telefonoLaboral= '" + obj.getTelefonoLaboral()
+                    + "' where idcliente= " + id + ";");
+
+            exito = s.execute("UPDATE cliente set nombres = '" + obj.getNombres() + "', apellidos = '" + obj.getApellidos()
+                    + "',numCedula= '" + obj.getNumCedula() + "'," + "sexo ='" + obj.getSexo() + "' , idMunicipio=" + obj.getIdMunicipio()
+                    + ",idDepartamento=" + obj.getIdDepartamento() + "," + "direccionPrincipal='" + obj.getDireccionPrincipal()
+                    + "',direccionSecundaria='" + obj.getDireccionSecundaria() + "'," + "limiteCredito=" + obj.getLimiteCredito()
+                    + ",diasCredito =" + obj.getDiasCredito() + ",telefonoCasa = '" + obj.getTelefonoCasa()
+                    + "',telefonoMovil = '" + obj.getTelefonoMovil() + "',telefonoVario_uno = '" + obj.getTelefonoVario_uno()
+                    + "',telefonoVario_dos = '" + obj.getTelefonoVario_dos() + "', IdRutaVisita=" + obj.getIdRutaVisita()
+                    + ", centroLaboral= '" + obj.getCentroLaboral() + "', telefonoLaboral= '" + obj.getTelefonoLaboral()
+                    + "' where idcliente= " + id + ";");
 
             exito = true;
 
@@ -322,15 +370,15 @@ public class ClienteDAO {
         return exito;
     }
 
-        public ClienteEntidad obtenerUltimoIdInsertado() {
+    public ClienteEntidad obtenerUltimoIdInsertado() {
         ClienteEntidad obj = null;
         try {
             //preparamos la ejecucion del query
             s = con.createStatement();
             //Ejecutamos el Query
-            System.out.println("SELECT last_insert_id() as id_cliente;");
+            System.out.println("SELECT last_insert_id() as idcliente;");
 
-            rs = s.executeQuery("SELECT last_insert_id() as id_cliente;");
+            rs = s.executeQuery("SELECT last_insert_id() as idcliente;");
 
             //Recorremos cada registro agregandolo al ArrayList
             while (rs.next()) {
@@ -343,7 +391,8 @@ public class ClienteDAO {
         return obj;
 
     }
-            private ClienteEntidad convertirID(ResultSet respuesta) {
+
+    private ClienteEntidad convertirID(ResultSet respuesta) {
         ClienteEntidad obj = new ClienteEntidad();
         try {
 
@@ -354,7 +403,7 @@ public class ClienteDAO {
 
         return obj;
     }
-            
+
     private ClienteEntidad convertir(ResultSet respuesta) {
         ClienteEntidad obj = new ClienteEntidad();
         try {
