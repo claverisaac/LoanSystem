@@ -12,9 +12,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import loansystem.entidad.ClienteEntidad;
 import loansystem.entidad.MunicipioEntidad;
-import loansystem.entidad.UsuarioEntidad;
 
 /**
  *
