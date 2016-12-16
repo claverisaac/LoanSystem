@@ -10,10 +10,19 @@ package loansystem.entidad;
  * @author jechavarria
  */
 public class ClienteEntidad {
-    int idCliente,idMunicipio, diasCredito, idRutaVisita, idEmpresa;
-String nombres,apellidos,numCedula, sexo, direccionPrincipal,direccionSecundaria,telefonoCasa,
-telefonoMovil,telefonoVario_uno,telefonoVario_dos,    centroLaboral,telefonoLaboral, fechaAlta;
-double limiteCredito;
+
+    int idCliente, idMunicipio, idDepartamento, diasCredito, idRutaVisita, idEmpresa;
+    String nombres, apellidos, numCedula, sexo, direccionPrincipal, direccionSecundaria, telefonoCasa,
+            telefonoMovil, telefonoVario_uno, telefonoVario_dos, centroLaboral, telefonoLaboral, fechaAlta;
+    double limiteCredito;
+
+    public void setIdDepartamento(int idDepartamento) {
+        this.idDepartamento = idDepartamento;
+    }
+
+    public int getIdDepartamento() {
+        return idDepartamento;
+    }
 
     public int getIdCliente() {
         return idCliente;
