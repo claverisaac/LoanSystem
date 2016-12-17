@@ -6,12 +6,15 @@
 package loansystem.visual.panel;
 
 import java.text.DecimalFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.DefaultListModel;
 import javax.swing.JOptionPane;
 import loansystem.Principal;
@@ -49,6 +52,7 @@ public class Prestamo extends javax.swing.JPanel {
         initComponents();
 
         formatoDatePicker(this.dtFechaInicio);
+        formatoDatePicker(this.dtFechaFin);
         util = new MetodosGenerales();
 
         //Nuevo comentario
@@ -115,7 +119,7 @@ public class Prestamo extends javax.swing.JPanel {
         dtFechaInicio = new org.jdesktop.swingx.JXDatePicker();
         jLabel14 = new javax.swing.JLabel();
         jLabel25 = new javax.swing.JLabel();
-        jXDatePicker2 = new org.jdesktop.swingx.JXDatePicker();
+        dtFechaFin = new org.jdesktop.swingx.JXDatePicker();
         cboDiasFrec = new javax.swing.JComboBox<>();
         btnCalcular1 = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
@@ -449,8 +453,8 @@ public class Prestamo extends javax.swing.JPanel {
         jLabel25.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         jLabel25.setText("Frecuencia de Pago:");
 
-        jXDatePicker2.setToolTipText("Fecha de Fin");
-        jXDatePicker2.setEditable(false);
+        dtFechaFin.setToolTipText("Fecha de Fin");
+        dtFechaFin.setEditable(false);
 
         cboDiasFrec.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Dia", "Semana", "Mes", "Año" }));
 
@@ -488,7 +492,7 @@ public class Prestamo extends javax.swing.JPanel {
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                         .addComponent(spnPlazo, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
                                     .addComponent(dtFechaInicio, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(jXDatePicker2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                    .addComponent(dtFechaFin, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                                 .addGap(201, 201, 201))
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -526,7 +530,7 @@ public class Prestamo extends javax.swing.JPanel {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel14, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jXDatePicker2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(dtFechaFin, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jLabel25, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -721,12 +725,19 @@ public class Prestamo extends javax.swing.JPanel {
 
             },
             new String [] {
-                "Número de Pago", "Fecha", "Dia", "Monto"
+                "Número de Pago", "Fecha", "Dia", "Monto", "Saldo", "Cancelada"
             }
         ) {
-            boolean[] canEdit = new boolean [] {
-                false, false, false, false
+            Class[] types = new Class [] {
+                java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Boolean.class
             };
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, false, false
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
                 return canEdit [columnIndex];
@@ -763,7 +774,7 @@ public class Prestamo extends javax.swing.JPanel {
                 .addContainerGap()
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 462, Short.MAX_VALUE)
+                        .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 492, Short.MAX_VALUE)
                         .addGap(3, 3, 3))
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addComponent(jXTitledSeparator3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -813,8 +824,8 @@ public class Prestamo extends javax.swing.JPanel {
                     .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 409, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(40, Short.MAX_VALUE))
+                .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
         );
         pnelPrestamoLayout.setVerticalGroup(
             pnelPrestamoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -1039,7 +1050,8 @@ public class Prestamo extends javax.swing.JPanel {
         
         System.out.println("Fecha seleccionada: "+fechaI.toString());
         
-        calcularFechasPago(diasFrecPago, cantCuotasT, round(cuota, 2), fechaI);
+       Date fechaFin = calcularFechasPago(diasFrecPago, cantCuotasT, round(cuota, 2), fechaI, totalPrestamo);
+       dtFechaFin.setDate(fechaFin);
     }
     
     /**
@@ -1049,25 +1061,42 @@ public class Prestamo extends javax.swing.JPanel {
      * @param montoCuota
      * @param fechaI 
      */
-    private void calcularFechasPago(int dias, int cuotas, double montoCuota, Date fechaI){
+    private Date calcularFechasPago(int dias, int cuotas, double montoCuota, Date fechaI, double totalPrestamo){
        String[][] cuotasHash = generarFechasPago(dias, cuotas, fechaI);
-        
+       double saldoTemp=0; 
+       saldoTemp = totalPrestamo;
+       String fechaFin = "";
        
         if(cuotasHash.length>0)
         {
             SimpleDateFormat formatDia = new SimpleDateFormat("EEEE");
             util.limpiarTabla(tabCuotas);
-            for(int i= 0; i<cuotasHash.length; i++){    
+            for(int i= 0; i<cuotasHash.length; i++){                                 
                 util.agregarFila(tabCuotas);
+                saldoTemp = saldoTemp - cuota;
+                
                 tabCuotas.setValueAt("Pago "+(i+1), i, 0); //ID
                 tabCuotas.setValueAt(cuotasHash[i][0], i, 1); //ID
                 tabCuotas.setValueAt(cuotasHash[i][1], i, 2); //ID
                 tabCuotas.setValueAt(montoCuota, i, 3); //ID
-                
+                tabCuotas.setValueAt(saldoTemp, i, 4); //ID
+                tabCuotas.setValueAt(false, i, 5);
                
+                fechaFin = cuotasHash[i][0];
             }
             
         }
+        
+        SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy");
+        Date fecha = null;
+        try {
+            fecha = formato.parse(fechaFin);
+        } catch (ParseException ex) {
+            Logger.getLogger(Prestamo.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        
+        return fecha;
     }
 
     /**
@@ -1184,6 +1213,7 @@ public class Prestamo extends javax.swing.JPanel {
     private javax.swing.JComboBox<String> cboDias;
     private javax.swing.JComboBox<String> cboDiasFrec;
     private javax.swing.JComboBox<String> cboMoneda;
+    private org.jdesktop.swingx.JXDatePicker dtFechaFin;
     private org.jdesktop.swingx.JXDatePicker dtFechaInicio;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
@@ -1221,7 +1251,6 @@ public class Prestamo extends javax.swing.JPanel {
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JScrollPane jScrollPane4;
-    private org.jdesktop.swingx.JXDatePicker jXDatePicker2;
     private org.jdesktop.swingx.JXTitledSeparator jXTitledSeparator1;
     private org.jdesktop.swingx.JXTitledSeparator jXTitledSeparator3;
     private org.jdesktop.swingx.JXTitledSeparator jXTitledSeparator4;
