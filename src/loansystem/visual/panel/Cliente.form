@@ -40,6 +40,7 @@
         <Property name="minimumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
           <Dimension value="[178, 20]"/>
         </Property>
+        <Property name="opaque" type="boolean" value="true"/>
       </Properties>
       <Constraints>
         <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignBorderLayout" value="org.netbeans.modules.form.compat2.layouts.DesignBorderLayout$BorderConstraintsDescription">
@@ -179,7 +180,7 @@
             <Component class="javax.swing.JFormattedTextField" name="txtCed">
               <Properties>
                 <Property name="formatterFactory" type="javax.swing.JFormattedTextField$AbstractFormatterFactory" editor="org.netbeans.modules.form.editors.AbstractFormatterFactoryEditor" preCode="try {" postCode="} catch (java.text.ParseException ex) {&#xa;ex.printStackTrace();&#xa;}">
-                  <Format format="###-######-####A" subtype="-1" type="5"/>
+                  <Format format="###-######-####U" subtype="-1" type="5"/>
                 </Property>
               </Properties>
             </Component>
@@ -318,44 +319,54 @@
                   <EmptySpace min="27" pref="27" max="-2" attributes="0"/>
                   <Component id="txtTelefoDos" min="-2" pref="150" max="-2" attributes="0"/>
               </Group>
-              <Group type="102" attributes="0">
-                  <EmptySpace min="4" pref="4" max="-2" attributes="0"/>
-                  <Component id="jLabel6" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace min="34" pref="34" max="-2" attributes="0"/>
-                  <Component id="cboMunicipio" min="-2" pref="230" max="-2" attributes="0"/>
-                  <EmptySpace min="20" pref="20" max="-2" attributes="0"/>
-                  <Component id="jLabel16" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace min="12" pref="12" max="-2" attributes="0"/>
-                  <Component id="txtcentroLabo" min="-2" pref="240" max="-2" attributes="0"/>
-                  <EmptySpace min="40" pref="40" max="-2" attributes="0"/>
-                  <Component id="jLabel15" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace min="22" pref="22" max="-2" attributes="0"/>
-                  <Component id="txtTeleLabo" min="-2" pref="150" max="-2" attributes="0"/>
-              </Group>
-              <Group type="102" attributes="0">
+              <Group type="102" alignment="0" attributes="0">
                   <EmptySpace min="4" pref="4" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
-                      <Component id="jLabel7" min="-2" pref="60" max="-2" attributes="0"/>
-                      <Group type="102" attributes="0">
-                          <EmptySpace min="10" pref="10" max="-2" attributes="0"/>
-                          <Component id="jLabel19" min="-2" max="-2" attributes="0"/>
+                      <Group type="102" alignment="0" attributes="0">
+                          <Component id="jLabel6" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace min="34" pref="34" max="-2" attributes="0"/>
+                          <Component id="cboMunicipio" min="-2" pref="230" max="-2" attributes="0"/>
+                          <EmptySpace min="20" pref="20" max="-2" attributes="0"/>
+                          <Component id="jLabel16" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace min="12" pref="12" max="-2" attributes="0"/>
+                          <Component id="txtcentroLabo" min="-2" pref="240" max="-2" attributes="0"/>
+                      </Group>
+                      <Group type="102" alignment="0" attributes="0">
+                          <Group type="103" groupAlignment="0" attributes="0">
+                              <Component id="jLabel7" min="-2" pref="60" max="-2" attributes="0"/>
+                              <Group type="102" attributes="0">
+                                  <EmptySpace min="10" pref="10" max="-2" attributes="0"/>
+                                  <Component id="jLabel19" min="-2" max="-2" attributes="0"/>
+                              </Group>
+                          </Group>
+                          <EmptySpace min="30" pref="30" max="-2" attributes="0"/>
+                          <Component id="jScrollPane3" min="-2" pref="230" max="-2" attributes="0"/>
+                          <EmptySpace min="20" pref="20" max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="0" attributes="0">
+                              <Component id="jLabel8" min="-2" max="-2" attributes="0"/>
+                              <Component id="jLabel20" min="-2" max="-2" attributes="0"/>
+                          </Group>
+                          <EmptySpace min="47" pref="47" max="-2" attributes="0"/>
+                          <Component id="jScrollPane2" min="-2" pref="240" max="-2" attributes="0"/>
                       </Group>
                   </Group>
-                  <EmptySpace min="30" pref="30" max="-2" attributes="0"/>
-                  <Component id="jScrollPane3" min="-2" pref="230" max="-2" attributes="0"/>
-                  <EmptySpace min="20" pref="20" max="-2" attributes="0"/>
+                  <EmptySpace min="-2" pref="40" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
-                      <Component id="jLabel8" min="-2" max="-2" attributes="0"/>
-                      <Component id="jLabel20" min="-2" max="-2" attributes="0"/>
+                      <Group type="102" attributes="0">
+                          <Component id="btnNuevo" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                          <Component id="btnModificar" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Component id="btnSave" min="-2" pref="50" max="-2" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Component id="btnCancelar" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                      <Group type="102" attributes="0">
+                          <Component id="jLabel15" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace min="22" pref="22" max="-2" attributes="0"/>
+                          <Component id="txtTeleLabo" min="-2" pref="150" max="-2" attributes="0"/>
+                      </Group>
                   </Group>
-                  <EmptySpace min="47" pref="47" max="-2" attributes="0"/>
-                  <Component id="jScrollPane2" min="-2" pref="240" max="-2" attributes="0"/>
-                  <EmptySpace min="70" pref="70" max="-2" attributes="0"/>
-                  <Component id="btnNuevo" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace min="17" pref="17" max="-2" attributes="0"/>
-                  <Component id="btnModificar" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace min="5" pref="5" max="-2" attributes="0"/>
-                  <Component id="btnSave" min="-2" pref="50" max="-2" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -436,10 +447,13 @@
                       <Component id="jScrollPane2" min="-2" max="-2" attributes="0"/>
                       <Group type="102" attributes="0">
                           <EmptySpace min="40" pref="40" max="-2" attributes="0"/>
-                          <Group type="103" groupAlignment="0" attributes="0">
-                              <Component id="btnNuevo" min="-2" pref="40" max="-2" attributes="0"/>
-                              <Component id="btnModificar" min="-2" pref="40" max="-2" attributes="0"/>
-                              <Component id="btnSave" min="-2" max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                              <Group type="103" groupAlignment="3" attributes="0">
+                                  <Component id="btnModificar" alignment="3" min="-2" pref="40" max="-2" attributes="0"/>
+                                  <Component id="btnNuevo" alignment="3" min="-2" pref="40" max="-2" attributes="0"/>
+                              </Group>
+                              <Component id="btnSave" max="32767" attributes="0"/>
+                              <Component id="btnCancelar" alignment="0" max="32767" attributes="0"/>
                           </Group>
                       </Group>
                   </Group>
@@ -498,7 +512,7 @@
           <Properties>
             <Property name="editable" type="boolean" value="false"/>
             <Property name="formatterFactory" type="javax.swing.JFormattedTextField$AbstractFormatterFactory" editor="org.netbeans.modules.form.editors.AbstractFormatterFactoryEditor" preCode="try {" postCode="} catch (java.text.ParseException ex) {&#xa;ex.printStackTrace();&#xa;}">
-              <Format format="###-######-####A" subtype="-1" type="5"/>
+              <Format format="###-######-####U" subtype="-1" type="5"/>
             </Property>
           </Properties>
           <Events>
@@ -735,6 +749,14 @@
           <AuxValues>
             <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
           </AuxValues>
+        </Component>
+        <Component class="javax.swing.JButton" name="btnCancelar">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Cancelar"/>
+          </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnCancelarActionPerformed"/>
+          </Events>
         </Component>
       </SubComponents>
     </Container>

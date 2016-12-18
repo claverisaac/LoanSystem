@@ -42,7 +42,7 @@ public class Usuario extends javax.swing.JPanel {
         txtNombre = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
         txtCargo = new javax.swing.JTextField();
-        jButton1 = new javax.swing.JButton();
+        btnBuscarPersona = new javax.swing.JButton();
         jLabel10 = new javax.swing.JLabel();
         txtId = new javax.swing.JTextField();
         jPanel2 = new javax.swing.JPanel();
@@ -57,6 +57,7 @@ public class Usuario extends javax.swing.JPanel {
         cboEstado = new javax.swing.JComboBox<>();
         lblPass2 = new javax.swing.JLabel();
         txtPass2 = new javax.swing.JTextField();
+        jLabel8 = new javax.swing.JLabel();
 
         jLabel2.setText("jLabel2");
 
@@ -71,7 +72,7 @@ public class Usuario extends javax.swing.JPanel {
 
         jLabel3.setText("Cargo:");
 
-        jButton1.setText("...");
+        btnBuscarPersona.setText("...");
 
         jLabel10.setText("Id:");
 
@@ -96,7 +97,7 @@ public class Usuario extends javax.swing.JPanel {
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addComponent(txtId, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(18, 18, 18)
-                                .addComponent(jButton1)))))
+                                .addComponent(btnBuscarPersona)))))
                 .addContainerGap(61, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
@@ -106,7 +107,7 @@ public class Usuario extends javax.swing.JPanel {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel10)
                     .addComponent(txtId, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, 31, Short.MAX_VALUE))
+                    .addComponent(btnBuscarPersona, javax.swing.GroupLayout.DEFAULT_SIZE, 31, Short.MAX_VALUE))
                 .addGap(9, 9, 9)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
@@ -199,17 +200,26 @@ public class Usuario extends javax.swing.JPanel {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
+        jLabel8.setBackground(new java.awt.Color(0, 0, 102));
+        jLabel8.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jLabel8.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel8.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel8.setText("Administración de Usuarios ");
+        jLabel8.setOpaque(true);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jLabel8, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(4, 4, 4)
+                .addComponent(jLabel8)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -218,8 +228,8 @@ public class Usuario extends javax.swing.JPanel {
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnBuscarPersona;
     private javax.swing.JComboBox<String> cboEstado;
-    private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JLabel jLabel1;
@@ -230,6 +240,7 @@ public class Usuario extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
