@@ -41,6 +41,7 @@ public class Prestamo extends javax.swing.JPanel {
     double cuota = 0;
     double cantCuota = 0;
     String moneda = "C$";
+    String descMoneda = "Córdobas";
 
     /**
      * Creates new form Prestamo
@@ -563,7 +564,12 @@ public class Prestamo extends javax.swing.JPanel {
         jLabel17.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         jLabel17.setText("Moneda:");
 
-        cboMoneda.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Córdobas", "Dolares", "Euros" }));
+        cboMoneda.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Córdobas", "Dólares", "Euros" }));
+        cboMoneda.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                cboMonedaItemStateChanged(evt);
+            }
+        });
 
         jLabel29.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jLabel29.setForeground(new java.awt.Color(153, 153, 153));
@@ -874,6 +880,28 @@ public class Prestamo extends javax.swing.JPanel {
 
     }//GEN-LAST:event_btnCalcular1ActionPerformed
 
+    private void cboMonedaItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cboMonedaItemStateChanged
+        int index = cboMoneda.getSelectedIndex();
+        descMoneda = cboMoneda.getSelectedItem().toString();
+       
+       switch(index)
+       {
+           case 0:
+               moneda = "C$";
+               break;
+               
+           case 1:
+               moneda = "U$";
+               break;
+               
+           case 2:
+               moneda = "€";
+               break;
+       }
+       
+       
+    }//GEN-LAST:event_cboMonedaItemStateChanged
+
     public void cargarDatosCliente(ClienteEntidad cliente) {
         MunicipioDAO muDao = new MunicipioDAO(con.getCon());
         MunicipioEntidad municipio = muDao.obtenerMunicipioXId(cliente.getIdMunicipio());
@@ -980,7 +1008,7 @@ public class Prestamo extends javax.swing.JPanel {
                 txtMontoCargos.setText(String.valueOf(formatearMoneda(montoCargos, moneda)));
 
                 txtTotalPrestamo.setText(String.valueOf(formatearMoneda(totalPrestamo, moneda)));
-                txtMontoLetras.setText(NumberToLetterConverter.convertNumberToLetter(totalPrestamo, "Córdobas"));
+                txtMontoLetras.setText(NumberToLetterConverter.convertNumberToLetter(totalPrestamo, descMoneda));
 
             } else {
                 JOptionPane.showMessageDialog(prin, "Debe indicar la tasa de interes!", "Cálculo de Préstamo!", JOptionPane.ERROR_MESSAGE);
