@@ -27,6 +27,7 @@ public class BuscarCliente extends javax.swing.JDialog {
     private Prestamo pres;
     private MetodosGenerales util;
     private ClienteDAO clieDAO;
+    private ClienteEntidad cliente=null;
     
     /**
      * Creates new form BuscarCliente
@@ -228,7 +229,7 @@ public class BuscarCliente extends javax.swing.JDialog {
 
     private void btnAceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAceptarActionPerformed
         int id =  Integer.parseInt(tabClientes.getValueAt(tabClientes.getSelectedRow(), 0).toString());
-        ClienteEntidad cliente = clieDAO.obtenerCliente(id);
+        cliente = clieDAO.obtenerCliente(id);
         
         this.pres.cargarDatosCliente(cliente);
         

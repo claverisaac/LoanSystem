@@ -5,17 +5,23 @@
  */
 package loansystem.entidad;
 
+import java.util.Date;
+
 /**
  *
  * @author jechavarria
  */
 public class PrestamoEntidad {
-int idPrestamo,idCliente, idPlazo, cantPeriodo, idMoneda, idFrecuenciaPago, cantFrecuencia, estado,
-diasPenalidad;
-String fechaInicio,fechaVencimiento;
-double montoOriginal, montoCargos, montoTotal, montoCuota,montoPenalidad;
-float tasa;
 
+    private int idPrestamo, idCliente, idPlazo, cantPeriodo, idMoneda, idFrecuenciaPago, cantFrecuencia, estado,
+            diasPenalidad;
+    private int plazoDias;
+    private int cantidadCuotas;
+    private int frecuenciaDias;
+    private String fechaInicio, fechaVencimiento;
+    private double montoOriginal, montoCargos, montoTotal, montoCuota, montoPenalidad;
+    private double tasa, tasaCargo;
+    private Date fechaCreacion;
 
     public int getIdPrestamo() {
         return idPrestamo;
@@ -81,7 +87,7 @@ float tasa;
         return montoPenalidad;
     }
 
-    public float getTasa() {
+    public double getTasa() {
         return tasa;
     }
 
@@ -149,8 +155,78 @@ float tasa;
         this.montoPenalidad = montoPenalidad;
     }
 
-    public void setTasa(float tasa) {
+    public void setTasa(double tasa) {
         this.tasa = tasa;
+    }
+
+    /**
+     * @return the plazoDias
+     */
+    public int getPlazoDias() {
+        return plazoDias;
+    }
+
+    /**
+     * @return the cantidadCuotas
+     */
+    public int getCantidadCuotas() {
+        return cantidadCuotas;
+    }
+
+    /**
+     * @return the frecuenciaDias
+     */
+    public int getFrecuenciaDias() {
+        return frecuenciaDias;
+    }
+
+    /**
+     * @return the fechaCreacion
+     */
+    public Date getFechaCreacion() {
+        return fechaCreacion;
+    }
+
+    /**
+     * @param fechaCreacion the fechaCreacion to set
+     */
+    public void setFechaCreacion(Date fechaCreacion) {
+        this.fechaCreacion = fechaCreacion;
+    }
+
+    /**
+     * @param plazoDias the plazoDias to set
+     */
+    public void setPlazoDias(int plazoDias) {
+        this.plazoDias = plazoDias;
+    }
+
+    /**
+     * @param cantidadCuotas the cantidadCuotas to set
+     */
+    public void setCantidadCuotas(int cantidadCuotas) {
+        this.cantidadCuotas = cantidadCuotas;
+    }
+
+    /**
+     * @param frecuenciaDias the frecuenciaDias to set
+     */
+    public void setFrecuenciaDias(int frecuenciaDias) {
+        this.frecuenciaDias = frecuenciaDias;
+    }
+
+    /**
+     * @return the tasaMonto
+     */
+    public double getTasaCargo() {
+        return tasaCargo;
+    }
+
+    /**
+     * @param tasaMonto the tasaMonto to set
+     */
+    public void setTasaCargo(double tasaMonto) {
+        this.tasaCargo = tasaMonto;
     }
 
 }
