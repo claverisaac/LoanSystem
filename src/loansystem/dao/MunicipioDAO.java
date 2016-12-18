@@ -53,12 +53,36 @@ public class MunicipioDAO {
 
         return lista;
     }
-    
+
+    /* *
+     * Lista los difernetes departamentos
+     *
+     
+     * @return departamentos
+     */
+    public ArrayList<MunicipioEntidad> obtenerDeptos() {
+        ArrayList<MunicipioEntidad> lista = new ArrayList<MunicipioEntidad>();
+        try {
+            s = con.createStatement();
+            rs = s.executeQuery("select distinct departamento from municipio;");
+
+            while (rs.next()) {
+                lista.add(this.convertirDepto(rs));
+            }
+
+        } catch (SQLException ex) {
+            Logger.getLogger(MunicipioDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        return lista;
+    }
+
     public MunicipioEntidad obtenerMunicipioXNombre(String municipio) {
         MunicipioEntidad lista = null;
         try {
             s = con.createStatement();
-            rs = s.executeQuery("SELECT idMunicipio, Departamento, [Municipio] from Municipio where [Municipio] = '"+municipio+"';");
+            System.err.println("SELECT idMunicipio, Departamento, Municipio from Municipio where Municipio = '" + municipio + "';");
+            rs = s.executeQuery("SELECT idMunicipio, Departamento, Municipio from Municipio where Municipio = '" + municipio + "';");
 
             while (rs.next()) {
                 lista = this.convertir(rs);
@@ -70,12 +94,12 @@ public class MunicipioDAO {
 
         return lista;
     }
-    
+
     public MunicipioEntidad obtenerMunicipioXId(int idMunicipio) {
         MunicipioEntidad lista = null;
         try {
             s = con.createStatement();
-            rs = s.executeQuery("SELECT idMunicipio, Departamento, Municipio from Municipio where idMunicipio = "+idMunicipio+";");
+            rs = s.executeQuery("SELECT idMunicipio, Departamento, Municipio from Municipio where idMunicipio = " + idMunicipio + ";");
 
             while (rs.next()) {
                 lista = this.convertir(rs);
@@ -95,6 +119,19 @@ public class MunicipioDAO {
             obj.setIdMunicipio(respuesta.getInt("idMunicipio"));
             obj.setDepartamento(respuesta.getString("Departamento"));
             obj.setMunicipio(respuesta.getString("Municipio"));
+
+        } catch (SQLException ex) {
+            Logger.getLogger(MunicipioDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        return obj;
+    }
+
+    private MunicipioEntidad convertirDepto(ResultSet respuesta) {
+        MunicipioEntidad obj = new MunicipioEntidad();
+        try {
+
+            obj.setDepartamento(respuesta.getString("Departamento"));
 
         } catch (SQLException ex) {
             Logger.getLogger(MunicipioDAO.class.getName()).log(Level.SEVERE, null, ex);
