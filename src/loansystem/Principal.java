@@ -5,7 +5,8 @@
  */
 package loansystem;
 
-import javax.swing.UIManager;
+import javax.swing.Icon;
+import javax.swing.JPanel;
 import loansystem.bd.Conexion;
 import loansystem.visual.panel.*;
 import loansystem.visual.panel.Prestamo;
@@ -16,8 +17,9 @@ import loansystem.visual.panel.Prestamo;
  */
 public class Principal extends javax.swing.JFrame {
 private static Conexion con;
- private javax.swing.JPanel pnelOpcionesColl;
-    private javax.swing.JTabbedPane tabPrincipal;
+
+    Cliente panelCliente ;
+    Prestamo panelPrestamo;
     /**
      * Creates new form Principal
      * Otro comentario mas..
@@ -32,6 +34,34 @@ private static Conexion con;
        
     }
 
+       private void cargarModulo(JPanel panel, String titulo, String tooltip, String icono) {
+        tabPrincipal.add(titulo, panel);
+        tabPrincipal.setSelectedComponent(panel);
+        // tabPrincipal.setSelectedIndex(tabPrincipal.getComponentCount() - 1);
+        tabPrincipal.setToolTipTextAt(tabPrincipal.getSelectedIndex(), tooltip);
+        if (icono.length() > 0) {
+            tabPrincipal.setIconAt(tabPrincipal.getSelectedIndex(), cargarIconoTab(icono));
+        }
+    }
+   
+     public Icon cargarIconoTab(String nombreIcono) {
+        return new javax.swing.ImageIcon(getClass().getResource("/loansystem/recursos/" + nombreIcono + ".png"));
+    }
+       public void seleccionarTab(JPanel panel) {
+           if(panel==null){
+       }else{tabPrincipal.setSelectedComponent(panel);}
+
+    }
+         public void removerTab(JPanel panel) {
+        tabPrincipal.remove(panel);
+          if (panel == panelCliente) {
+            panelCliente= null;
+                }   
+          
+             if (panel == panelPrestamo) {
+            panelPrestamo= null;
+                }   
+         }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -254,6 +284,13 @@ private static Conexion con;
 
     private void lnkNuevoPrestamoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_lnkNuevoPrestamoActionPerformed
         // TODO add your handling code here:
+          if (panelPrestamo == null) {
+                  panelPrestamo= new Prestamo(con,this);
+                  cargarModulo(panelPrestamo, "Prestamos", "Prestamoss", "registrar_prestamo");
+                  } else {
+                          this.seleccionarTab(panelPrestamo);
+                  }
+        
     }//GEN-LAST:event_lnkNuevoPrestamoActionPerformed
 
     private void mnuSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuSalirActionPerformed
@@ -263,10 +300,15 @@ private static Conexion con;
 
     private void lnkNuevoClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_lnkNuevoClienteActionPerformed
         // TODO add your handling code here:
-        
-        Cliente panelCliente = new Cliente(con, this);
+           if (panelCliente == null) {
+                  panelCliente= new Cliente(con,this);
+                  cargarModulo(panelCliente, "Clientes", "Catalogo de Clientess", "nuevo_cliente");
+                  } else {
+                          this.seleccionarTab(panelCliente);
+                  }
+       /* Cliente panelCliente = new Cliente(con, this);
         tabPrincipal.add(panelCliente);
-        panelCliente.setVisible(true);
+        panelCliente.setVisible(true);*/
         
     }//GEN-LAST:event_lnkNuevoClienteActionPerformed
 
@@ -335,6 +377,8 @@ private static Conexion con;
     private javax.swing.JMenu mnuClientes;
     private javax.swing.JMenuItem mnuSalir;
     private javax.swing.JPanel pnelOpciones;
+    private javax.swing.JPanel pnelOpcionesColl;
+    private javax.swing.JTabbedPane tabPrincipal;
     private com.l2fprod.common.swing.JTaskPaneGroup tskCliente;
     private com.l2fprod.common.swing.JTaskPaneGroup tskEmpresa;
     private com.l2fprod.common.swing.JTaskPaneGroup tskPrestamo;
