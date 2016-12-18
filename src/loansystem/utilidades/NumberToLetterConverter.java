@@ -38,9 +38,9 @@ public class NumberToLetterConverter {
      * Si valor del numero no es valido (fuera de rango o )
      * @return Numero en letras
      */
-    public static String convertNumberToLetter(String number)
+    public static String convertNumberToLetter(String number, String moneda)
             throws NumberFormatException {
-        return convertNumberToLetter(Double.parseDouble(number));
+        return convertNumberToLetter(Double.parseDouble(number), moneda);
     }
 
     /**
@@ -51,7 +51,7 @@ public class NumberToLetterConverter {
      * @throws NumberFormatException
      * Si el numero esta fuera del rango
      */
-    public static String convertNumberToLetter(double doubleNumber)
+    public static String convertNumberToLetter(double doubleNumber, String moneda)
             throws NumberFormatException {
 
         StringBuilder converted = new StringBuilder();
@@ -137,7 +137,10 @@ public class NumberToLetterConverter {
        }else{
           converted.append(splitNumber[1]).append("/100 "); 
        }
-        converted.append("U.S. DOLARES**");
+        
+       //converted.append("U.S. DOLARES**");
+       converted.append(moneda.toUpperCase());
+       converted.append(" **");
         return converted.toString();
     }
 
