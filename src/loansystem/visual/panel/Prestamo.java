@@ -10,18 +10,17 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.DefaultListModel;
 import javax.swing.JOptionPane;
 import loansystem.Principal;
 import loansystem.bd.Conexion;
+import loansystem.dao.CuotasDAO;
 import loansystem.dao.MunicipioDAO;
 import loansystem.dao.PrestamoDAO;
 import loansystem.entidad.ClienteEntidad;
+import loansystem.entidad.CuotasEntidad;
 import loansystem.entidad.MunicipioEntidad;
 import loansystem.entidad.PrestamoEntidad;
 import loansystem.utilidades.MetodosGenerales;
@@ -38,13 +37,13 @@ public class Prestamo extends javax.swing.JPanel {
     private Conexion con;
     private Principal prin;
     private MetodosGenerales util;
-    
+
     double totalPrestamo = 0;
     double cuota = 0;
     int cantCuota = 0;
     String moneda = "C$";
     String descMoneda = "Córdobas";
-    
+
     private ClienteEntidad cliente = null;
     private Integer cantPlazo;
     private int dias;
@@ -55,6 +54,7 @@ public class Prestamo extends javax.swing.JPanel {
     private double tasaCargos;
     private double montoInteres;
     private double montoCargos;
+    private int idMoneda;
 
     /**
      * Creates new form Prestamo
@@ -909,23 +909,26 @@ public class Prestamo extends javax.swing.JPanel {
     private void cboMonedaItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cboMonedaItemStateChanged
         int index = cboMoneda.getSelectedIndex();
         descMoneda = cboMoneda.getSelectedItem().toString();
-       
-       switch(index)
-       {
-           case 0:
-               moneda = "C$";
-               break;
-               
-           case 1:
-               moneda = "U$";
-               break;
-               
-           case 2:
-               moneda = "€";
-               break;
-       }
-       
-       
+        idMoneda = 0;
+
+        switch (index) {
+            case 0:
+                moneda = "C$";
+                idMoneda = 1;
+                break;
+
+            case 1:
+                moneda = "U$";
+                idMoneda = 2;
+                break;
+
+            case 2:
+                moneda = "€";
+                idMoneda = 3;
+                break;
+        }
+
+
     }//GEN-LAST:event_cboMonedaItemStateChanged
 
     private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
@@ -934,7 +937,7 @@ public class Prestamo extends javax.swing.JPanel {
 
     public void cargarDatosCliente(ClienteEntidad cliente) {
         this.cliente = cliente;
-        
+
         MunicipioDAO muDao = new MunicipioDAO(con.getCon());
         MunicipioEntidad municipio = muDao.obtenerMunicipioXId(cliente.getIdMunicipio());
 
@@ -1013,12 +1016,12 @@ public class Prestamo extends javax.swing.JPanel {
      * Logica para realizar el calculo del prestamo.
      */
     private void calcularPrestamo() {
-         montoPrestamo = 0;
-         tasaInteres = 0;
-         tasaCargos = 0;
+        montoPrestamo = 0;
+        tasaInteres = 0;
+        tasaCargos = 0;
 
-         montoInteres = 0;
-         montoCargos = 0;
+        montoInteres = 0;
+        montoCargos = 0;
 
         if (txtMontoPrestamo.getText().length() > 0) {
             montoPrestamo = Double.parseDouble(txtMontoPrestamo.getText().replace(",", ""));
@@ -1086,7 +1089,7 @@ public class Prestamo extends javax.swing.JPanel {
     }
 
     /**
-     * 
+     *
      */
     private void calcularCuotas() {
         String plazo = cboDias.getSelectedItem().toString();
@@ -1101,52 +1104,51 @@ public class Prestamo extends javax.swing.JPanel {
         cuota = totalPrestamo / cantCuota;
 
         txtMontoCuota.setText(String.valueOf(formatearMoneda(round(cuota, 2), moneda)) + " por " + plazoFrec);
-        
-        int cantCuotasT = (int) round(cantCuota, 2);        
+
+        int cantCuotasT = (int) round(cantCuota, 2);
         txtCantCuotas.setText(String.valueOf(round(cantCuota, 2)));
         txtCantDias.setText(String.valueOf(dias));
-        
+
         Date fechaI = dtFechaInicio.getDate();
-        
-        System.out.println("Fecha seleccionada: "+fechaI.toString());
-        
-       Date fechaFin = calcularFechasPago(diasFrecPago, cantCuotasT, round(cuota, 2), fechaI, totalPrestamo);
-       dtFechaFin.setDate(fechaFin);
+
+        System.out.println("Fecha seleccionada: " + fechaI.toString());
+
+        Date fechaFin = calcularFechasPago(diasFrecPago, cantCuotasT, round(cuota, 2), fechaI, totalPrestamo);
+        dtFechaFin.setDate(fechaFin);
     }
-    
+
     /**
-     * 
+     *
      * @param dias
      * @param cuotas
      * @param montoCuota
-     * @param fechaI 
+     * @param fechaI
      */
-    private Date calcularFechasPago(int dias, int cuotas, double montoCuota, Date fechaI, double totalPrestamo){
-       String[][] cuotasHash = generarFechasPago(dias, cuotas, fechaI);
-       double saldoTemp=0; 
-       saldoTemp = totalPrestamo;
-       String fechaFin = "";
-       
-        if(cuotasHash.length>0)
-        {
+    private Date calcularFechasPago(int dias, int cuotas, double montoCuota, Date fechaI, double totalPrestamo) {
+        String[][] cuotasHash = generarFechasPago(dias, cuotas, fechaI);
+        double saldoTemp = 0;
+        saldoTemp = totalPrestamo;
+        String fechaFin = "";
+
+        if (cuotasHash.length > 0) {
             SimpleDateFormat formatDia = new SimpleDateFormat("EEEE");
             util.limpiarTabla(tabCuotas);
-            for(int i= 0; i<cuotasHash.length; i++){                                 
+            for (int i = 0; i < cuotasHash.length; i++) {
                 util.agregarFila(tabCuotas);
                 saldoTemp = saldoTemp - cuota;
-                
-                tabCuotas.setValueAt("Pago "+(i+1), i, 0); //ID
+
+                tabCuotas.setValueAt("Pago " + (i + 1), i, 0); //ID
                 tabCuotas.setValueAt(cuotasHash[i][0], i, 1); //ID
                 tabCuotas.setValueAt(cuotasHash[i][1], i, 2); //ID
                 tabCuotas.setValueAt(montoCuota, i, 3); //ID
-                tabCuotas.setValueAt(saldoTemp, i, 4); //ID
+                tabCuotas.setValueAt((round(saldoTemp, 2) < 0 ? 0 : round(saldoTemp, 2)), i, 4); //ID
                 tabCuotas.setValueAt(false, i, 5);
-               
+
                 fechaFin = cuotasHash[i][0];
             }
-            
+
         }
-        
+
         SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy");
         Date fecha = null;
         try {
@@ -1154,8 +1156,7 @@ public class Prestamo extends javax.swing.JPanel {
         } catch (ParseException ex) {
             Logger.getLogger(Prestamo.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
-        
+
         return fecha;
     }
 
@@ -1194,73 +1195,70 @@ public class Prestamo extends javax.swing.JPanel {
     }
 
     /**
-     * 
-     * @param picker 
+     *
+     * @param picker
      */
     private void formatoDatePicker(JXDatePicker picker) {
         SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
 
         picker.setFormats(format);
     }
-    
+
     /**
-    * 
-    * @param dias
-    * @param cuotas
-    * @param fechaI
-    * @return 
-    */
-   public String[][] generarFechasPago(int dias, int cuotas, Date fechaI ){
-       String[][] fechasPago = new String[cuotas][2];
-       
-       Calendar calendar;
-       
-       calendar = Calendar.getInstance();
+     *
+     * @param dias
+     * @param cuotas
+     * @param fechaI
+     * @return
+     */
+    public String[][] generarFechasPago(int dias, int cuotas, Date fechaI) {
+        String[][] fechasPago = new String[cuotas][2];
+
+        Calendar calendar;
+
+        calendar = Calendar.getInstance();
         calendar.setTime(fechaI);
-        
+
         SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
         SimpleDateFormat formatDia = new SimpleDateFormat("EEEE");
-        
-        
-        System.out.println("Fecha inicial: "+format.format(fechaI));
+
+        System.out.println("Fecha inicial: " + format.format(fechaI));
         Date dateTemp = fechaI;
-        
-          String fecha="";
-          String dia = "";
-        for(int i=0; i<cuotas; i++){
+
+        String fecha = "";
+        String dia = "";
+        for (int i = 0; i < cuotas; i++) {
             calendar.setTime(dateTemp);
-            calendar.add(Calendar.DAY_OF_YEAR, dias );
+            calendar.add(Calendar.DAY_OF_YEAR, dias);
             dateTemp = calendar.getTime();
-            
+
             int diaSemana = dateTemp.getDay();
-            
-            if(diaSemana==0)
-            {
-                 calendar.add(Calendar.DAY_OF_YEAR, 1 ); //Si es domingo le sumamos un dia mas.                
-                 Date diaLunes = calendar.getTime();
-                 
+
+            if (diaSemana == 0) {
+                calendar.add(Calendar.DAY_OF_YEAR, 1); //Si es domingo le sumamos un dia mas.                
+                Date diaLunes = calendar.getTime();
+
                 fecha = format.format(diaLunes);
                 dia = formatDia.format(diaLunes);
-                 
-                  System.out.println("Fecha ("+(i+1)+"): "+ fecha + " dia: "+dia + "  dia semana: "+diaLunes.getDay() );
-                 
-            }else
-            {
+
+                System.out.println("Fecha (" + (i + 1) + "): " + fecha + " dia: " + dia + "  dia semana: " + diaLunes.getDay());
+
+            } else {
                 fecha = format.format(dateTemp);
                 dia = formatDia.format(dateTemp);
-                
-                 System.out.println("Fecha ("+(i+1)+"): "+fecha + " dia: "+dia+ "  dia semana: "+dateTemp.getDay() );
-                
-            }
-            
-             fechasPago[i][0] = fecha;
-             fechasPago[i][1] = dia;
-        }
-       
-       
-       return fechasPago;
-   }
 
+                System.out.println("Fecha (" + (i + 1) + "): " + fecha + " dia: " + dia + "  dia semana: " + dateTemp.getDay());
+
+            }
+
+            fechasPago[i][0] = fecha;
+            fechasPago[i][1] = dia;
+        }
+
+        return fechasPago;
+    }
+
+    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnBuscar;
@@ -1349,44 +1347,74 @@ public class Prestamo extends javax.swing.JPanel {
     private javax.swing.JTextField txtTotalPrestamo;
     // End of variables declaration//GEN-END:variables
 
-private void guardarPrestamo(){
-    PrestamoEntidad p = new PrestamoEntidad();
-    PrestamoDAO pDao = new PrestamoDAO(con.getCon());
-    SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
-    
-    if(cliente!=null){
-        p.setIdCliente(cliente.getIdCliente());
-        p.setFechaInicio(format.format(dtFechaInicio.getDate()));
-        p.setFechaVencimiento(format.format(dtFechaFin.getDate()) );
-        p.setIdPlazo(cboDias.getSelectedIndex()+1); //Se que esta mal, pero hay poco tiempo!.. :-)
-        p.setCantPeriodo(cantPlazo );
-        p.setIdMoneda(1);
-        p.setPlazoDias(dias);
-        p.setMontoOriginal(montoPrestamo);
-        p.setTasa(tasaInteres);
-        p.setTasaCargo(tasaCargos);
-        p.setMontoCargos(montoCargos);
-        p.setMontoTotal(totalPrestamo);
-        p.setCantidadCuotas(cantCuota);
-        p.setMontoCuota(cuota);
-        p.setIdFrecuenciaPago(cboDiasFrec.getSelectedIndex()+1 );
-        p.setCantFrecuencia(cantPlazoFrec);
-        p.setFrecuenciaDias( diasFrecPago);
-        p.setMontoPenalidad(Double.parseDouble(txtMontoPenalidad.getText()));
-        p.setDiasPenalidad((int) spnDiasPenalidad.getValue() );
-        p.setEstado(1);
+    private void guardarPrestamo() {
+        PrestamoEntidad p = new PrestamoEntidad();
+        PrestamoDAO pDao = new PrestamoDAO(con.getCon());
         
-        boolean result=pDao.insertarPrestamo(p);
+        CuotasEntidad c = new CuotasEntidad();
+        CuotasDAO cDao = new CuotasDAO(con.getCon());
         
-        if(result)
-            JOptionPane.showMessageDialog(prin, "Se inserto la chochada!","Insertando Prestamo",JOptionPane.INFORMATION_MESSAGE);        
-        else
-            JOptionPane.showMessageDialog(prin, "NO SIRVE!","Insertando Prestamo",JOptionPane.INFORMATION_MESSAGE);
+        
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+        SimpleDateFormat format2 = new SimpleDateFormat("dd/MM/yyyy");
+
+        if (cliente != null) {
+            p.setIdCliente(cliente.getIdCliente());
+            p.setFechaInicio(format.format(dtFechaInicio.getDate()));
+            p.setFechaVencimiento(format.format(dtFechaFin.getDate()));
+            p.setIdPlazo(cboDias.getSelectedIndex() + 1); //Se que esta mal, pero hay poco tiempo!.. :-)
+            p.setCantPeriodo(cantPlazo);
+            p.setIdMoneda(idMoneda);
+            p.setPlazoDias(dias);
+            p.setMontoOriginal(montoPrestamo);
+            p.setTasa(tasaInteres);
+            p.setTasaCargo(tasaCargos);
+            p.setMontoCargos(montoCargos);
+            p.setMontoTotal(totalPrestamo);
+            p.setCantidadCuotas(cantCuota);
+            p.setMontoCuota(cuota);
+            p.setIdFrecuenciaPago(cboDiasFrec.getSelectedIndex() + 1);
+            p.setCantFrecuencia(cantPlazoFrec);
+            p.setFrecuenciaDias(diasFrecPago);
+            p.setMontoPenalidad(Double.parseDouble(txtMontoPenalidad.getText()));
+            p.setDiasPenalidad((int) spnDiasPenalidad.getValue());
+            p.setEstado(1);
+
+            int id = pDao.insertarPrestamo(p);
+
+            if (id > 0) {
+                JOptionPane.showMessageDialog(prin, "Se inserto la chochada! Id:" + id, "Insertando Prestamo", JOptionPane.INFORMATION_MESSAGE);
+                
+                
+                for(int i=0; i<tabCuotas.getRowCount();i++)
+                {
+                    c = new CuotasEntidad();
+                    c.setIdPrestamo(id);
+                    c.setPagoNumero(tabCuotas.getValueAt(i, 0).toString());
+                    try {
+                        c.setFecha( format.format(format2.parse(tabCuotas.getValueAt(i, 1).toString())) );
+                    } catch (ParseException ex) {
+                        Logger.getLogger(Prestamo.class.getName()).log(Level.SEVERE, null, ex);
+                        System.out.println("ERROR al convertir fecha: "+ex.getMessage());
+                    }
                     
-        
+                    c.setDia(tabCuotas.getValueAt(i, 2).toString());
+                    c.setMonto(Double.parseDouble(tabCuotas.getValueAt(i, 3).toString()));
+                    c.setSaldo(Double.parseDouble(tabCuotas.getValueAt(i, 4).toString()));
+                    c.setCancelado(0);
+                    cDao.insertarCuota(c);
+                }
+                
+                
+                
+                
+                
+            } else {
+                JOptionPane.showMessageDialog(prin, "NO SIRVE!", "Insertando Prestamo", JOptionPane.INFORMATION_MESSAGE);
+            }
+
+        }
+
     }
-    
-    
-}
-    
+
 }

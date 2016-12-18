@@ -18,46 +18,53 @@ import loansystem.entidad.PrestamoEntidad;
  * @author jechavarria
  */
 public class PrestamoDAO {
-private Connection con;
-private ResultSet rs;
-private Statement s;
 
-public PrestamoDAO(Connection con) {
+    private Connection con;
+    private ResultSet rs;
+    private Statement s;
+
+    public PrestamoDAO(Connection con) {
         this.con = con;
-}
+    }
 
-/**
- * 
- * @param obj
- * @return 
- */
- public boolean insertarPrestamo(PrestamoEntidad obj) {
+    /**
+     *
+     * @param obj
+     * @return
+     */
+    public int insertarPrestamo(PrestamoEntidad obj) {
         //ProductoEntidad id = null;
         boolean exito = false;
+        int id = 0;
         try {
             s = con.createStatement();
             StringBuilder query = new StringBuilder();
-            
+
             query.append("INSERT INTO prestamo (idCliente, fechaInicio, fechaVencimiento, idPlazo, ");
             query.append("cantPeriodo, idMoneda, plazoDias, montoOriginal, tasa, tasaCargos, montoCargos, ");
             query.append("montoTotal, cantidadCuotas, montoCuota, idFrecuenciaPago, cantFrecuencia, ");
             query.append("frecuenciaDias, montoPenalidad, diasPenalidad, estado, fechaCreacion) ");
-            query.append("VALUES ("+obj.getIdCliente()+", '"+obj.getFechaInicio()+"', '"+obj.getFechaVencimiento()+"', ");
-            query.append(""+obj.getIdPlazo()+", "+obj.getCantPeriodo()+", "+obj.getIdMoneda()+", "+obj.getPlazoDias()+", "+obj.getMontoOriginal()+", "+obj.getTasa()+", "+obj.getTasaCargo()+", "+obj.getMontoCargos());
-            query.append(", "+obj.getMontoTotal()+","+obj.getCantidadCuotas()+","+obj.getMontoCuota()+","+obj.getIdFrecuenciaPago()+","+obj.getCantFrecuencia());
-            query.append(","+obj.getFrecuenciaDias()+","+obj.getMontoPenalidad()+","+obj.getDiasPenalidad()+","+obj.getEstado()+", current_timestamp() );");
-           
-            System.out.println("QUERY: "+query.toString());
-            
+            query.append("VALUES (" + obj.getIdCliente() + ", '" + obj.getFechaInicio() + "', '" + obj.getFechaVencimiento() + "', ");
+            query.append("" + obj.getIdPlazo() + ", " + obj.getCantPeriodo() + ", " + obj.getIdMoneda() + ", " + obj.getPlazoDias() + ", " + obj.getMontoOriginal() + ", " + obj.getTasa() + ", " + obj.getTasaCargo() + ", " + obj.getMontoCargos());
+            query.append(", " + obj.getMontoTotal() + "," + obj.getCantidadCuotas() + "," + obj.getMontoCuota() + "," + obj.getIdFrecuenciaPago() + "," + obj.getCantFrecuencia());
+            query.append("," + obj.getFrecuenciaDias() + "," + obj.getMontoPenalidad() + "," + obj.getDiasPenalidad() + "," + obj.getEstado() + ", current_timestamp() );");
+
+            System.out.println("QUERY: " + query.toString());
+
             exito = s.execute(query.toString());
+
+            ResultSet rs = s.getGeneratedKeys();
+            if (rs.next()) {
+                id = rs.getInt(1);
+            }
 
             exito = true;
 
         } catch (SQLException ex) {
             Logger.getLogger(ClienteDAO.class.getName()).log(Level.SEVERE, null, ex);
+            id = 0;
         }
-        return exito;
+        return id;
     }
-    
- 
+
 }
