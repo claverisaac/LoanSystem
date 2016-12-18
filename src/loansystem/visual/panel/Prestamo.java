@@ -10,18 +10,19 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.DefaultListModel;
 import javax.swing.JOptionPane;
 import loansystem.Principal;
 import loansystem.bd.Conexion;
+import loansystem.dao.CuotasDAO;
 import loansystem.dao.MunicipioDAO;
+import loansystem.dao.PrestamoDAO;
 import loansystem.entidad.ClienteEntidad;
+import loansystem.entidad.CuotasEntidad;
 import loansystem.entidad.MunicipioEntidad;
+import loansystem.entidad.PrestamoEntidad;
 import loansystem.utilidades.MetodosGenerales;
 import loansystem.utilidades.NumberToLetterConverter;
 import loansystem.visual.modal.BuscarCliente;
@@ -36,12 +37,24 @@ public class Prestamo extends javax.swing.JPanel {
     private Conexion con;
     private Principal prin;
     private MetodosGenerales util;
-    
+
     double totalPrestamo = 0;
     double cuota = 0;
-    double cantCuota = 0;
+    int cantCuota = 0;
     String moneda = "C$";
     String descMoneda = "Córdobas";
+
+    private ClienteEntidad cliente = null;
+    private Integer cantPlazo;
+    private int dias;
+    private Integer cantPlazoFrec;
+    private int diasFrecPago;
+    private double montoPrestamo;
+    private double tasaInteres;
+    private double tasaCargos;
+    private double montoInteres;
+    private double montoCargos;
+    private int idMoneda;
 
     /**
      * Creates new form Prestamo
@@ -71,12 +84,12 @@ public class Prestamo extends javax.swing.JPanel {
         buttonGroup1 = new javax.swing.ButtonGroup();
         toolOpciones = new javax.swing.JToolBar();
         btnBuscar = new javax.swing.JButton();
+        btnCalcular = new javax.swing.JButton();
         btnLimpiar = new javax.swing.JButton();
         btnGuardar = new javax.swing.JButton();
         btnCancelar = new javax.swing.JButton();
-        jPanel6 = new javax.swing.JPanel();
+        pnelContenedor = new javax.swing.JPanel();
         pnelCliente = new javax.swing.JPanel();
-        jLabel1 = new javax.swing.JLabel();
         pnelDatosCliente = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
@@ -104,6 +117,7 @@ public class Prestamo extends javax.swing.JPanel {
         txtDireccionSec = new javax.swing.JTextArea();
         jLabel12 = new javax.swing.JLabel();
         txtCodigo = new javax.swing.JTextField();
+        lblTitulo = new javax.swing.JLabel();
         scrollPrestamo = new javax.swing.JScrollPane();
         pnelPrestamo = new javax.swing.JPanel();
         jPanel1 = new javax.swing.JPanel();
@@ -140,7 +154,6 @@ public class Prestamo extends javax.swing.JPanel {
         txtMontoCargos = new javax.swing.JFormattedTextField();
         jLabel24 = new javax.swing.JLabel();
         jXTitledSeparator4 = new org.jdesktop.swingx.JXTitledSeparator();
-        btnCalcular = new javax.swing.JButton();
         txtTotalPrestamo = new javax.swing.JTextField();
         jPanel3 = new javax.swing.JPanel();
         jLabel26 = new javax.swing.JLabel();
@@ -153,17 +166,19 @@ public class Prestamo extends javax.swing.JPanel {
         txtCantDias = new javax.swing.JTextField();
         txtMontoCuota = new javax.swing.JTextField();
 
-        setBackground(new java.awt.Color(102, 255, 255));
+        setBackground(new java.awt.Color(255, 255, 255));
         setLayout(new java.awt.BorderLayout());
 
         toolOpciones.setFloatable(false);
         toolOpciones.setOrientation(javax.swing.SwingConstants.VERTICAL);
         toolOpciones.setRollover(true);
+        toolOpciones.setOpaque(false);
 
         btnBuscar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/loansystem/recursos/paneles/search.png"))); // NOI18N
         btnBuscar.setToolTipText("Buscar Cliente");
         btnBuscar.setFocusable(false);
         btnBuscar.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        btnBuscar.setOpaque(false);
         btnBuscar.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
         btnBuscar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -172,21 +187,42 @@ public class Prestamo extends javax.swing.JPanel {
         });
         toolOpciones.add(btnBuscar);
 
+        btnCalcular.setIcon(new javax.swing.ImageIcon(getClass().getResource("/loansystem/recursos/paneles/calculator.png"))); // NOI18N
+        btnCalcular.setToolTipText("Calcular");
+        btnCalcular.setMaximumSize(new java.awt.Dimension(43, 43));
+        btnCalcular.setMinimumSize(new java.awt.Dimension(43, 43));
+        btnCalcular.setOpaque(false);
+        btnCalcular.setPreferredSize(new java.awt.Dimension(43, 43));
+        btnCalcular.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCalcularActionPerformed(evt);
+            }
+        });
+        toolOpciones.add(btnCalcular);
+
         btnLimpiar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/loansystem/recursos/paneles/repeat.png"))); // NOI18N
         btnLimpiar.setToolTipText("Limpiar");
+        btnLimpiar.setOpaque(false);
         toolOpciones.add(btnLimpiar);
 
         btnGuardar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/loansystem/recursos/paneles/save.png"))); // NOI18N
         btnGuardar.setToolTipText("Aceptar");
         btnGuardar.setFocusable(false);
         btnGuardar.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        btnGuardar.setOpaque(false);
         btnGuardar.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        btnGuardar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnGuardarActionPerformed(evt);
+            }
+        });
         toolOpciones.add(btnGuardar);
 
         btnCancelar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/loansystem/recursos/paneles/cerrar.png"))); // NOI18N
         btnCancelar.setToolTipText("Cancelar");
         btnCancelar.setFocusable(false);
         btnCancelar.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        btnCancelar.setOpaque(false);
         btnCancelar.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
         btnCancelar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -197,18 +233,10 @@ public class Prestamo extends javax.swing.JPanel {
 
         add(toolOpciones, java.awt.BorderLayout.WEST);
 
-        jPanel6.setLayout(new java.awt.BorderLayout());
+        pnelContenedor.setLayout(new java.awt.BorderLayout());
 
         pnelCliente.setBackground(new java.awt.Color(255, 255, 255));
         pnelCliente.setLayout(new java.awt.BorderLayout());
-
-        jLabel1.setBackground(new java.awt.Color(0, 0, 102));
-        jLabel1.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        jLabel1.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel1.setText("ASIGNACÓN DE PRÉSTAMO");
-        jLabel1.setOpaque(true);
-        pnelCliente.add(jLabel1, java.awt.BorderLayout.PAGE_START);
 
         pnelDatosCliente.setBackground(new java.awt.Color(255, 255, 255));
         pnelDatosCliente.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Datos del Cliente", javax.swing.border.TitledBorder.LEADING, javax.swing.border.TitledBorder.ABOVE_TOP, new java.awt.Font("Tahoma", 1, 12))); // NOI18N
@@ -408,7 +436,17 @@ public class Prestamo extends javax.swing.JPanel {
 
         pnelCliente.add(pnelDatosCliente, java.awt.BorderLayout.CENTER);
 
-        jPanel6.add(pnelCliente, java.awt.BorderLayout.NORTH);
+        lblTitulo.setBackground(new java.awt.Color(0, 0, 102));
+        lblTitulo.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        lblTitulo.setForeground(new java.awt.Color(255, 255, 255));
+        lblTitulo.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblTitulo.setText("ASIGNACÓN DE PRÉSTAMO");
+        lblTitulo.setOpaque(true);
+        lblTitulo.setPreferredSize(new java.awt.Dimension(195, 28));
+        pnelCliente.add(lblTitulo, java.awt.BorderLayout.PAGE_START);
+        lblTitulo.getAccessibleContext().setAccessibleName("ASIGNACIÓN DE PRÉSTAMO");
+
+        pnelContenedor.add(pnelCliente, java.awt.BorderLayout.NORTH);
 
         scrollPrestamo.setBackground(new java.awt.Color(255, 255, 255));
         scrollPrestamo.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Detalle del Préstamo", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 12))); // NOI18N
@@ -624,14 +662,6 @@ public class Prestamo extends javax.swing.JPanel {
         jXTitledSeparator4.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jXTitledSeparator4.setTitle("Generales");
 
-        btnCalcular.setIcon(new javax.swing.ImageIcon(getClass().getResource("/loansystem/recursos/paneles/calculator.png"))); // NOI18N
-        btnCalcular.setToolTipText("Calcular");
-        btnCalcular.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnCalcularActionPerformed(evt);
-            }
-        });
-
         txtTotalPrestamo.setEditable(false);
         txtTotalPrestamo.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
 
@@ -672,8 +702,7 @@ public class Prestamo extends javax.swing.JPanel {
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                             .addComponent(txtMontoInteres, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addComponent(txtMontoCargos, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addComponent(btnCalcular, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                            .addComponent(txtMontoCargos, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)))
                                     .addGroup(jPanel2Layout.createSequentialGroup()
                                         .addComponent(jLabel29)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -687,16 +716,13 @@ public class Prestamo extends javax.swing.JPanel {
                 .addGap(0, 0, Short.MAX_VALUE)
                 .addComponent(jXTitledSeparator4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(8, 8, 8)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel17, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(cboMoneda, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel16, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txtMontoPrestamo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addComponent(btnCalcular))
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel17, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(cboMoneda, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel16, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtMontoPrestamo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel19, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -780,7 +806,7 @@ public class Prestamo extends javax.swing.JPanel {
                 .addContainerGap()
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 492, Short.MAX_VALUE)
+                        .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 537, Short.MAX_VALUE)
                         .addGap(3, 3, 3))
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addComponent(jXTitledSeparator3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -847,9 +873,9 @@ public class Prestamo extends javax.swing.JPanel {
 
         scrollPrestamo.setViewportView(pnelPrestamo);
 
-        jPanel6.add(scrollPrestamo, java.awt.BorderLayout.CENTER);
+        pnelContenedor.add(scrollPrestamo, java.awt.BorderLayout.CENTER);
 
-        add(jPanel6, java.awt.BorderLayout.CENTER);
+        add(pnelContenedor, java.awt.BorderLayout.CENTER);
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
@@ -883,26 +909,35 @@ public class Prestamo extends javax.swing.JPanel {
     private void cboMonedaItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cboMonedaItemStateChanged
         int index = cboMoneda.getSelectedIndex();
         descMoneda = cboMoneda.getSelectedItem().toString();
-       
-       switch(index)
-       {
-           case 0:
-               moneda = "C$";
-               break;
-               
-           case 1:
-               moneda = "U$";
-               break;
-               
-           case 2:
-               moneda = "€";
-               break;
-       }
-       
-       
+        idMoneda = 0;
+
+        switch (index) {
+            case 0:
+                moneda = "C$";
+                idMoneda = 1;
+                break;
+
+            case 1:
+                moneda = "U$";
+                idMoneda = 2;
+                break;
+
+            case 2:
+                moneda = "€";
+                idMoneda = 3;
+                break;
+        }
+
+
     }//GEN-LAST:event_cboMonedaItemStateChanged
 
+    private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
+        guardarPrestamo();
+    }//GEN-LAST:event_btnGuardarActionPerformed
+
     public void cargarDatosCliente(ClienteEntidad cliente) {
+        this.cliente = cliente;
+
         MunicipioDAO muDao = new MunicipioDAO(con.getCon());
         MunicipioEntidad municipio = muDao.obtenerMunicipioXId(cliente.getIdMunicipio());
 
@@ -981,12 +1016,12 @@ public class Prestamo extends javax.swing.JPanel {
      * Logica para realizar el calculo del prestamo.
      */
     private void calcularPrestamo() {
-        double montoPrestamo = 0;
-        double tasaInteres = 0;
-        double tasaCargos = 0;
+        montoPrestamo = 0;
+        tasaInteres = 0;
+        tasaCargos = 0;
 
-        double montoInteres = 0;
-        double montoCargos = 0;
+        montoInteres = 0;
+        montoCargos = 0;
 
         if (txtMontoPrestamo.getText().length() > 0) {
             montoPrestamo = Double.parseDouble(txtMontoPrestamo.getText().replace(",", ""));
@@ -1054,67 +1089,66 @@ public class Prestamo extends javax.swing.JPanel {
     }
 
     /**
-     * 
+     *
      */
     private void calcularCuotas() {
         String plazo = cboDias.getSelectedItem().toString();
         String plazoFrec = cboDiasFrec.getSelectedItem().toString();
-        int cantPlazo = Integer.valueOf(spnPlazo.getValue().toString());
-        int dias = calcularDiasPlazo(plazo, cantPlazo);
+        cantPlazo = Integer.valueOf(spnPlazo.getValue().toString());
+        dias = calcularDiasPlazo(plazo, cantPlazo);
 
-        int cantPlazoFrec = Integer.valueOf(spnFrecuencia.getValue().toString());
-        int diasFrecPago = calcularDiasPlazo(plazoFrec, cantPlazoFrec);
+        cantPlazoFrec = Integer.valueOf(spnFrecuencia.getValue().toString());
+        diasFrecPago = calcularDiasPlazo(plazoFrec, cantPlazoFrec);
 
         cantCuota = dias / diasFrecPago;
         cuota = totalPrestamo / cantCuota;
 
         txtMontoCuota.setText(String.valueOf(formatearMoneda(round(cuota, 2), moneda)) + " por " + plazoFrec);
-        
-        int cantCuotasT = (int) round(cantCuota, 2);        
+
+        int cantCuotasT = (int) round(cantCuota, 2);
         txtCantCuotas.setText(String.valueOf(round(cantCuota, 2)));
         txtCantDias.setText(String.valueOf(dias));
-        
+
         Date fechaI = dtFechaInicio.getDate();
-        
-        System.out.println("Fecha seleccionada: "+fechaI.toString());
-        
-       Date fechaFin = calcularFechasPago(diasFrecPago, cantCuotasT, round(cuota, 2), fechaI, totalPrestamo);
-       dtFechaFin.setDate(fechaFin);
+
+        System.out.println("Fecha seleccionada: " + fechaI.toString());
+
+        Date fechaFin = calcularFechasPago(diasFrecPago, cantCuotasT, round(cuota, 2), fechaI, totalPrestamo);
+        dtFechaFin.setDate(fechaFin);
     }
-    
+
     /**
-     * 
+     *
      * @param dias
      * @param cuotas
      * @param montoCuota
-     * @param fechaI 
+     * @param fechaI
      */
-    private Date calcularFechasPago(int dias, int cuotas, double montoCuota, Date fechaI, double totalPrestamo){
-       String[][] cuotasHash = generarFechasPago(dias, cuotas, fechaI);
-       double saldoTemp=0; 
-       saldoTemp = totalPrestamo;
-       String fechaFin = "";
-       
-        if(cuotasHash.length>0)
-        {
+    private Date calcularFechasPago(int dias, int cuotas, double montoCuota, Date fechaI, double totalPrestamo) {
+        String[][] cuotasHash = generarFechasPago(dias, cuotas, fechaI);
+        double saldoTemp = 0;
+        saldoTemp = totalPrestamo;
+        String fechaFin = "";
+
+        if (cuotasHash.length > 0) {
             SimpleDateFormat formatDia = new SimpleDateFormat("EEEE");
             util.limpiarTabla(tabCuotas);
-            for(int i= 0; i<cuotasHash.length; i++){                                 
+            for (int i = 0; i < cuotasHash.length; i++) {
                 util.agregarFila(tabCuotas);
                 saldoTemp = saldoTemp - cuota;
-                
-                tabCuotas.setValueAt("Pago "+(i+1), i, 0); //ID
+
+                tabCuotas.setValueAt("Pago " + (i + 1), i, 0); //ID
                 tabCuotas.setValueAt(cuotasHash[i][0], i, 1); //ID
                 tabCuotas.setValueAt(cuotasHash[i][1], i, 2); //ID
                 tabCuotas.setValueAt(montoCuota, i, 3); //ID
-                tabCuotas.setValueAt(saldoTemp, i, 4); //ID
+                tabCuotas.setValueAt((round(saldoTemp, 2) < 0 ? 0 : round(saldoTemp, 2)), i, 4); //ID
                 tabCuotas.setValueAt(false, i, 5);
-               
+
                 fechaFin = cuotasHash[i][0];
             }
-            
+
         }
-        
+
         SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy");
         Date fecha = null;
         try {
@@ -1122,8 +1156,7 @@ public class Prestamo extends javax.swing.JPanel {
         } catch (ParseException ex) {
             Logger.getLogger(Prestamo.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
-        
+
         return fecha;
     }
 
@@ -1162,73 +1195,70 @@ public class Prestamo extends javax.swing.JPanel {
     }
 
     /**
-     * 
-     * @param picker 
+     *
+     * @param picker
      */
     private void formatoDatePicker(JXDatePicker picker) {
         SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
 
         picker.setFormats(format);
     }
-    
+
     /**
-    * 
-    * @param dias
-    * @param cuotas
-    * @param fechaI
-    * @return 
-    */
-   public String[][] generarFechasPago(int dias, int cuotas, Date fechaI ){
-       String[][] fechasPago = new String[cuotas][2];
-       
-       Calendar calendar;
-       
-       calendar = Calendar.getInstance();
+     *
+     * @param dias
+     * @param cuotas
+     * @param fechaI
+     * @return
+     */
+    public String[][] generarFechasPago(int dias, int cuotas, Date fechaI) {
+        String[][] fechasPago = new String[cuotas][2];
+
+        Calendar calendar;
+
+        calendar = Calendar.getInstance();
         calendar.setTime(fechaI);
-        
+
         SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
         SimpleDateFormat formatDia = new SimpleDateFormat("EEEE");
-        
-        
-        System.out.println("Fecha inicial: "+format.format(fechaI));
+
+        System.out.println("Fecha inicial: " + format.format(fechaI));
         Date dateTemp = fechaI;
-        
-          String fecha="";
-          String dia = "";
-        for(int i=0; i<cuotas; i++){
+
+        String fecha = "";
+        String dia = "";
+        for (int i = 0; i < cuotas; i++) {
             calendar.setTime(dateTemp);
-            calendar.add(Calendar.DAY_OF_YEAR, dias );
+            calendar.add(Calendar.DAY_OF_YEAR, dias);
             dateTemp = calendar.getTime();
-            
+
             int diaSemana = dateTemp.getDay();
-            
-            if(diaSemana==0)
-            {
-                 calendar.add(Calendar.DAY_OF_YEAR, 1 ); //Si es domingo le sumamos un dia mas.                
-                 Date diaLunes = calendar.getTime();
-                 
+
+            if (diaSemana == 0) {
+                calendar.add(Calendar.DAY_OF_YEAR, 1); //Si es domingo le sumamos un dia mas.                
+                Date diaLunes = calendar.getTime();
+
                 fecha = format.format(diaLunes);
                 dia = formatDia.format(diaLunes);
-                 
-                  System.out.println("Fecha ("+(i+1)+"): "+ fecha + " dia: "+dia + "  dia semana: "+diaLunes.getDay() );
-                 
-            }else
-            {
+
+                System.out.println("Fecha (" + (i + 1) + "): " + fecha + " dia: " + dia + "  dia semana: " + diaLunes.getDay());
+
+            } else {
                 fecha = format.format(dateTemp);
                 dia = formatDia.format(dateTemp);
-                
-                 System.out.println("Fecha ("+(i+1)+"): "+fecha + " dia: "+dia+ "  dia semana: "+dateTemp.getDay() );
-                
-            }
-            
-             fechasPago[i][0] = fecha;
-             fechasPago[i][1] = dia;
-        }
-       
-       
-       return fechasPago;
-   }
 
+                System.out.println("Fecha (" + (i + 1) + "): " + fecha + " dia: " + dia + "  dia semana: " + dateTemp.getDay());
+
+            }
+
+            fechasPago[i][0] = fecha;
+            fechasPago[i][1] = dia;
+        }
+
+        return fechasPago;
+    }
+
+    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnBuscar;
@@ -1243,7 +1273,6 @@ public class Prestamo extends javax.swing.JPanel {
     private javax.swing.JComboBox<String> cboMoneda;
     private org.jdesktop.swingx.JXDatePicker dtFechaFin;
     private org.jdesktop.swingx.JXDatePicker dtFechaInicio;
-    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
@@ -1274,7 +1303,6 @@ public class Prestamo extends javax.swing.JPanel {
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
-    private javax.swing.JPanel jPanel6;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
@@ -1282,8 +1310,10 @@ public class Prestamo extends javax.swing.JPanel {
     private org.jdesktop.swingx.JXTitledSeparator jXTitledSeparator1;
     private org.jdesktop.swingx.JXTitledSeparator jXTitledSeparator3;
     private org.jdesktop.swingx.JXTitledSeparator jXTitledSeparator4;
+    private javax.swing.JLabel lblTitulo;
     private javax.swing.JList<String> lstTelefono;
     private javax.swing.JPanel pnelCliente;
+    private javax.swing.JPanel pnelContenedor;
     private javax.swing.JPanel pnelDatosCliente;
     private javax.swing.JPanel pnelPrestamo;
     private javax.swing.JRadioButton rbtnFemenino;
@@ -1316,5 +1346,75 @@ public class Prestamo extends javax.swing.JPanel {
     private javax.swing.JFormattedTextField txtTasaCargo;
     private javax.swing.JTextField txtTotalPrestamo;
     // End of variables declaration//GEN-END:variables
+
+    private void guardarPrestamo() {
+        PrestamoEntidad p = new PrestamoEntidad();
+        PrestamoDAO pDao = new PrestamoDAO(con.getCon());
+        
+        CuotasEntidad c = new CuotasEntidad();
+        CuotasDAO cDao = new CuotasDAO(con.getCon());
+        
+        
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+        SimpleDateFormat format2 = new SimpleDateFormat("dd/MM/yyyy");
+
+        if (cliente != null) {
+            p.setIdCliente(cliente.getIdCliente());
+            p.setFechaInicio(format.format(dtFechaInicio.getDate()));
+            p.setFechaVencimiento(format.format(dtFechaFin.getDate()));
+            p.setIdPlazo(cboDias.getSelectedIndex() + 1); //Se que esta mal, pero hay poco tiempo!.. :-)
+            p.setCantPeriodo(cantPlazo);
+            p.setIdMoneda(idMoneda);
+            p.setPlazoDias(dias);
+            p.setMontoOriginal(montoPrestamo);
+            p.setTasa(tasaInteres);
+            p.setTasaCargo(tasaCargos);
+            p.setMontoCargos(montoCargos);
+            p.setMontoTotal(totalPrestamo);
+            p.setCantidadCuotas(cantCuota);
+            p.setMontoCuota(cuota);
+            p.setIdFrecuenciaPago(cboDiasFrec.getSelectedIndex() + 1);
+            p.setCantFrecuencia(cantPlazoFrec);
+            p.setFrecuenciaDias(diasFrecPago);
+            p.setMontoPenalidad(Double.parseDouble(txtMontoPenalidad.getText()));
+            p.setDiasPenalidad((int) spnDiasPenalidad.getValue());
+            p.setEstado(1);
+
+            int id = pDao.insertarPrestamo(p);
+
+            if (id > 0) {
+                JOptionPane.showMessageDialog(prin, "Se inserto la chochada! Id:" + id, "Insertando Prestamo", JOptionPane.INFORMATION_MESSAGE);
+                
+                
+                for(int i=0; i<tabCuotas.getRowCount();i++)
+                {
+                    c = new CuotasEntidad();
+                    c.setIdPrestamo(id);
+                    c.setPagoNumero(tabCuotas.getValueAt(i, 0).toString());
+                    try {
+                        c.setFecha( format.format(format2.parse(tabCuotas.getValueAt(i, 1).toString())) );
+                    } catch (ParseException ex) {
+                        Logger.getLogger(Prestamo.class.getName()).log(Level.SEVERE, null, ex);
+                        System.out.println("ERROR al convertir fecha: "+ex.getMessage());
+                    }
+                    
+                    c.setDia(tabCuotas.getValueAt(i, 2).toString());
+                    c.setMonto(Double.parseDouble(tabCuotas.getValueAt(i, 3).toString()));
+                    c.setSaldo(Double.parseDouble(tabCuotas.getValueAt(i, 4).toString()));
+                    c.setCancelado(0);
+                    cDao.insertarCuota(c);
+                }
+                
+                
+                
+                
+                
+            } else {
+                JOptionPane.showMessageDialog(prin, "NO SIRVE!", "Insertando Prestamo", JOptionPane.INFORMATION_MESSAGE);
+            }
+
+        }
+
+    }
 
 }
