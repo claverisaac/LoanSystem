@@ -6,7 +6,6 @@
 package loansystem.visual.panel;
 
 import java.awt.event.KeyEvent;
-import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;

@@ -56,6 +56,33 @@ public class UsuarioDAO {
 
         return userEntidad;
     }
+    
+      /***
+     * Lista a un usuario dependiendo de ID
+     * @param nombre_usuario
+     * @param pass
+     * @return toda informacion del usuario
+     */
+        public UsuarioEntidad obtenerXUsuarioId(int id) {
+        UsuarioEntidad userEntidad = null;
+        try {
+            s = con.createStatement();
+            rs = s.executeQuery("select idusuario, idpersona, login, pass, estado "
+                    + "from  usuario where idPersona = " + id + ";");
+            
+             System.out.println("select idusuario, idpersona, login, pass, estado "
+                    + "from  usuario where idPersona = " + id + ";");
+   
+            while (rs.next()) {
+                userEntidad = this.convertir(rs);
+            }
+            
+        } catch (SQLException ex) {
+            Logger.getLogger(UsuarioDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        return userEntidad;
+    }
 
         private UsuarioEntidad convertir(ResultSet respuesta) {
         UsuarioEntidad obj = new UsuarioEntidad();

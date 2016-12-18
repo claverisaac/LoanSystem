@@ -20,6 +20,7 @@ private static Conexion con;
 
     Cliente panelCliente ;
     Prestamo panelPrestamo;
+    Usuario panelUsuarios;
     /**
      * Creates new form Principal
      * Otro comentario mas..
@@ -60,6 +61,10 @@ private static Conexion con;
           
              if (panel == panelPrestamo) {
             panelPrestamo= null;
+                }  
+             
+             if (panel == panelUsuarios) {
+            panelUsuarios= null;
                 }   
          }
     /**
@@ -76,8 +81,6 @@ private static Conexion con;
         pnelOpcionesColl = new javax.swing.JPanel();
         tskCliente = new com.l2fprod.common.swing.JTaskPaneGroup();
         lnkNuevoCliente = new com.l2fprod.common.swing.JLinkButton();
-        lnkBuscarCliente = new com.l2fprod.common.swing.JLinkButton();
-        lnkModificarCliente = new com.l2fprod.common.swing.JLinkButton();
         tskPrestamo = new com.l2fprod.common.swing.JTaskPaneGroup();
         lnkNuevoPrestamo = new com.l2fprod.common.swing.JLinkButton();
         lnkNuevoPago = new com.l2fprod.common.swing.JLinkButton();
@@ -132,14 +135,6 @@ private static Conexion con;
         });
         tskCliente.getContentPane().add(lnkNuevoCliente);
 
-        lnkBuscarCliente.setIcon(new javax.swing.ImageIcon(getClass().getResource("/loansystem/recursos/buscar_cliente.png"))); // NOI18N
-        lnkBuscarCliente.setText("Buscar Cliente");
-        tskCliente.getContentPane().add(lnkBuscarCliente);
-
-        lnkModificarCliente.setIcon(new javax.swing.ImageIcon(getClass().getResource("/loansystem/recursos/modificar_cliente.png"))); // NOI18N
-        lnkModificarCliente.setText("Modificar Cliente");
-        tskCliente.getContentPane().add(lnkModificarCliente);
-
         pnelOpcionesColl.add(tskCliente);
 
         tskPrestamo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/loansystem/recursos/prestamo.png"))); // NOI18N
@@ -161,6 +156,7 @@ private static Conexion con;
 
         pnelOpcionesColl.add(tskPrestamo);
 
+        tskReportes.setExpanded(false);
         tskReportes.setIcon(new javax.swing.ImageIcon(getClass().getResource("/loansystem/recursos/reportes.png"))); // NOI18N
         tskReportes.setTitle("Reportes");
         tskReportes.setToolTipText("Reportes");
@@ -177,7 +173,6 @@ private static Conexion con;
 
         pnelOpcionesColl.add(tskReportes);
 
-        tskEmpresa.setExpanded(false);
         tskEmpresa.setIcon(new javax.swing.ImageIcon(getClass().getResource("/loansystem/recursos/admin.png"))); // NOI18N
         tskEmpresa.setTitle("Administración");
 
@@ -187,6 +182,11 @@ private static Conexion con;
 
         lnkUsuarios.setIcon(new javax.swing.ImageIcon(getClass().getResource("/loansystem/recursos/usuarios.png"))); // NOI18N
         lnkUsuarios.setText("Administrar Usuarios");
+        lnkUsuarios.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                lnkUsuariosActionPerformed(evt);
+            }
+        });
         tskEmpresa.getContentPane().add(lnkUsuarios);
 
         jSeparator1.setPreferredSize(new java.awt.Dimension(0, 10));
@@ -302,7 +302,7 @@ private static Conexion con;
         // TODO add your handling code here:
            if (panelCliente == null) {
                   panelCliente= new Cliente(con,this);
-                  cargarModulo(panelCliente, "Clientes", "Catalogo de Clientess", "nuevo_cliente");
+                  cargarModulo(panelCliente, "Clientes", "Catalogo de Clientes", "nuevo_cliente");
                   } else {
                           this.seleccionarTab(panelCliente);
                   }
@@ -315,6 +315,16 @@ private static Conexion con;
     private void lnkNuevoPrestamo1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_lnkNuevoPrestamo1ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_lnkNuevoPrestamo1ActionPerformed
+
+    private void lnkUsuariosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_lnkUsuariosActionPerformed
+        // TODO add your handling code here:
+          if (panelUsuarios == null) {
+                  panelUsuarios = new Usuario(con,this);
+                  cargarModulo(panelUsuarios, "Usuarios", "Administración de Usuarios", "usuarios");
+                  } else {
+                          this.seleccionarTab(panelUsuarios);
+                  }
+    }//GEN-LAST:event_lnkUsuariosActionPerformed
 
 
     /**
@@ -363,10 +373,8 @@ private static Conexion con;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JToolBar.Separator jSeparator2;
     private javax.swing.JToolBar jToolBar1;
-    private com.l2fprod.common.swing.JLinkButton lnkBuscarCliente;
     private com.l2fprod.common.swing.JLinkButton lnkCargo;
     private com.l2fprod.common.swing.JLinkButton lnkEmpresa;
-    private com.l2fprod.common.swing.JLinkButton lnkModificarCliente;
     private com.l2fprod.common.swing.JLinkButton lnkMonedas;
     private com.l2fprod.common.swing.JLinkButton lnkNuevoCliente;
     private com.l2fprod.common.swing.JLinkButton lnkNuevoPago;

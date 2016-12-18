@@ -12,6 +12,15 @@ package loansystem.entidad;
 public class PersonalEntidad {
 int idPersona,idCargo, idEmpresa;
 String nombres,apellidos,numCedula,sexo, fechaRegistro;
+String login;
+
+    public void setLogin(String login) {
+        this.login = login;
+    }
+
+    public String getLogin() {
+        return login;
+    }
 
     public int getIdPersona() {
         return idPersona;

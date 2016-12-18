@@ -128,22 +128,6 @@
                     <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="lnkNuevoClienteActionPerformed"/>
                   </Events>
                 </Component>
-                <Component class="com.l2fprod.common.swing.JLinkButton" name="lnkBuscarCliente">
-                  <Properties>
-                    <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                      <Image iconType="3" name="/loansystem/recursos/buscar_cliente.png"/>
-                    </Property>
-                    <Property name="text" type="java.lang.String" value="Buscar Cliente"/>
-                  </Properties>
-                </Component>
-                <Component class="com.l2fprod.common.swing.JLinkButton" name="lnkModificarCliente">
-                  <Properties>
-                    <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                      <Image iconType="3" name="/loansystem/recursos/modificar_cliente.png"/>
-                    </Property>
-                    <Property name="text" type="java.lang.String" value="Modificar Cliente"/>
-                  </Properties>
-                </Component>
               </SubComponents>
               <LayoutCode>
                 <CodeStatement>
@@ -306,6 +290,7 @@
             </Container>
             <Container class="com.l2fprod.common.swing.JTaskPaneGroup" name="tskReportes">
               <Properties>
+                <Property name="expanded" type="boolean" value="false"/>
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
                   <Image iconType="3" name="/loansystem/recursos/reportes.png"/>
                 </Property>
@@ -393,7 +378,6 @@
             </Container>
             <Container class="com.l2fprod.common.swing.JTaskPaneGroup" name="tskEmpresa">
               <Properties>
-                <Property name="expanded" type="boolean" value="false"/>
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
                   <Image iconType="3" name="/loansystem/recursos/admin.png"/>
                 </Property>
@@ -415,6 +399,9 @@
                     </Property>
                     <Property name="text" type="java.lang.String" value="Administrar Usuarios"/>
                   </Properties>
+                  <Events>
+                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="lnkUsuariosActionPerformed"/>
+                  </Events>
                 </Component>
                 <Component class="javax.swing.JSeparator" name="jSeparator1">
                   <Properties>
