@@ -64,7 +64,7 @@ public class UsuarioDAO {
      * @param pass
      * @return toda informacion del usuario
      */
-        public UsuarioEntidad obtenerXUsuarioId(int id) {
+        public UsuarioEntidad obtenerXUsuarioIdPersona(int id) {
         UsuarioEntidad userEntidad = null;
         try {
             s = con.createStatement();
@@ -85,26 +85,84 @@ public class UsuarioDAO {
         return userEntidad;
     }
 
+          public UsuarioEntidad obtenerCantLogins(String login) {
+        UsuarioEntidad userEntidad = null;
+        try {
+            s = con.createStatement();
+            rs = s.executeQuery("select count(*) AS cantidad FROM usuario where login like '%" + login + "%';");
+            
+             System.out.println("select count(*) AS cantidad FROM usuario where login like '%" + login + "%';");
+   
+            while (rs.next()) {
+                userEntidad = this.convertirCant(rs);
+            }
+            
+        } catch (SQLException ex) {
+            Logger.getLogger(UsuarioDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        return userEntidad;
+    }
+                
          public ArrayList<UsuarioEntidad> obtenerTodosUsuarios() {
         ArrayList<UsuarioEntidad> lista = new ArrayList<UsuarioEntidad>();
         try {
             s = con.createStatement();
-            System.out.println(";");
+            System.out.println("select idUsuario,idPersona, login, pass,estado from loan_system.usuario ;");
 
-            rs = s.executeQuery("");
+            rs = s.executeQuery("select idUsuario,idPersona, login, pass,estado from loan_system.usuario;");
 
             while (rs.next()) {
                 lista.add(this.convertir(rs));
             }
 
         } catch (SQLException ex) {
-            Logger.getLogger(ClienteDAO.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(UsuarioDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
 
         return lista;
     }
          
+             /* ACTUALIZAR CLEINTE
+     */
+    public boolean updateEstadoUsuario(UsuarioEntidad obj, int id) {
+        //ProductoEntidad id = null;
+        boolean exito = false;
+        try {
+            s = con.createStatement();
+            System.out.println("");
+
+            System.out.println("update usuario set estado = "+obj.getEstado()+" where idUsuario= " + id + ";");
+
+            exito = s.execute("update usuario set estado = "+obj.getEstado()+" where idUsuario= " + id + ";");
+            exito = true;
+
+        } catch (SQLException ex) {
+            Logger.getLogger(UsuarioDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return exito;
+    }
          
+ 
+        
+        public boolean updatePassUsuario(UsuarioEntidad obj,String login, String passA) {
+        //ProductoEntidad id = null;
+        boolean exito = false;
+        try {
+            s = con.createStatement();
+            System.out.println("");
+
+            System.out.println("update usuario set pass = md5('"+obj.getPass()+"') where login='"+login+"' and pass =md5('"+passA+"');");
+
+            exito = s.execute("update usuario set pass = md5('"+obj.getPass()+"') where login='"+login+"' and pass =md5('"+passA+"');");
+            exito = true;
+
+        } catch (SQLException ex) {
+            Logger.getLogger(UsuarioDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return exito;
+    }
+    
         private UsuarioEntidad convertir(ResultSet respuesta) {
         UsuarioEntidad obj = new UsuarioEntidad();
         try {
@@ -114,6 +172,20 @@ public class UsuarioDAO {
             obj.setLogin(respuesta.getString("login"));
             obj.setPass(respuesta.getString("pass"));
             obj.setEstado(respuesta.getInt("estado"));
+
+        } catch (SQLException ex) {
+            Logger.getLogger(UsuarioDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        return obj;
+    }
+        
+              private UsuarioEntidad convertirCant(ResultSet respuesta) {
+        UsuarioEntidad obj = new UsuarioEntidad();
+        try {
+
+            obj.setIdUsuario(respuesta.getInt("cantidad"));
+       
 
         } catch (SQLException ex) {
             Logger.getLogger(UsuarioDAO.class.getName()).log(Level.SEVERE, null, ex);
