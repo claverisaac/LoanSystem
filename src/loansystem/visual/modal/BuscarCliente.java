@@ -11,8 +11,10 @@ import loansystem.Principal;
 import loansystem.bd.Conexion;
 import loansystem.dao.ClienteDAO;
 import loansystem.dao.MunicipioDAO;
+import loansystem.dao.PrestamoDAO;
 import loansystem.entidad.ClienteEntidad;
 import loansystem.entidad.MunicipioEntidad;
+import loansystem.entidad.PrestamoEntidad;
 import loansystem.utilidades.MetodosGenerales;
 import loansystem.visual.panel.Prestamo;
 
@@ -77,14 +79,14 @@ public class BuscarCliente extends javax.swing.JDialog {
 
             },
             new String [] {
-                "ID", "Nombres", "Apellidos", "Cédula", "Sexo", "Departamento", "Municipio", "Movil", "Telefono", "Ruta"
+                "ID", "Nombres", "Apellidos", "Cédula", "Sexo", "Departamento", "Municipio", "Movil", "Telefono"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
+                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
             };
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false, false, false, false, false
+                false, false, false, false, false, false, false, false, false
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -95,6 +97,7 @@ public class BuscarCliente extends javax.swing.JDialog {
                 return canEdit [columnIndex];
             }
         });
+        tabClientes.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_ALL_COLUMNS);
         tabClientes.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusGained(java.awt.event.FocusEvent evt) {
                 tabClientesFocusGained(evt);
@@ -106,6 +109,12 @@ public class BuscarCliente extends javax.swing.JDialog {
             }
         });
         jScrollPane1.setViewportView(tabClientes);
+        if (tabClientes.getColumnModel().getColumnCount() > 0) {
+            tabClientes.getColumnModel().getColumn(0).setPreferredWidth(50);
+            tabClientes.getColumnModel().getColumn(0).setMaxWidth(50);
+            tabClientes.getColumnModel().getColumn(1).setPreferredWidth(120);
+            tabClientes.getColumnModel().getColumn(2).setPreferredWidth(120);
+        }
 
         getContentPane().add(jScrollPane1, java.awt.BorderLayout.CENTER);
 
@@ -115,14 +124,15 @@ public class BuscarCliente extends javax.swing.JDialog {
         jLabel22.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jLabel22.setText("Buscar:");
 
-        btnBuscar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/loansystem/recursos/paneles/search.png"))); // NOI18N
+        btnBuscar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/loansystem/recursos/paneles/encontrar.png"))); // NOI18N
         btnBuscar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnBuscarActionPerformed(evt);
             }
         });
 
-        btnBuscarTodos.setText("Todos");
+        btnBuscarTodos.setIcon(new javax.swing.ImageIcon(getClass().getResource("/loansystem/recursos/paneles/repeat.png"))); // NOI18N
+        btnBuscarTodos.setToolTipText("Todos");
         btnBuscarTodos.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnBuscarTodosActionPerformed(evt);
@@ -161,7 +171,7 @@ public class BuscarCliente extends javax.swing.JDialog {
 
         jPanel1.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.RIGHT));
 
-        btnAceptar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/loansystem/recursos/paneles/save.png"))); // NOI18N
+        btnAceptar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/loansystem/recursos/paneles/like.png"))); // NOI18N
         btnAceptar.setText("Aceptar");
         btnAceptar.setToolTipText("Aceptar");
         btnAceptar.setFocusable(false);
@@ -173,7 +183,7 @@ public class BuscarCliente extends javax.swing.JDialog {
         });
         jPanel1.add(btnAceptar);
 
-        btnCancelar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/loansystem/recursos/paneles/back.png"))); // NOI18N
+        btnCancelar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/loansystem/recursos/paneles/cerrar.png"))); // NOI18N
         btnCancelar.setText("Cerrar");
         btnCancelar.setToolTipText("Cerrar");
         btnCancelar.setFocusable(false);
@@ -231,7 +241,28 @@ public class BuscarCliente extends javax.swing.JDialog {
         int id =  Integer.parseInt(tabClientes.getValueAt(tabClientes.getSelectedRow(), 0).toString());
         cliente = clieDAO.obtenerCliente(id);
         
-        this.pres.cargarDatosCliente(cliente);
+        ArrayList<PrestamoEntidad> arrP = new ArrayList<PrestamoEntidad>();
+        PrestamoDAO pDao = new PrestamoDAO(con.getCon());
+        arrP = pDao.obtenerPrestamosPorClienteEstado(cliente.getIdCliente(),1); //Prestamos abiertos
+        
+        if(arrP.size()>0) {
+            if(JOptionPane.showConfirmDialog(prin, "El cliente "+cliente.getNombres()+" "+cliente.getApellidos()+" tiene "+arrP.size()+" préstamos abiertos. \n¿Desea editar uno de estos?", 
+                    "Cliente con Pedidos Abiertos", 
+                    JOptionPane.YES_NO_OPTION, 
+                    JOptionPane.OK_CANCEL_OPTION, 
+                    new javax.swing.ImageIcon(getClass().getResource("/loansystem/recursos/prestamo.png"))) == JOptionPane.YES_OPTION)
+            {
+                System.out.println("Selecciono Si");
+                
+            }else
+            {
+                this.pres.cargarDatosCliente(cliente);
+            }
+        }else
+        {
+            this.pres.cargarDatosCliente(cliente);
+        }
+        
         
         this.dispose();
     }//GEN-LAST:event_btnAceptarActionPerformed
@@ -256,7 +287,7 @@ public class BuscarCliente extends javax.swing.JDialog {
                 tabClientes.setValueAt(municipio.getMunicipio(), i, 6); //municipio
                 tabClientes.setValueAt(aClieEnti.get(i).getTelefonoMovil(), i, 7); //movil
                 tabClientes.setValueAt(aClieEnti.get(i).getTelefonoCasa(), i, 8); //telefono
-                tabClientes.setValueAt(aClieEnti.get(i).getIdRutaVisita(), i, 9); //ruta
+                //tabClientes.setValueAt(aClieEnti.get(i).getIdRutaVisita(), i, 9); //ruta
 
             }
 

@@ -7,6 +7,7 @@ package loansystem.utilidades;
 
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import javax.swing.DefaultListModel;
 import javax.swing.JList;
@@ -137,6 +138,38 @@ public class MetodosGenerales {
         DefaultListModel modelo = new DefaultListModel();
         lista = new JList(modelo);
         modelo.removeAllElements();
+    }
+    
+    /**
+     * Retorna un String a partir de un Date, dandole el formato indicado.
+     * @param fecha
+     * @param formato
+     * @return 
+     */
+    public static String formatFecha(Date fecha, String formato){
+        String fechaS = "";
+        
+         SimpleDateFormat format = new SimpleDateFormat(formato);
+         fechaS = format.format(fecha);
+         
+        return fechaS;
+    }
+    
+    /**
+     *
+     * @param value
+     * @param places
+     * @return
+     */
+    public double round(double value, int places) {
+        if (places < 0) {
+            throw new IllegalArgumentException();
+        }
+
+        long factor = (long) Math.pow(10, places);
+        value = value * factor;
+        long tmp = Math.round(value);
+        return (double) tmp / factor;
     }
 
 }

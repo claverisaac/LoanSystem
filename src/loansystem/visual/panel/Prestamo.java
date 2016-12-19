@@ -54,7 +54,7 @@ public class Prestamo extends javax.swing.JPanel {
     private double tasaCargos;
     private double montoInteres;
     private double montoCargos;
-    private int idMoneda;
+    private int idMoneda = 1;
 
     /**
      * Creates new form Prestamo
@@ -107,8 +107,6 @@ public class Prestamo extends javax.swing.JPanel {
         rbtnFemenino = new javax.swing.JRadioButton();
         rbtnMasculino = new javax.swing.JRadioButton();
         jLabel10 = new javax.swing.JLabel();
-        txtCobro = new javax.swing.JTextField();
-        jLabel11 = new javax.swing.JLabel();
         txtCentroLab = new javax.swing.JTextField();
         jPanel5 = new javax.swing.JPanel();
         jScrollPane3 = new javax.swing.JScrollPane();
@@ -136,7 +134,6 @@ public class Prestamo extends javax.swing.JPanel {
         jLabel25 = new javax.swing.JLabel();
         dtFechaFin = new org.jdesktop.swingx.JXDatePicker();
         cboDiasFrec = new javax.swing.JComboBox<>();
-        btnCalcular1 = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
         jLabel16 = new javax.swing.JLabel();
         txtMontoInteres = new javax.swing.JFormattedTextField();
@@ -203,6 +200,11 @@ public class Prestamo extends javax.swing.JPanel {
         btnLimpiar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/loansystem/recursos/paneles/repeat.png"))); // NOI18N
         btnLimpiar.setToolTipText("Limpiar");
         btnLimpiar.setOpaque(false);
+        btnLimpiar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnLimpiarActionPerformed(evt);
+            }
+        });
         toolOpciones.add(btnLimpiar);
 
         btnGuardar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/loansystem/recursos/paneles/save.png"))); // NOI18N
@@ -298,20 +300,9 @@ public class Prestamo extends javax.swing.JPanel {
         jLabel10.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jLabel10.setForeground(new java.awt.Color(153, 153, 153));
         jLabel10.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-        jLabel10.setText("Ruta Cobro:");
-
-        txtCobro.setEditable(false);
-
-        jLabel11.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
-        jLabel11.setForeground(new java.awt.Color(153, 153, 153));
-        jLabel11.setText("Centro Laboral:");
+        jLabel10.setText("Trabaja en:");
 
         txtCentroLab.setEditable(false);
-        txtCentroLab.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtCentroLabActionPerformed(evt);
-            }
-        });
 
         jPanel5.setOpaque(false);
         jPanel5.setLayout(new java.awt.GridLayout(1, 2, 10, 10));
@@ -359,36 +350,30 @@ public class Prestamo extends javax.swing.JPanel {
                     .addGroup(pnelDatosClienteLayout.createSequentialGroup()
                         .addGap(104, 104, 104)
                         .addComponent(rbtnMasculino)
-                        .addGap(333, 333, 333))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(pnelDatosClienteLayout.createSequentialGroup()
+                        .addGroup(pnelDatosClienteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addComponent(jLabel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jLabel12, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(rbtnFemenino, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(18, 18, 18)
                         .addGroup(pnelDatosClienteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(pnelDatosClienteLayout.createSequentialGroup()
-                                .addGroup(pnelDatosClienteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                    .addComponent(jLabel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(jLabel12, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(rbtnFemenino, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGap(18, 18, 18)
-                                .addGroup(pnelDatosClienteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(txtNombres)
-                                    .addComponent(txtCodigo)
-                                    .addComponent(txtDepartamento))
-                                .addGap(18, 18, 18)
-                                .addGroup(pnelDatosClienteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 68, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addGroup(pnelDatosClienteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(txtApellidos)
-                                    .addComponent(txtMunicipio)
-                                    .addComponent(txtCobro)
-                                    .addComponent(txtCedula)))
-                            .addGroup(pnelDatosClienteLayout.createSequentialGroup()
-                                .addComponent(jLabel11, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addComponent(txtCentroLab)))
+                            .addComponent(txtNombres)
+                            .addComponent(txtCodigo, javax.swing.GroupLayout.DEFAULT_SIZE, 285, Short.MAX_VALUE)
+                            .addComponent(txtDepartamento))
+                        .addGap(18, 18, 18)
+                        .addGroup(pnelDatosClienteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 68, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(pnelDatosClienteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(txtApellidos, javax.swing.GroupLayout.DEFAULT_SIZE, 239, Short.MAX_VALUE)
+                            .addComponent(txtMunicipio)
+                            .addComponent(txtCentroLab)
+                            .addComponent(txtCedula))
                         .addGap(18, 18, 18)))
                 .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, 236, javax.swing.GroupLayout.PREFERRED_SIZE))
             .addGroup(pnelDatosClienteLayout.createSequentialGroup()
@@ -423,13 +408,9 @@ public class Prestamo extends javax.swing.JPanel {
                             .addComponent(rbtnFemenino)
                             .addComponent(rbtnMasculino)
                             .addComponent(jLabel10)
-                            .addComponent(txtCobro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 6, Short.MAX_VALUE)
-                        .addGroup(pnelDatosClienteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel11)
                             .addComponent(txtCentroLab, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                    .addComponent(jPanel4, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(0, 0, Short.MAX_VALUE)
                 .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, 62, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(5, 5, 5))
         );
@@ -468,6 +449,7 @@ public class Prestamo extends javax.swing.JPanel {
         jLabel27.setText("Monto Penalidad:");
 
         txtMontoPenalidad.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("#,###.00"))));
+        txtMontoPenalidad.setText("0");
 
         jLabel28.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jLabel28.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
@@ -496,14 +478,6 @@ public class Prestamo extends javax.swing.JPanel {
         dtFechaFin.setEditable(false);
 
         cboDiasFrec.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Dia", "Semana", "Mes", "Año" }));
-
-        btnCalcular1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/loansystem/recursos/paneles/calculator.png"))); // NOI18N
-        btnCalcular1.setToolTipText("Calcular Cuotas");
-        btnCalcular1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnCalcular1ActionPerformed(evt);
-            }
-        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -540,12 +514,9 @@ public class Prestamo extends javax.swing.JPanel {
                                         .addComponent(cboDiasFrec, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                         .addComponent(spnFrecuencia, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addGroup(jPanel1Layout.createSequentialGroup()
-                                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(spnDiasPenalidad, javax.swing.GroupLayout.PREFERRED_SIZE, 57, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addComponent(txtMontoPenalidad, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                        .addGap(18, 18, 18)
-                                        .addComponent(btnCalcular1, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(spnDiasPenalidad, javax.swing.GroupLayout.PREFERRED_SIZE, 57, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(txtMontoPenalidad, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE)))
                                 .addGap(0, 0, Short.MAX_VALUE))))
                     .addComponent(jXTitledSeparator1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -576,16 +547,13 @@ public class Prestamo extends javax.swing.JPanel {
                         .addComponent(cboDiasFrec, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(spnFrecuencia, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel28, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(spnDiasPenalidad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel27, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txtMontoPenalidad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addComponent(btnCalcular1))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel28, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(spnDiasPenalidad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel27, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtMontoPenalidad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -882,10 +850,6 @@ public class Prestamo extends javax.swing.JPanel {
         // TODO add your handling code here:
     }//GEN-LAST:event_btnCancelarActionPerformed
 
-    private void txtCentroLabActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtCentroLabActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtCentroLabActionPerformed
-
     private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
         BuscarCliente bc = new BuscarCliente(prin, true, con, this);
         bc.setVisible(true);
@@ -893,18 +857,14 @@ public class Prestamo extends javax.swing.JPanel {
 
     private void btnCalcularActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCalcularActionPerformed
         calcularPrestamo();
-    }//GEN-LAST:event_btnCalcularActionPerformed
-
-    private void btnCalcular1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCalcular1ActionPerformed
-        if (totalPrestamo <= 0) {
-            JOptionPane.showMessageDialog(prin, "Debe calcular el préstamo primero!", "Cálculo de Préstamo!", JOptionPane.ERROR_MESSAGE);
+        
+         if (totalPrestamo <= 0) {
+            JOptionPane.showMessageDialog(prin, "Por favor complete los datos del Prestamo!", "Cálculo de Préstamo!", JOptionPane.ERROR_MESSAGE);
         } else {
             calcularCuotas();
 
         }
-
-
-    }//GEN-LAST:event_btnCalcular1ActionPerformed
+    }//GEN-LAST:event_btnCalcularActionPerformed
 
     private void cboMonedaItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cboMonedaItemStateChanged
         int index = cboMoneda.getSelectedIndex();
@@ -932,8 +892,16 @@ public class Prestamo extends javax.swing.JPanel {
     }//GEN-LAST:event_cboMonedaItemStateChanged
 
     private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
-        guardarPrestamo();
+        try {            
+            guardarPrestamo();
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Por favor complete los datos del préstamo correctamente!");
+        }
     }//GEN-LAST:event_btnGuardarActionPerformed
+
+    private void btnLimpiarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLimpiarActionPerformed
+        limpiarCampos();
+    }//GEN-LAST:event_btnLimpiarActionPerformed
 
     public void cargarDatosCliente(ClienteEntidad cliente) {
         this.cliente = cliente;
@@ -1103,17 +1071,17 @@ public class Prestamo extends javax.swing.JPanel {
         cantCuota = dias / diasFrecPago;
         cuota = totalPrestamo / cantCuota;
 
-        txtMontoCuota.setText(String.valueOf(formatearMoneda(round(cuota, 2), moneda)) + " por " + plazoFrec);
+        txtMontoCuota.setText(String.valueOf(formatearMoneda(util.round(cuota, 2), moneda)) + " por " + plazoFrec);
 
-        int cantCuotasT = (int) round(cantCuota, 2);
-        txtCantCuotas.setText(String.valueOf(round(cantCuota, 2)));
+        int cantCuotasT = (int) util.round(cantCuota, 2);
+        txtCantCuotas.setText(String.valueOf(util.round(cantCuota, 2)));
         txtCantDias.setText(String.valueOf(dias));
 
         Date fechaI = dtFechaInicio.getDate();
 
         System.out.println("Fecha seleccionada: " + fechaI.toString());
 
-        Date fechaFin = calcularFechasPago(diasFrecPago, cantCuotasT, round(cuota, 2), fechaI, totalPrestamo);
+        Date fechaFin = calcularFechasPago(diasFrecPago, cantCuotasT, util.round(cuota, 2), fechaI, totalPrestamo);
         dtFechaFin.setDate(fechaFin);
     }
 
@@ -1141,7 +1109,7 @@ public class Prestamo extends javax.swing.JPanel {
                 tabCuotas.setValueAt(cuotasHash[i][0], i, 1); //ID
                 tabCuotas.setValueAt(cuotasHash[i][1], i, 2); //ID
                 tabCuotas.setValueAt(montoCuota, i, 3); //ID
-                tabCuotas.setValueAt((round(saldoTemp, 2) < 0 ? 0 : round(saldoTemp, 2)), i, 4); //ID
+                tabCuotas.setValueAt((util.round(saldoTemp, 2) < 0 ? 0 : util.round(saldoTemp, 2)), i, 4); //ID
                 tabCuotas.setValueAt(false, i, 5);
 
                 fechaFin = cuotasHash[i][0];
@@ -1160,22 +1128,7 @@ public class Prestamo extends javax.swing.JPanel {
         return fecha;
     }
 
-    /**
-     *
-     * @param value
-     * @param places
-     * @return
-     */
-    public double round(double value, int places) {
-        if (places < 0) {
-            throw new IllegalArgumentException();
-        }
-
-        long factor = (long) Math.pow(10, places);
-        value = value * factor;
-        long tmp = Math.round(value);
-        return (double) tmp / factor;
-    }
+    
 
     /**
      *
@@ -1263,7 +1216,6 @@ public class Prestamo extends javax.swing.JPanel {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnBuscar;
     private javax.swing.JButton btnCalcular;
-    private javax.swing.JButton btnCalcular1;
     private javax.swing.JButton btnCancelar;
     private javax.swing.JButton btnGuardar;
     private javax.swing.JButton btnLimpiar;
@@ -1274,7 +1226,6 @@ public class Prestamo extends javax.swing.JPanel {
     private org.jdesktop.swingx.JXDatePicker dtFechaFin;
     private org.jdesktop.swingx.JXDatePicker dtFechaInicio;
     private javax.swing.JLabel jLabel10;
-    private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel14;
@@ -1329,7 +1280,6 @@ public class Prestamo extends javax.swing.JPanel {
     private javax.swing.JTextField txtCantDias;
     private javax.swing.JTextField txtCedula;
     private javax.swing.JTextField txtCentroLab;
-    private javax.swing.JTextField txtCobro;
     private javax.swing.JTextField txtCodigo;
     private javax.swing.JTextField txtDepartamento;
     private javax.swing.JTextArea txtDireccionPrin;
@@ -1368,22 +1318,25 @@ public class Prestamo extends javax.swing.JPanel {
             p.setPlazoDias(dias);
             p.setMontoOriginal(montoPrestamo);
             p.setTasa(tasaInteres);
+            p.setMontoTasa(montoInteres);
             p.setTasaCargo(tasaCargos);
             p.setMontoCargos(montoCargos);
             p.setMontoTotal(totalPrestamo);
             p.setCantidadCuotas(cantCuota);
-            p.setMontoCuota(cuota);
+            p.setMontoCuota(util.round(cuota,2));
             p.setIdFrecuenciaPago(cboDiasFrec.getSelectedIndex() + 1);
             p.setCantFrecuencia(cantPlazoFrec);
             p.setFrecuenciaDias(diasFrecPago);
-            p.setMontoPenalidad(Double.parseDouble(txtMontoPenalidad.getText()));
+                      
+            p.setMontoPenalidad((txtMontoPenalidad.getText().length()>0?Double.parseDouble(txtMontoPenalidad.getText()):0 ));
+            
             p.setDiasPenalidad((int) spnDiasPenalidad.getValue());
             p.setEstado(1);
 
             int id = pDao.insertarPrestamo(p);
 
             if (id > 0) {
-                JOptionPane.showMessageDialog(prin, "Se inserto la chochada! Id:" + id, "Insertando Prestamo", JOptionPane.INFORMATION_MESSAGE);
+                JOptionPane.showMessageDialog(prin, "Se guardo el prestamo para el cliente [" + cliente.getNombres()+" "+cliente.getApellidos() +"]", "Insertando Prestamo", JOptionPane.INFORMATION_MESSAGE);
                 
                 
                 for(int i=0; i<tabCuotas.getRowCount();i++)
@@ -1407,14 +1360,62 @@ public class Prestamo extends javax.swing.JPanel {
                 
                 
                 
-                
-                
             } else {
-                JOptionPane.showMessageDialog(prin, "NO SIRVE!", "Insertando Prestamo", JOptionPane.INFORMATION_MESSAGE);
+                JOptionPane.showMessageDialog(prin, "Hubo un error al guardar el Préstamo!!", "Insertando Prestamo", JOptionPane.INFORMATION_MESSAGE);
             }
 
         }
 
+    }
+    
+    private void limpiarCampos(){
+        
+        //LIMPIAR DATOS DEL CLIENTE        
+        this.txtNombres.setText("");
+        this.txtApellidos.setText("");
+        this.txtCentroLab.setText("");
+        this.txtCedula.setText("");
+        this.txtCodigo.setText("");
+        this.txtDepartamento.setText("");
+        this.txtMunicipio.setText("");
+        this.txtDireccionPrin.setText("");
+        this.txtDireccionSec.setText(""); 
+        rbtnMasculino.setSelected(false);
+        rbtnFemenino.setSelected(false);
+
+        DefaultListModel modelo = new DefaultListModel();
+        this.lstTelefono.setModel(modelo);
+        
+        //LIMPIAR PRESTAMO
+        this.txtMontoPrestamo.setText("0");
+        this.txtTasa.setText("0");
+        this.txtTasaCargo.setText("0");
+        
+        this.txtMontoInteres.setText("0");
+        this.txtMontoCargos.setText("0");
+
+        this.txtTotalPrestamo.setText("0");
+        this.txtMontoLetras.setText("0");
+        this.txtMontoPenalidad.setText("0");
+        
+        this.spnPlazo.setValue(0);
+        this.spnFrecuencia.setValue(0);
+        this.spnDiasPenalidad.setValue(0);
+        
+        
+        this.txtCantCuotas.setText("0");
+        this.txtCantDias.setText("0");
+        this.txtMontoCuota.setText("0");
+        
+        dtFechaInicio.setDate(null);
+        dtFechaFin.setDate(null);
+        
+        cboMoneda.setSelectedIndex(0);
+        cboDias.setSelectedIndex(0);
+        cboDiasFrec.setSelectedIndex(0);
+        
+        util.limpiarTabla(tabCuotas);
+        
     }
 
 }

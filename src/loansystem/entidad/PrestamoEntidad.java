@@ -19,9 +19,10 @@ public class PrestamoEntidad {
     private int cantidadCuotas;
     private int frecuenciaDias;
     private String fechaInicio, fechaVencimiento;
-    private double montoOriginal, montoCargos, montoTotal, montoCuota, montoPenalidad;
+    private double montoOriginal, montoTasa, montoCargos, montoTotal, montoCuota, montoPenalidad;
     private double tasa, tasaCargo;
     private Date fechaCreacion;
+    private String descEstado;
 
     public int getIdPrestamo() {
         return idPrestamo;
@@ -227,6 +228,34 @@ public class PrestamoEntidad {
      */
     public void setTasaCargo(double tasaMonto) {
         this.tasaCargo = tasaMonto;
+    }
+
+    /**
+     * @return the descEstado
+     */
+    public String getDescEstado() {
+        return descEstado;
+    }
+
+    /**
+     * @param descEstado the descEstado to set
+     */
+    public void setDescEstado(String descEstado) {
+        this.descEstado = descEstado;
+    }
+
+    /**
+     * @return the montoTasa
+     */
+    public double getMontoTasa() {
+        return montoTasa;
+    }
+
+    /**
+     * @param montoTasa the montoTasa to set
+     */
+    public void setMontoTasa(double montoTasa) {
+        this.montoTasa = montoTasa;
     }
 
 }
