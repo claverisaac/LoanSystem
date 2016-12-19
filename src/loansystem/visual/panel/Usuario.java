@@ -288,9 +288,11 @@ public class Usuario extends javax.swing.JPanel {
         //Crear login
    PersonalDAO daoPerso = new PersonalDAO(con.getCon());
    PersonalEntidad enti = daoPerso.obtenerLoginPropuesto(perso.getIdPersona());
+   String login = enti.getLogin();
    
-     
-       String login = enti.getLogin();
+   UsuarioDAO usuDAO = new UsuarioDAO(con.getCon());
+   
+       
        txtLogin.setText(login);
        txtPass.setText("123");
        txtPass2.setText("123");

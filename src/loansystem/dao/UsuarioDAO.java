@@ -9,6 +9,7 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import loansystem.entidad.UsuarioEntidad;
@@ -84,6 +85,26 @@ public class UsuarioDAO {
         return userEntidad;
     }
 
+         public ArrayList<UsuarioEntidad> obtenerTodosUsuarios() {
+        ArrayList<UsuarioEntidad> lista = new ArrayList<UsuarioEntidad>();
+        try {
+            s = con.createStatement();
+            System.out.println(";");
+
+            rs = s.executeQuery("");
+
+            while (rs.next()) {
+                lista.add(this.convertir(rs));
+            }
+
+        } catch (SQLException ex) {
+            Logger.getLogger(ClienteDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        return lista;
+    }
+         
+         
         private UsuarioEntidad convertir(ResultSet respuesta) {
         UsuarioEntidad obj = new UsuarioEntidad();
         try {
