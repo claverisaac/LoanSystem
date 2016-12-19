@@ -82,11 +82,12 @@ public class Prestamo extends javax.swing.JPanel {
     private void initComponents() {
 
         buttonGroup1 = new javax.swing.ButtonGroup();
+        lblTitulo = new javax.swing.JLabel();
         toolOpciones = new javax.swing.JToolBar();
         btnBuscar = new javax.swing.JButton();
-        btnCalcular = new javax.swing.JButton();
         btnLimpiar = new javax.swing.JButton();
         btnGuardar = new javax.swing.JButton();
+        btnImprimir = new javax.swing.JButton();
         btnCancelar = new javax.swing.JButton();
         pnelContenedor = new javax.swing.JPanel();
         pnelCliente = new javax.swing.JPanel();
@@ -115,7 +116,6 @@ public class Prestamo extends javax.swing.JPanel {
         txtDireccionSec = new javax.swing.JTextArea();
         jLabel12 = new javax.swing.JLabel();
         txtCodigo = new javax.swing.JTextField();
-        lblTitulo = new javax.swing.JLabel();
         scrollPrestamo = new javax.swing.JScrollPane();
         pnelPrestamo = new javax.swing.JPanel();
         jPanel1 = new javax.swing.JPanel();
@@ -162,9 +162,20 @@ public class Prestamo extends javax.swing.JPanel {
         jLabel23 = new javax.swing.JLabel();
         txtCantDias = new javax.swing.JTextField();
         txtMontoCuota = new javax.swing.JTextField();
+        btnCalcular = new javax.swing.JButton();
 
         setBackground(new java.awt.Color(255, 255, 255));
         setLayout(new java.awt.BorderLayout());
+
+        lblTitulo.setBackground(new java.awt.Color(0, 0, 102));
+        lblTitulo.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        lblTitulo.setForeground(new java.awt.Color(255, 255, 255));
+        lblTitulo.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblTitulo.setText("ASIGNACÓN DE PRÉSTAMO");
+        lblTitulo.setOpaque(true);
+        lblTitulo.setPreferredSize(new java.awt.Dimension(195, 28));
+        add(lblTitulo, java.awt.BorderLayout.PAGE_START);
+        lblTitulo.getAccessibleContext().setAccessibleName("ASIGNACIÓN DE PRÉSTAMO");
 
         toolOpciones.setFloatable(false);
         toolOpciones.setOrientation(javax.swing.SwingConstants.VERTICAL);
@@ -184,19 +195,6 @@ public class Prestamo extends javax.swing.JPanel {
         });
         toolOpciones.add(btnBuscar);
 
-        btnCalcular.setIcon(new javax.swing.ImageIcon(getClass().getResource("/loansystem/recursos/paneles/calculator.png"))); // NOI18N
-        btnCalcular.setToolTipText("Calcular");
-        btnCalcular.setMaximumSize(new java.awt.Dimension(43, 43));
-        btnCalcular.setMinimumSize(new java.awt.Dimension(43, 43));
-        btnCalcular.setOpaque(false);
-        btnCalcular.setPreferredSize(new java.awt.Dimension(43, 43));
-        btnCalcular.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnCalcularActionPerformed(evt);
-            }
-        });
-        toolOpciones.add(btnCalcular);
-
         btnLimpiar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/loansystem/recursos/paneles/repeat.png"))); // NOI18N
         btnLimpiar.setToolTipText("Limpiar");
         btnLimpiar.setOpaque(false);
@@ -208,7 +206,7 @@ public class Prestamo extends javax.swing.JPanel {
         toolOpciones.add(btnLimpiar);
 
         btnGuardar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/loansystem/recursos/paneles/save.png"))); // NOI18N
-        btnGuardar.setToolTipText("Aceptar");
+        btnGuardar.setToolTipText("Guardar el Prestamo");
         btnGuardar.setFocusable(false);
         btnGuardar.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         btnGuardar.setOpaque(false);
@@ -220,8 +218,21 @@ public class Prestamo extends javax.swing.JPanel {
         });
         toolOpciones.add(btnGuardar);
 
+        btnImprimir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/loansystem/recursos/paneles/printer.png"))); // NOI18N
+        btnImprimir.setToolTipText("Cancelar");
+        btnImprimir.setFocusable(false);
+        btnImprimir.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        btnImprimir.setOpaque(false);
+        btnImprimir.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        btnImprimir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnImprimirActionPerformed(evt);
+            }
+        });
+        toolOpciones.add(btnImprimir);
+
         btnCancelar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/loansystem/recursos/paneles/cerrar.png"))); // NOI18N
-        btnCancelar.setToolTipText("Cancelar");
+        btnCancelar.setToolTipText("Cerrar");
         btnCancelar.setFocusable(false);
         btnCancelar.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         btnCancelar.setOpaque(false);
@@ -416,16 +427,6 @@ public class Prestamo extends javax.swing.JPanel {
         );
 
         pnelCliente.add(pnelDatosCliente, java.awt.BorderLayout.CENTER);
-
-        lblTitulo.setBackground(new java.awt.Color(0, 0, 102));
-        lblTitulo.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        lblTitulo.setForeground(new java.awt.Color(255, 255, 255));
-        lblTitulo.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lblTitulo.setText("ASIGNACÓN DE PRÉSTAMO");
-        lblTitulo.setOpaque(true);
-        lblTitulo.setPreferredSize(new java.awt.Dimension(195, 28));
-        pnelCliente.add(lblTitulo, java.awt.BorderLayout.PAGE_START);
-        lblTitulo.getAccessibleContext().setAccessibleName("ASIGNACIÓN DE PRÉSTAMO");
 
         pnelContenedor.add(pnelCliente, java.awt.BorderLayout.NORTH);
 
@@ -766,6 +767,18 @@ public class Prestamo extends javax.swing.JPanel {
         txtMontoCuota.setEditable(false);
         txtMontoCuota.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
 
+        btnCalcular.setIcon(new javax.swing.ImageIcon(getClass().getResource("/loansystem/recursos/paneles/calculator.png"))); // NOI18N
+        btnCalcular.setToolTipText("Calcular");
+        btnCalcular.setMaximumSize(new java.awt.Dimension(43, 43));
+        btnCalcular.setMinimumSize(new java.awt.Dimension(43, 43));
+        btnCalcular.setOpaque(false);
+        btnCalcular.setPreferredSize(new java.awt.Dimension(43, 43));
+        btnCalcular.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCalcularActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
@@ -792,6 +805,8 @@ public class Prestamo extends javax.swing.JPanel {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(txtCantDias, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addComponent(txtMontoCuota))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnCalcular, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
         );
         jPanel3Layout.setVerticalGroup(
@@ -800,15 +815,18 @@ public class Prestamo extends javax.swing.JPanel {
                 .addGap(0, 0, 0)
                 .addComponent(jXTitledSeparator3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel26, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtMontoCuota, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel18)
-                    .addComponent(txtCantCuotas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel23)
-                    .addComponent(txtCantDias, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel26, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txtMontoCuota, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel18)
+                            .addComponent(txtCantCuotas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel23)
+                            .addComponent(txtCantDias, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addComponent(btnCalcular, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
                 .addContainerGap())
@@ -847,7 +865,7 @@ public class Prestamo extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
-        // TODO add your handling code here:
+       prin.removerTab(this);
     }//GEN-LAST:event_btnCancelarActionPerformed
 
     private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
@@ -903,6 +921,11 @@ public class Prestamo extends javax.swing.JPanel {
         limpiarCampos();
     }//GEN-LAST:event_btnLimpiarActionPerformed
 
+    private void btnImprimirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnImprimirActionPerformed
+        JOptionPane.showMessageDialog(prin, "Aqui va la logica para el reporte de impresion!","Imprimir datos del Préstamo",JOptionPane.INFORMATION_MESSAGE,
+            new javax.swing.ImageIcon(getClass().getResource("/loansystem/recursos/nuevo_cliente.png")));
+    }//GEN-LAST:event_btnImprimirActionPerformed
+
     public void cargarDatosCliente(ClienteEntidad cliente) {
         this.cliente = cliente;
 
@@ -913,7 +936,7 @@ public class Prestamo extends javax.swing.JPanel {
         this.txtApellidos.setText(cliente.getApellidos());
         this.txtCentroLab.setText(cliente.getCentroLaboral());
         this.txtCedula.setText(cliente.getNumCedula());
-        this.txtCodigo.setText(completarCerosID(cliente.getIdCliente(), 6));
+        this.txtCodigo.setText(util.completarCerosID(cliente.getIdCliente(), 6));
         this.txtDepartamento.setText(municipio.getDepartamento());
         this.txtMunicipio.setText(municipio.getMunicipio());
         this.txtDireccionPrin.setText(cliente.getDireccionPrincipal());
@@ -954,31 +977,7 @@ public class Prestamo extends javax.swing.JPanel {
 
     }
 
-    /**
-     *
-     * @param id
-     * @param espacios
-     * @return
-     */
-    private String completarCerosID(int id, int espacios) {
-        String idStr = String.valueOf(id);
-        String nuevoId = "";
-        StringBuilder aux = new StringBuilder();
-
-        if (idStr.length() < espacios) {
-            for (int i = 0; i < espacios - idStr.length(); i++) {
-                aux.append("0");
-            }
-
-            aux.append(idStr);
-            nuevoId = aux.toString();
-
-        } else {
-            nuevoId = String.valueOf(id);
-        }
-
-        return nuevoId;
-    }
+   
 
     /**
      * Logica para realizar el calculo del prestamo.
@@ -1218,6 +1217,7 @@ public class Prestamo extends javax.swing.JPanel {
     private javax.swing.JButton btnCalcular;
     private javax.swing.JButton btnCancelar;
     private javax.swing.JButton btnGuardar;
+    private javax.swing.JButton btnImprimir;
     private javax.swing.JButton btnLimpiar;
     private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.JComboBox<String> cboDias;

@@ -171,5 +171,31 @@ public class MetodosGenerales {
         long tmp = Math.round(value);
         return (double) tmp / factor;
     }
+    
+     /**
+     *
+     * @param id
+     * @param espacios
+     * @return
+     */
+    public String completarCerosID(int id, int espacios) {
+        String idStr = String.valueOf(id);
+        String nuevoId = "";
+        StringBuilder aux = new StringBuilder();
+
+        if (idStr.length() < espacios) {
+            for (int i = 0; i < espacios - idStr.length(); i++) {
+                aux.append("0");
+            }
+
+            aux.append(idStr);
+            nuevoId = aux.toString();
+
+        } else {
+            nuevoId = String.valueOf(id);
+        }
+
+        return nuevoId;
+    }
 
 }

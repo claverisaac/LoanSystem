@@ -142,25 +142,24 @@
                   <EmptySpace max="-2" attributes="0"/>
                   <Component id="txtNombre" min="-2" pref="451" max="-2" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
-                  <Component id="btnBuscar" min="-2" pref="50" max="-2" attributes="0"/>
+                  <Component id="btnBuscar" min="-2" pref="38" max="-2" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
-                  <Component id="btnBuscarTodos" min="-2" pref="60" max="-2" attributes="0"/>
+                  <Component id="btnBuscarTodos" min="-2" pref="38" max="-2" attributes="0"/>
+                  <EmptySpace max="-2" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
         <DimensionLayout dim="1">
           <Group type="103" groupAlignment="0" attributes="0">
-              <Group type="102" attributes="0">
-                  <Group type="103" groupAlignment="0" attributes="0">
-                      <Component id="btnBuscarTodos" alignment="0" min="-2" pref="45" max="-2" attributes="0"/>
-                      <Component id="btnBuscar" alignment="0" min="-2" max="-2" attributes="0"/>
-                      <Group type="102" alignment="0" attributes="0">
-                          <EmptySpace max="-2" attributes="0"/>
-                          <Group type="103" groupAlignment="3" attributes="0">
-                              <Component id="txtNombre" alignment="3" min="-2" max="-2" attributes="0"/>
-                              <Component id="jLabel22" alignment="3" min="-2" max="-2" attributes="0"/>
-                          </Group>
+              <Group type="102" alignment="0" attributes="0">
+                  <EmptySpace max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                      <Component id="btnBuscar" max="32767" attributes="0"/>
+                      <Group type="103" groupAlignment="3" attributes="0">
+                          <Component id="txtNombre" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="jLabel22" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
+                      <Component id="btnBuscarTodos" alignment="0" max="32767" attributes="0"/>
                   </Group>
                   <EmptySpace max="32767" attributes="0"/>
               </Group>
@@ -181,7 +180,7 @@
         <Component class="javax.swing.JButton" name="btnBuscar">
           <Properties>
             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-              <Image iconType="3" name="/loansystem/recursos/paneles/encontrar.png"/>
+              <Image iconType="3" name="/loansystem/recursos/botones/encontrar.png"/>
             </Property>
           </Properties>
           <Events>
@@ -191,7 +190,7 @@
         <Component class="javax.swing.JButton" name="btnBuscarTodos">
           <Properties>
             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-              <Image iconType="3" name="/loansystem/recursos/paneles/repeat.png"/>
+              <Image iconType="3" name="/loansystem/recursos/botones/repeat.png"/>
             </Property>
             <Property name="toolTipText" type="java.lang.String" value="Todos"/>
           </Properties>

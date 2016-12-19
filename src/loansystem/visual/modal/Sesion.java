@@ -85,7 +85,7 @@ Conexion con;
 
         jLabel4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/loansystem/recursos/sesion.png"))); // NOI18N
 
-        btnIniciar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/loansystem/recursos/paneles/save.png"))); // NOI18N
+        btnIniciar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/loansystem/recursos/paneles/like.png"))); // NOI18N
         btnIniciar.setText("Iniciar");
         btnIniciar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -93,7 +93,7 @@ Conexion con;
             }
         });
 
-        btnCancelar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/loansystem/recursos/paneles/back.png"))); // NOI18N
+        btnCancelar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/loansystem/recursos/paneles/cerrar.png"))); // NOI18N
         btnCancelar.setText("Cancelar");
         btnCancelar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -168,7 +168,7 @@ Conexion con;
 
     private void btnIniciarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIniciarActionPerformed
     //Conectarse a la BD
-        Conexion con = new Conexion("root", "", "loan_system", "localhost");
+        Conexion con = new Conexion("root", "159951", "loan_system", "localhost");
         boolean conexion_abierta = con.abrirConeccion();
       
         //Verificamos si la conexion esta abierta
