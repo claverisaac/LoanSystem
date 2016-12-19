@@ -61,14 +61,16 @@ public class BuscarCliente extends javax.swing.JDialog {
 
         jScrollPane1 = new javax.swing.JScrollPane();
         tabClientes = new javax.swing.JTable();
+        jPanel1 = new javax.swing.JPanel();
+        btnAceptar = new javax.swing.JButton();
+        btnCancelar = new javax.swing.JButton();
+        jPanel2 = new javax.swing.JPanel();
+        lblTitulo = new javax.swing.JLabel();
         jPanel3 = new javax.swing.JPanel();
         jLabel22 = new javax.swing.JLabel();
         txtNombre = new javax.swing.JTextField();
         btnBuscar = new javax.swing.JButton();
         btnBuscarTodos = new javax.swing.JButton();
-        jPanel1 = new javax.swing.JPanel();
-        btnAceptar = new javax.swing.JButton();
-        btnCancelar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Buscar Cliente");
@@ -117,6 +119,52 @@ public class BuscarCliente extends javax.swing.JDialog {
         }
 
         getContentPane().add(jScrollPane1, java.awt.BorderLayout.CENTER);
+
+        jPanel1.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel1.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.RIGHT));
+
+        btnAceptar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/loansystem/recursos/paneles/like.png"))); // NOI18N
+        btnAceptar.setText("Aceptar");
+        btnAceptar.setToolTipText("Aceptar");
+        btnAceptar.setFocusable(false);
+        btnAceptar.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
+        btnAceptar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAceptarActionPerformed(evt);
+            }
+        });
+        jPanel1.add(btnAceptar);
+
+        btnCancelar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/loansystem/recursos/paneles/cerrar.png"))); // NOI18N
+        btnCancelar.setText("Cerrar");
+        btnCancelar.setToolTipText("Cerrar");
+        btnCancelar.setFocusable(false);
+        btnCancelar.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
+        btnCancelar.setVerticalAlignment(javax.swing.SwingConstants.BOTTOM);
+        btnCancelar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCancelarActionPerformed(evt);
+            }
+        });
+        jPanel1.add(btnCancelar);
+
+        getContentPane().add(jPanel1, java.awt.BorderLayout.PAGE_END);
+
+        jPanel2.setLayout(new java.awt.BorderLayout());
+
+        lblTitulo.setBackground(new java.awt.Color(0, 0, 102));
+        lblTitulo.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        lblTitulo.setForeground(new java.awt.Color(255, 255, 255));
+        lblTitulo.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblTitulo.setText("CLIENTES PARA PRÉSTAMO");
+        lblTitulo.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        lblTitulo.setFocusable(false);
+        lblTitulo.setIconTextGap(10);
+        lblTitulo.setMaximumSize(new java.awt.Dimension(178, 20));
+        lblTitulo.setMinimumSize(new java.awt.Dimension(178, 28));
+        lblTitulo.setOpaque(true);
+        lblTitulo.setPreferredSize(new java.awt.Dimension(178, 28));
+        jPanel2.add(lblTitulo, java.awt.BorderLayout.PAGE_START);
 
         jPanel3.setBackground(new java.awt.Color(255, 255, 255));
         jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder("Búsqueda por:"));
@@ -167,36 +215,9 @@ public class BuscarCliente extends javax.swing.JDialog {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        getContentPane().add(jPanel3, java.awt.BorderLayout.PAGE_START);
+        jPanel2.add(jPanel3, java.awt.BorderLayout.CENTER);
 
-        jPanel1.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.RIGHT));
-
-        btnAceptar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/loansystem/recursos/paneles/like.png"))); // NOI18N
-        btnAceptar.setText("Aceptar");
-        btnAceptar.setToolTipText("Aceptar");
-        btnAceptar.setFocusable(false);
-        btnAceptar.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
-        btnAceptar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnAceptarActionPerformed(evt);
-            }
-        });
-        jPanel1.add(btnAceptar);
-
-        btnCancelar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/loansystem/recursos/paneles/cerrar.png"))); // NOI18N
-        btnCancelar.setText("Cerrar");
-        btnCancelar.setToolTipText("Cerrar");
-        btnCancelar.setFocusable(false);
-        btnCancelar.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
-        btnCancelar.setVerticalAlignment(javax.swing.SwingConstants.BOTTOM);
-        btnCancelar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnCancelarActionPerformed(evt);
-            }
-        });
-        jPanel1.add(btnCancelar);
-
-        getContentPane().add(jPanel1, java.awt.BorderLayout.PAGE_END);
+        getContentPane().add(jPanel2, java.awt.BorderLayout.NORTH);
 
         setSize(new java.awt.Dimension(878, 463));
         setLocationRelativeTo(null);
@@ -253,6 +274,16 @@ public class BuscarCliente extends javax.swing.JDialog {
                     new javax.swing.ImageIcon(getClass().getResource("/loansystem/recursos/prestamo.png"))) == JOptionPane.YES_OPTION)
             {
                 System.out.println("Selecciono Si");
+                ListaPrestamos lPrestamo = new ListaPrestamos(prin, true, con, pres);
+                lPrestamo.setPrestamosArr(arrP);
+                lPrestamo.setCliente(cliente);
+                
+                lPrestamo.cagarPrestamos();
+                
+                
+                lPrestamo.setVisible(true);
+                
+                this.dispose();
                 
             }else
             {
@@ -304,8 +335,10 @@ public class BuscarCliente extends javax.swing.JDialog {
     private javax.swing.JButton btnCancelar;
     private javax.swing.JLabel jLabel22;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JLabel lblTitulo;
     private javax.swing.JTable tabClientes;
     private javax.swing.JTextField txtNombre;
     // End of variables declaration//GEN-END:variables

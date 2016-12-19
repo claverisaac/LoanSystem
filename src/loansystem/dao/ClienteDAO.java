@@ -13,6 +13,7 @@ import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import loansystem.entidad.ClienteEntidad;
+import loansystem.utilidades.MetodosGenerales;
 
 /**
  *
@@ -455,7 +456,7 @@ public class ClienteDAO {
             obj.setApellidos(respuesta.getString("apellidos"));
             obj.setNombres(respuesta.getString("nombres"));
             obj.setIdEmpresa(respuesta.getInt("idEmpresa"));
-            obj.setFechaAlta(respuesta.getString("fechaAlta"));
+            obj.setFechaAlta(MetodosGenerales.formatFecha(respuesta.getDate("fechaAlta"),"dd/MM/yyyy"));
             obj.setNumCedula(respuesta.getString("numCedula"));
             obj.setSexo(respuesta.getString("sexo"));
             obj.setCentroLaboral(respuesta.getString("centroLaboral"));
