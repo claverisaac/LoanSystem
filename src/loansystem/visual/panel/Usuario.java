@@ -5,6 +5,8 @@
  */
 package loansystem.visual.panel;
 
+import java.util.ArrayList;
+import javax.swing.JOptionPane;
 import loansystem.Principal;
 import loansystem.bd.Conexion;
 import loansystem.dao.CargoDAO;
@@ -24,6 +26,7 @@ public class Usuario extends javax.swing.JPanel {
 
     private Conexion con;
     private Principal prin;
+    private boolean inact = false, passw= false, save = false;
 
     /**
      * Creates new form Usuario
@@ -33,6 +36,15 @@ public class Usuario extends javax.swing.JPanel {
         this.prin = prin;
 
         initComponents();
+        txtPass.setVisible(false);
+        txtPass2.setVisible(false);
+        lblPass2.setVisible(false);
+        lblPass.setVisible(false);
+        txtLogin.setEditable(false);
+            cboEstado.setEnabled(false);
+            btnPass.setEnabled(false);
+            btnInact.setEnabled(false);
+            btnGuardar.setEnabled(false);
     }
 
     /**
@@ -54,19 +66,20 @@ public class Usuario extends javax.swing.JPanel {
         btnBuscarPersona = new javax.swing.JButton();
         jLabel10 = new javax.swing.JLabel();
         txtId = new javax.swing.JTextField();
-        jButton3 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
         jButton1 = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
         jLabel4 = new javax.swing.JLabel();
         txtLogin = new javax.swing.JTextField();
         jLabel5 = new javax.swing.JLabel();
-        jLabel6 = new javax.swing.JLabel();
+        lblPass = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
         cboEstado = new javax.swing.JComboBox<>();
         lblPass2 = new javax.swing.JLabel();
         txtPass = new javax.swing.JPasswordField();
         txtPass2 = new javax.swing.JPasswordField();
+        btnGuardar = new javax.swing.JButton();
+        btnPass = new javax.swing.JButton();
+        btnInact = new javax.swing.JButton();
         jLabel8 = new javax.swing.JLabel();
 
         jLabel2.setText("jLabel2");
@@ -100,11 +113,12 @@ public class Usuario extends javax.swing.JPanel {
         txtId.setEditable(false);
         txtId.setHorizontalAlignment(javax.swing.JTextField.CENTER);
 
-        jButton3.setText("Inactivar");
-
-        jButton2.setText("Cambiar Pass");
-
-        jButton1.setText("Guardar");
+        jButton1.setText("Cancelar");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -130,15 +144,11 @@ public class Usuario extends javax.swing.JPanel {
                                         .addComponent(txtId, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addGap(18, 18, 18)
                                         .addComponent(btnBuscarPersona)))))
-                        .addGap(0, 0, Short.MAX_VALUE))
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
                         .addComponent(jButton1)
-                        .addGap(18, 18, 18)
-                        .addComponent(jButton3)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jButton2)))
-                .addContainerGap())
+                        .addContainerGap())))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -156,11 +166,9 @@ public class Usuario extends javax.swing.JPanel {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
                     .addComponent(txtCargo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(43, 43, 43)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton2)
-                    .addComponent(jButton3)
-                    .addComponent(jButton1)))
+                .addGap(67, 67, 67)
+                .addComponent(jButton1)
+                .addGap(19, 19, 19))
         );
 
         jPanel2.setBackground(new java.awt.Color(255, 255, 255));
@@ -168,13 +176,34 @@ public class Usuario extends javax.swing.JPanel {
 
         jLabel4.setText("Login:");
 
-        jLabel6.setText("Contraseña: ");
+        lblPass.setText("Contraseña: ");
 
         jLabel7.setText("Estado:");
 
         cboEstado.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Activo", "Inactivo" }));
 
         lblPass2.setText("Repetir Conta..");
+
+        btnGuardar.setText("Guardar");
+        btnGuardar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnGuardarActionPerformed(evt);
+            }
+        });
+
+        btnPass.setText("Cambiar Pass");
+        btnPass.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnPassActionPerformed(evt);
+            }
+        });
+
+        btnInact.setText("Inactivar");
+        btnInact.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnInactActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -186,10 +215,14 @@ public class Usuario extends javax.swing.JPanel {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addComponent(jLabel4)
+                        .addGap(56, 56, 56)
+                        .addComponent(txtLogin))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel2Layout.createSequentialGroup()
                                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel6)
+                                    .addComponent(lblPass)
                                     .addComponent(jLabel7))
                                 .addGap(22, 22, 22)
                                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
@@ -198,12 +231,15 @@ public class Usuario extends javax.swing.JPanel {
                             .addGroup(jPanel2Layout.createSequentialGroup()
                                 .addComponent(lblPass2)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(txtPass2)))
-                        .addGap(0, 207, Short.MAX_VALUE))
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(jLabel4)
-                        .addGap(56, 56, 56)
-                        .addComponent(txtLogin)))
+                                .addComponent(txtPass2, javax.swing.GroupLayout.PREFERRED_SIZE, 149, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                        .addGap(0, 160, Short.MAX_VALUE)
+                        .addComponent(btnPass)
+                        .addGap(18, 18, 18)
+                        .addComponent(btnInact)
+                        .addGap(18, 18, 18)
+                        .addComponent(btnGuardar)))
                 .addContainerGap())
         );
         jPanel2Layout.setVerticalGroup(
@@ -226,12 +262,17 @@ public class Usuario extends javax.swing.JPanel {
                             .addComponent(cboEstado, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(18, 18, 18)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel6)
+                            .addComponent(lblPass)
                             .addComponent(txtPass, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(18, 18, 18)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(lblPass2)
                             .addComponent(txtPass2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnGuardar)
+                    .addComponent(btnPass)
+                    .addComponent(btnInact))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -270,6 +311,59 @@ public class Usuario extends javax.swing.JPanel {
         bp.setVisible(true);
     }//GEN-LAST:event_btnBuscarPersonaActionPerformed
 
+    private void btnInactActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInactActionPerformed
+        // TODO add your handling code here:
+        btnGuardar.setEnabled(true);
+        cboEstado.setEnabled(true);
+        btnInact.setEnabled(false);
+        btnPass.setEnabled(false);
+        inact= true;
+        
+    }//GEN-LAST:event_btnInactActionPerformed
+
+    private void btnPassActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPassActionPerformed
+        // TODO add your handling code here:
+          btnGuardar.setEnabled(true);
+          passw = true;
+           txtPass.setVisible(true);
+        txtPass2.setVisible(false);
+        lblPass2.setVisible(false);
+        lblPass.setVisible(false);
+          
+    }//GEN-LAST:event_btnPassActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+        prin.removerTab(this);
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
+        // TODO add your handling code here:
+       PersonalDAO persoDAO = new PersonalDAO(con.getCon()); 
+       PersonalEntidad persoE = persoDAO.obtenerXPersona(Integer.parseInt(txtId.getText()));
+       UsuarioDAO dao = new UsuarioDAO(con.getCon());
+       UsuarioEntidad entidadUser= new UsuarioEntidad();
+       entidadUser = dao.obtenerXUsuarioIdPersona(persoE.getIdPersona());
+       
+        
+        
+      
+        if (inact){
+             UsuarioEntidad UsuarioEnti = new UsuarioEntidad();
+             if (cboEstado.getSelectedItem().equals("Activo")){
+              UsuarioEnti.setEstado(1);
+              }else{  UsuarioEnti.setEstado(0);}
+             
+              save = dao.updateEstadoUsuario(UsuarioEnti,entidadUser.getIdUsuario());
+                    if(save){
+                    JOptionPane.showMessageDialog(this, "Estado actualizado exitosamente!!", "Administración de Usuarios", JOptionPane.INFORMATION_MESSAGE);
+                   inact = false;
+                    }
+        
+        }
+    }//GEN-LAST:event_btnGuardarActionPerformed
+
+    
     public void cargarDatosPersonal(PersonalEntidad perso) {
         CargoDAO cargoDao = new CargoDAO(con.getCon());
         CargoEntidad cargoenti = cargoDao.obtenerCargo(perso.getIdCargo());
@@ -277,51 +371,86 @@ public class Usuario extends javax.swing.JPanel {
         this.txtId.setText(String.valueOf(perso.getIdPersona()));
         this.txtNombre.setText(perso.getNombres().concat(" ").concat(perso.getApellidos()));
         this.txtCargo.setText(cargoenti.getCargo());
-        
+
         //Buscar cuenta
         UsuarioEntidad usuEnti;
         UsuarioDAO daoUsu = new UsuarioDAO(con.getCon());
-        usuEnti = daoUsu.obtenerXUsuarioId(perso.getIdPersona());
-        
-        if(usuEnti ==null) //No hay cuenta de usuario
+        usuEnti = daoUsu.obtenerXUsuarioIdPersona(perso.getIdPersona());
+
+        if (usuEnti == null) //No hay cuenta de usuario
         {
-        //Crear login
-   PersonalDAO daoPerso = new PersonalDAO(con.getCon());
-   PersonalEntidad enti = daoPerso.obtenerLoginPropuesto(perso.getIdPersona());
-   
-     
-       String login = enti.getLogin();
-       txtLogin.setText(login);
-       txtPass.setText("123");
-       txtPass2.setText("123");
-       
-        }
-        else{ //Si hay cuenta de usuario
+            //Crear login
+            PersonalDAO daoPerso = new PersonalDAO(con.getCon());
+            PersonalEntidad enti = daoPerso.obtenerLoginPropuesto(perso.getIdPersona());
+            String loginDos = null;
+            String login = enti.getLogin();
+
+            ArrayList<UsuarioEntidad> usuarioEnti;
+            UsuarioEntidad usua;
+            UsuarioDAO usuDAO = new UsuarioDAO(con.getCon());
+            usuarioEnti = usuDAO.obtenerTodosUsuarios();
             
+
+            for (int i = 0; i < usuarioEnti.size(); i++) {
+              System.out.println("Login: "+login);
+              
+                if (usuarioEnti.get(i).getLogin().contains(login)) {
+                    //Login ya existe
+                    usua = usuDAO.obtenerCantLogins(login);
+                    loginDos = login.concat(String.valueOf(usua.getCantidad()));
+                     System.out.println("Login "+loginDos+" existe");
+                     txtLogin.setText(loginDos);
+                     
+                } else {
+                    //Login no existe
+                    System.out.println("Login "+loginDos+" No existe");
+                    loginDos = login;
+                     txtLogin.setText(loginDos);
+                }
+
+            }
+
+           
+            txtPass.setText("123");
+            txtPass2.setText("123");
+
+        } else { //Si hay cuenta de usuario
             
+            txtLogin.setEditable(false);
+            cboEstado.setEnabled(false);
+            txtLogin.setText(usuEnti.getLogin());
+            if(usuEnti.getEstado()==1){
+            cboEstado.setSelectedItem("Activo");
+            }else{      cboEstado.setSelectedItem("Inactivo");}
+            
+            btnPass.setEnabled(true);
+            btnInact.setEnabled(true);
+            
+
         }
-        
+
     }
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnBuscarPersona;
+    private javax.swing.JButton btnGuardar;
+    private javax.swing.JButton btnInact;
+    private javax.swing.JButton btnPass;
     private javax.swing.JComboBox<String> cboEstado;
     private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
+    private javax.swing.JLabel lblPass;
     private javax.swing.JLabel lblPass2;
     private javax.swing.JTextField txtCargo;
     private javax.swing.JTextField txtId;

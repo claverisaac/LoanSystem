@@ -9,9 +9,19 @@ package loansystem.entidad;
  *
  * @author jechavarria
  */
+
 public class UsuarioEntidad {
-int idUsuario,idPersona, estado;
+int idUsuario,idPersona, estado, cantidad;
 String login,pass;
+
+    public void setCantidad(int cantidad) {
+        this.cantidad = cantidad;
+    }
+
+    public int getCantidad() {
+        return cantidad;
+    }
+
 
     public int getEstado() {
         return estado;
