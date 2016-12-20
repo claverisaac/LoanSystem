@@ -103,6 +103,25 @@ public class UsuarioDAO {
 
         return userEntidad;
     }
+          
+                    public UsuarioEntidad conv_md5(String palabra) {
+        UsuarioEntidad userEntidad = null;
+        try {
+            s = con.createStatement();
+            rs = s.executeQuery("SELECT MD5('"+palabra+"') as new_pass;");
+            
+             System.out.println("SELECT MD5('"+palabra+"') as new_pass;");
+   
+            while (rs.next()) {
+                userEntidad = this.convertirPalabra(rs);
+            }
+            
+        } catch (SQLException ex) {
+            Logger.getLogger(UsuarioDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        return userEntidad;
+    }
                 
          public ArrayList<UsuarioEntidad> obtenerTodosUsuarios() {
         ArrayList<UsuarioEntidad> lista = new ArrayList<UsuarioEntidad>();
@@ -179,12 +198,26 @@ public class UsuarioDAO {
 
         return obj;
     }
-        
+                private UsuarioEntidad convertirPalabra(ResultSet respuesta) {
+        UsuarioEntidad obj = new UsuarioEntidad();
+        try {
+
+       
+            obj.setPass_new(respuesta.getString("new_pass"));
+          
+
+        } catch (SQLException ex) {
+            Logger.getLogger(UsuarioDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        return obj;
+    }
+                
               private UsuarioEntidad convertirCant(ResultSet respuesta) {
         UsuarioEntidad obj = new UsuarioEntidad();
         try {
 
-            obj.setIdUsuario(respuesta.getInt("cantidad"));
+            obj.setCantidad(respuesta.getInt("cantidad"));
        
 
         } catch (SQLException ex) {

@@ -12,7 +12,16 @@ package loansystem.entidad;
 
 public class UsuarioEntidad {
 int idUsuario,idPersona, estado, cantidad;
-String login,pass;
+String login,pass, pass_new;
+
+    public void setPass_new(String pass_new) {
+        this.pass_new = pass_new;
+    }
+
+    public String getPass_new() {
+        return pass_new;
+    }
+
 
     public void setCantidad(int cantidad) {
         this.cantidad = cantidad;
