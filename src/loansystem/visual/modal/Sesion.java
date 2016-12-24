@@ -10,7 +10,6 @@ package loansystem.visual.modal;
 import java.awt.event.KeyEvent;
 import javax.swing.JOptionPane;
 import javax.swing.UIManager;
-import javax.swing.UnsupportedLookAndFeelException;
 import loansystem.Principal;
 import loansystem.bd.Conexion;
 import loansystem.entidad.*;
@@ -168,7 +167,7 @@ Conexion con;
 
     private void btnIniciarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIniciarActionPerformed
     //Conectarse a la BD
-        Conexion con = new Conexion("root", "", "loan_system", "localhost");
+        Conexion con = new Conexion("root", "159951", "loan_system", "localhost");
         boolean conexion_abierta = con.abrirConeccion();
       
         //Verificamos si la conexion esta abierta

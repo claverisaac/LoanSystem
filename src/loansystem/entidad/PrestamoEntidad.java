@@ -23,6 +23,14 @@ public class PrestamoEntidad {
     private double tasa, tasaCargo;
     private Date fechaCreacion;
     private String descEstado;
+    
+    private double saldoActual = 0;
+    private String fechaUltimoPago = "";
+    private double ultimoPago = 0;
+    private String simboloMoneda="", moneda="";
+    private String plazoPrestamo = "", frecueciaPago = "";
+    
+    
 
     public int getIdPrestamo() {
         return idPrestamo;
@@ -256,6 +264,105 @@ public class PrestamoEntidad {
      */
     public void setMontoTasa(double montoTasa) {
         this.montoTasa = montoTasa;
+    }
+
+    /**
+     * @return the saldoActual
+     */
+    public double getSaldoActual() {
+        return saldoActual;
+    }
+
+    /**
+     * @param saldoActual the saldoActual to set
+     */
+    public void setSaldoActual(double saldoActual) {
+        this.saldoActual = saldoActual;
+    }
+
+
+    /**
+     * @return the fechaUltimoPago
+     */
+    public String getFechaUltimoPago() {
+        return fechaUltimoPago;
+    }
+
+    /**
+     * @param fechaUltimoPago the fechaUltimoPago to set
+     */
+    public void setFechaUltimoPago(String fechaUltimoPago) {
+        this.fechaUltimoPago = fechaUltimoPago;
+    }
+
+    /**
+     * @return the ultimoPago
+     */
+    public double getUltimoPago() {
+        return ultimoPago;
+    }
+
+    /**
+     * @param ultimoPago the ultimoPago to set
+     */
+    public void setUltimoPago(double ultimoPago) {
+        this.ultimoPago = ultimoPago;
+    }
+
+    /**
+     * @return the simboloMoneda
+     */
+    public String getSimboloMoneda() {
+        return simboloMoneda;
+    }
+
+    /**
+     * @param simboloMoneda the simboloMoneda to set
+     */
+    public void setSimboloMoneda(String simboloMoneda) {
+        this.simboloMoneda = simboloMoneda;
+    }
+
+    /**
+     * @return the moneda
+     */
+    public String getMoneda() {
+        return moneda;
+    }
+
+    /**
+     * @param moneda the moneda to set
+     */
+    public void setMoneda(String moneda) {
+        this.moneda = moneda;
+    }
+
+    /**
+     * @return the plazoPrestamo
+     */
+    public String getPlazoPrestamo() {
+        return plazoPrestamo;
+    }
+
+    /**
+     * @param plazoPrestamo the plazoPrestamo to set
+     */
+    public void setPlazoPrestamo(String plazoPrestamo) {
+        this.plazoPrestamo = plazoPrestamo;
+    }
+
+    /**
+     * @return the frecueciaPago
+     */
+    public String getFrecueciaPago() {
+        return frecueciaPago;
+    }
+
+    /**
+     * @param frecueciaPago the frecueciaPago to set
+     */
+    public void setFrecueciaPago(String frecueciaPago) {
+        this.frecueciaPago = frecueciaPago;
     }
 
 }

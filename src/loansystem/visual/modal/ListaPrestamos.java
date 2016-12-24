@@ -207,11 +207,12 @@ public class ListaPrestamos extends javax.swing.JDialog {
                 tabPrestamos.setValueAt(p.getFechaInicio(),i ,1 );
                 tabPrestamos.setValueAt(p.getFechaVencimiento(),i ,2 );
                 tabPrestamos.setValueAt(p.getMontoTotal(),i ,3 );
-                tabPrestamos.setValueAt(p.getCantPeriodo(),i ,4 );
+                tabPrestamos.setValueAt(p.getCantPeriodo() + " "+p.getPlazoPrestamo(),i ,4 );
                 tabPrestamos.setValueAt(util.round(p.getMontoCuota(),2),i ,5 );
-                tabPrestamos.setValueAt(p.getCantFrecuencia(),i ,6 );
+                tabPrestamos.setValueAt(p.getCantFrecuencia() + " "+p.getFrecueciaPago(),i ,6 );
                 tabPrestamos.setValueAt(0,i ,7 );
                 tabPrestamos.setValueAt(p.getDescEstado(),i ,8);
+                
                 
                 i++;
 
