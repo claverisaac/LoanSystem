@@ -141,6 +141,50 @@ public class UsuarioDAO {
 
         return lista;
     }
+     
+        public ArrayList<UsuarioEntidad> obtenerUsuariosXlogiin(String logi) {
+        ArrayList<UsuarioEntidad> lista = new ArrayList<UsuarioEntidad>();
+        try {
+            s = con.createStatement();
+            System.out.println("select idUsuario,idPersona, login, pass,estado from loan_system.usuario where login = '"+logi+"';");
+
+            rs = s.executeQuery("select idUsuario,idPersona, login, pass,estado from loan_system.usuario where login = '"+logi+"';");
+
+            while (rs.next()) {
+                lista.add(this.convertir(rs));
+            }
+
+        } catch (SQLException ex) {
+            Logger.getLogger(UsuarioDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        return lista;
+    }
+         
+    public boolean insertarUsuario(UsuarioEntidad obj) {
+        //ProductoEntidad id = null;
+        boolean exito = false;
+        try {
+            s = con.createStatement();
+            System.out.println("INSERT INTO usuario(idPersona, login, pass ,estado) VALUES("
+                    + obj.getIdPersona()+ ",'"
+                    + obj.getLogin()+ "',md5('"
+                    + obj.getPass()+ "'),"
+                    + obj.getEstado()+ ");");
+
+            exito = s.execute("INSERT INTO usuario(idPersona, login, pass ,estado) VALUES("
+                    + obj.getIdPersona()+ ",'"
+                    + obj.getLogin()+ "',md5('"
+                    + obj.getPass()+ "'),"
+                    + obj.getEstado()+ ");");
+
+            exito = true;
+
+        } catch (SQLException ex) {
+            Logger.getLogger(UsuarioDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return exito;
+    }
          
              /* ACTUALIZAR CLEINTE
      */

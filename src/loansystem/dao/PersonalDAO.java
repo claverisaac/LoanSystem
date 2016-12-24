@@ -12,7 +12,6 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import loansystem.entidad.CargoEntidad;
 import loansystem.entidad.ClienteEntidad;
 import loansystem.entidad.PersonalEntidad;
 
@@ -57,6 +56,188 @@ public class PersonalDAO {
             while (rs.next()) {
                 lista.add(this.convertir(rs));
 
+            }
+
+        } catch (SQLException ex) {
+            Logger.getLogger(PersonalDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        return lista;
+    }
+
+    public ArrayList<PersonalEntidad> obtenerePersonalNombreIDCed(String nom, String cedula, int id) {
+
+        ArrayList<PersonalEntidad> lista = new ArrayList<PersonalEntidad>();
+
+        try {
+            //preparamos la ejecucion del query
+            s = con.createStatement();
+            //Ejecutamos el Query
+            System.out.println("SELECT idPersona,\n"
+                    + "    nombres,\n"
+                    + "    apellidos,\n"
+                    + "    numCedula,\n"
+                    + "    sexo,\n"
+                    + "    idCargo,\n"
+                    + "    fechaRegistro,\n"
+                    + "    idEmpresa\n"
+                    + "FROM personal\n"
+                    + "WHERE nombres like '%" + nom + "%' or apellidos like '%" + nom + "%' or numCedula ='" + cedula + "' or idPersona =" + id + ";");
+
+            rs = s.executeQuery("SELECT idPersona,\n"
+                    + "    nombres,\n"
+                    + "    apellidos,\n"
+                    + "    numCedula,\n"
+                    + "    sexo,\n"
+                    + "    idCargo,\n"
+                    + "    fechaRegistro,\n"
+                    + "    idEmpresa\n"
+                    + "FROM personal\n"
+                    + "WHERE nombres like '%" + nom + "%' or apellidos like '%" + nom + "%' or numCedula ='" + cedula + "' or idPersona =" + id + ";");
+
+            //   System.out.println("SELECT id_categoria, nombre_categoria,descripcion FROM producto_categoria;");
+            //Recorremos cada registro agregandolo al ArrayList
+            while (rs.next()) {
+                lista.add(this.convertir(rs));
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(PersonalDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        return lista;
+    }
+
+    public ArrayList<PersonalEntidad> obtenerClientesNombre(String nom) {
+        ArrayList<PersonalEntidad> lista = new ArrayList<PersonalEntidad>();
+        try {
+            //preparamos la ejecucion del query
+            s = con.createStatement();
+            //Ejecutamos el Query
+            rs = s.executeQuery("SELECT idPersona,\n"
+                    + "    nombres,\n"
+                    + "    apellidos,\n"
+                    + "    numCedula,\n"
+                    + "    sexo,\n"
+                    + "    idCargo,\n"
+                    + "    fechaRegistro,\n"
+                    + "    idEmpresa\n"
+                    + "FROM personal\n"
+                    + "WHERE nombres like '%" + nom + "%' or apellidos like '%" + nom + "%';");
+
+            //   System.out.println("SELECT id_categoria, nombre_categoria,descripcion FROM producto_categoria;");
+            //Recorremos cada registro agregandolo al ArrayList
+            while (rs.next()) {
+                lista.add(this.convertir(rs));
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(PersonalDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        return lista;
+    }
+
+    public PersonalEntidad obtenerPersonal(int idPersona) {
+        PersonalEntidad lista = null;
+        try {
+            s = con.createStatement();
+            System.out.println("SELECT idPersona,\n"
+                    + "    nombres,\n"
+                    + "    apellidos,\n"
+                    + "    numCedula,\n"
+                    + "    sexo,\n"
+                    + "    idCargo,\n"
+                    + "    fechaRegistro,\n"
+                    + "    idEmpresa\n"
+                    + "FROM personal\n"
+                    + "WHERE idPersona =" + idPersona + ";");
+
+            rs = s.executeQuery("SELECT idPersona,\n"
+                    + "    nombres,\n"
+                    + "    apellidos,\n"
+                    + "    numCedula,\n"
+                    + "    sexo,\n"
+                    + "    idCargo,\n"
+                    + "    fechaRegistro,\n"
+                    + "    idEmpresa\n"
+                    + "FROM personal\n"
+                    + "WHERE idPersona =" + idPersona + ";");
+
+            while (rs.next()) {
+                lista = this.convertir(rs);
+            }
+
+        } catch (SQLException ex) {
+            Logger.getLogger(PersonalDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        return lista;
+    }
+
+    public ArrayList<PersonalEntidad> obtenerXidPersona(int idPersona) {
+        ArrayList<PersonalEntidad> lista = new ArrayList<PersonalEntidad>();
+        try {
+            s = con.createStatement();
+            System.out.println("SELECT idPersona,\n"
+                    + "    nombres,\n"
+                    + "    apellidos,\n"
+                    + "    numCedula,\n"
+                    + "    sexo,\n"
+                    + "    idCargo,\n"
+                    + "    fechaRegistro,\n"
+                    + "    idEmpresa\n"
+                    + "FROM personal\n"
+                    + "WHERE idPersona =" + idPersona + ";");
+
+            rs = s.executeQuery("SELECT idPersona,\n"
+                    + "    nombres,\n"
+                    + "    apellidos,\n"
+                    + "    numCedula,\n"
+                    + "    sexo,\n"
+                    + "    idCargo,\n"
+                    + "    fechaRegistro,\n"
+                    + "    idEmpresa\n"
+                    + "FROM personal\n"
+                    + "WHERE idPersona =" + idPersona + ";");
+
+            while (rs.next()) {
+                lista.add(this.convertir(rs));
+            }
+
+        } catch (SQLException ex) {
+            Logger.getLogger(PersonalDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        return lista;
+    }
+
+    public ArrayList<PersonalEntidad> obtenerClienteCed(String cedula) {
+        ArrayList<PersonalEntidad> lista = new ArrayList<PersonalEntidad>();
+        try {
+            s = con.createStatement();
+            System.out.println("SELECT idPersona,\n"
+                    + "    nombres,\n"
+                    + "    apellidos,\n"
+                    + "    numCedula,\n"
+                    + "    sexo,\n"
+                    + "    idCargo,\n"
+                    + "    fechaRegistro,\n"
+                    + "    idEmpresa\n"
+                    + "FROM personal\n"
+                    + "WHERE numCedula ='" + cedula + "';");
+
+            rs = s.executeQuery("SELECT idPersona,\n"
+                    + "    nombres,\n"
+                    + "    apellidos,\n"
+                    + "    numCedula,\n"
+                    + "    sexo,\n"
+                    + "    idCargo,\n"
+                    + "    fechaRegistro,\n"
+                    + "    idEmpresa\n"
+                    + "FROM personal\n"
+                    + "WHERE numCedula ='" + cedula + "';");
+
+            while (rs.next()) {
+                lista.add(this.convertir(rs));
             }
 
         } catch (SQLException ex) {
@@ -150,6 +331,74 @@ public class PersonalDAO {
         }
 
         return lista;
+    }
+
+    public int insertarPersonal(PersonalEntidad obj) {
+        //ProductoEntidad id = null;
+        boolean exito = false;
+        int id = 0;
+        try {
+            s = con.createStatement();
+            StringBuilder query = new StringBuilder();
+
+            query.append("INSERT INTO loan_system.personal(\n"
+                    + "  nombres\n"
+                    + "  ,apellidos\n"
+                    + "  ,numCedula\n"
+                    + "  ,sexo\n"
+                    + "  ,idCargo\n"
+                    + "  ,fechaRegistro\n"
+                    + "  ,idEmpresa\n"
+                    + ") VALUES ('"
+                    + obj.getNombres() + "','"
+                    + obj.getApellidos() + "','"
+                    + obj.getNumCedula() + "','"
+                    + obj.getSexo() + "',"
+                    + obj.getIdCargo() + ","
+                    + "current_timestamp(),"
+                    + obj.getIdEmpresa() + ");");
+
+            System.out.println("QUERY: " + query.toString());
+
+            exito = s.execute(query.toString());
+
+            ResultSet rs = s.getGeneratedKeys();
+            if (rs.next()) {
+                id = rs.getInt(1);
+            }
+
+            exito = true;
+
+        } catch (SQLException ex) {
+            Logger.getLogger(PersonalDAO.class.getName()).log(Level.SEVERE, null, ex);
+            id = 0;
+        }
+        return id;
+    }
+
+    /* ACTUALIZAR PERSONAL
+     */
+    public boolean updatePersonal(PersonalEntidad obj, int id) {
+        //ProductoEntidad id = null;
+        boolean exito = false;
+        try {
+            s = con.createStatement();
+            System.out.println("");
+
+            System.out.println("UPDATE loan_system.personal SET nombres = '" + obj.getNombres() + "' ,"
+                    + "apellidos = '" + obj.getApellidos() + "' ,numCedula = '" + obj.getNumCedula() + "',"
+                    + "sexo = '" + obj.getSexo() + "',idCargo = " + obj.getIdCargo() + " WHERE idPersona = " + id + ";");
+
+            exito = s.execute("UPDATE loan_system.personal SET nombres = '" + obj.getNombres() + "' ,"
+                    + "apellidos = '" + obj.getApellidos() + "' ,numCedula = '" + obj.getNumCedula() + "',"
+                    + "sexo = '" + obj.getSexo() + "',idCargo = " + obj.getIdCargo() + " WHERE idPersona = " + id + ";");
+
+            exito = true;
+
+        } catch (SQLException ex) {
+            Logger.getLogger(PersonalDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return exito;
     }
 
     private PersonalEntidad convertir(ResultSet respuesta) {

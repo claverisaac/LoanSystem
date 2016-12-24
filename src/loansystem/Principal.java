@@ -21,6 +21,7 @@ private static Conexion con;
     Cliente panelCliente ;
     Prestamo panelPrestamo;
     Usuario panelUsuarios;
+    Personal panelPersonal;
     /**
      * Creates new form Principal
      * Otro comentario mas..
@@ -66,6 +67,10 @@ private static Conexion con;
              if (panel == panelUsuarios) {
             panelUsuarios= null;
                 }   
+             
+              if (panel == panelPersonal) {
+            panelPersonal= null;
+                }
          }
     /**
      * This method is called from within the constructor to initialize the form.
@@ -197,7 +202,12 @@ private static Conexion con;
         tskEmpresa.getContentPane().add(jLabel1);
 
         lnkCargo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/loansystem/recursos/cargo.png"))); // NOI18N
-        lnkCargo.setText("Cargos");
+        lnkCargo.setText("Personal");
+        lnkCargo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                lnkCargoActionPerformed(evt);
+            }
+        });
         tskEmpresa.getContentPane().add(lnkCargo);
 
         lnkMonedas.setIcon(new javax.swing.ImageIcon(getClass().getResource("/loansystem/recursos/monedas.png"))); // NOI18N
@@ -325,6 +335,16 @@ private static Conexion con;
                           this.seleccionarTab(panelUsuarios);
                   }
     }//GEN-LAST:event_lnkUsuariosActionPerformed
+
+    private void lnkCargoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_lnkCargoActionPerformed
+        // TODO add your handling code here:
+          if (panelPersonal == null) {
+                  panelPersonal = new Personal(con,this);
+                  cargarModulo(panelPersonal, "Personal", "Administración de Personal", "cargo");
+                  } else {
+                          this.seleccionarTab(panelPersonal);
+                  }
+    }//GEN-LAST:event_lnkCargoActionPerformed
 
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
