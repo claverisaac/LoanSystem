@@ -50,6 +50,27 @@ public class CargoDAO {
         return lista;
     }
       
+                public CargoEntidad obtenerCargoXnombre(String cargo) {
+        CargoEntidad lista = null;
+        try {
+            s = con.createStatement();
+            System.out.println("SELECT idCargo, cargo, descripcion \n" +
+"FROM loan_system.cargo WHERE cargo ='" + cargo+ "';");
+
+            rs = s.executeQuery("SELECT idCargo, cargo, descripcion \n" +
+"FROM loan_system.cargo WHERE cargo ='" + cargo+ "';");
+
+            while (rs.next()) {
+                lista = this.convertir(rs);
+            }
+
+        } catch (SQLException ex) {
+            Logger.getLogger(ClienteDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        return lista;
+    }
+      
           public CargoEntidad obtenerCargo(int idCargo) {
         CargoEntidad lista = null;
         try {

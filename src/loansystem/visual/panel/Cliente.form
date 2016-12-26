@@ -156,6 +156,9 @@
                   </Properties>
                 </Component>
                 <Component class="javax.swing.JTextField" name="txtNombre">
+                  <Events>
+                    <EventHandler event="keyReleased" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="txtNombreKeyReleased"/>
+                  </Events>
                 </Component>
                 <Component class="javax.swing.JFormattedTextField" name="txtCed">
                   <Properties>
@@ -731,6 +734,9 @@
               <Properties>
                 <Property name="editable" type="boolean" value="false"/>
               </Properties>
+              <Events>
+                <EventHandler event="keyReleased" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="txtcentroLaboKeyReleased"/>
+              </Events>
             </Component>
             <Component class="javax.swing.JTextField" name="txtFecha">
               <Properties>

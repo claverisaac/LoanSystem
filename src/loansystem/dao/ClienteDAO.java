@@ -243,50 +243,15 @@ public class ClienteDAO {
         return lista;
     }
 
-    public boolean insertarCliente(ClienteEntidad obj) {
+    public int insertarCliente(ClienteEntidad obj) {
         //ProductoEntidad id = null;
         boolean exito = false;
+        int id =0;
         try {
             s = con.createStatement();
-            System.out.println("INSERT INTO loan_system.cliente(nombres\n"
-                    + "  ,apellidos\n"
-                    + "  ,numCedula\n"
-                    + "  ,sexo\n"
-                    + "  ,idMunicipio\n"
-                    + "  ,direccionPrincipal\n"
-                    + "  ,direccionSecundaria\n"
-                    + "  ,limiteCredito\n"
-                    + "  ,diasCredito\n"
-                    + "  ,telefonoCasa\n"
-                    + "  ,telefonoMovil\n"
-                    + "  ,telefonoVario_uno\n"
-                    + "  ,telefonoVario_dos\n"
-                    + "  ,idRutaVisita\n"
-                    + "  ,centroLaboral\n"
-                    + "  ,telefonoLaboral\n"
-                    + "  ,fechaAlta\n"
-                    + "  ,idEmpresa\n"
-                    + ") VALUES ('"
-                    + obj.getNombres() + "','"
-                    + obj.getApellidos() + "','"
-                    + obj.getNumCedula() + "','"
-                    + obj.getSexo() + "',"
-                    + obj.getIdMunicipio() + ",'"
-                    + obj.getDireccionPrincipal() + "','"
-                    + obj.getDireccionSecundaria() + "',"
-                    + obj.getLimiteCredito() + ",'"
-                    + obj.getDiasCredito() + ",'"
-                    + obj.getTelefonoCasa() + "','"
-                    + obj.getTelefonoMovil() + "','"
-                    + obj.getTelefonoVario_uno() + "','"
-                    + obj.getTelefonoVario_dos() + "',"
-                    + obj.getIdRutaVisita() + ",'"
-                    + obj.getCentroLaboral() + "','"
-                    + obj.getTelefonoLaboral() + "',"
-                    + "CURDATE(),"
-                    + obj.getIdEmpresa() + ");");
-
-            exito = s.execute("INSERT INTO loan_system.cliente(nombres\n"
+            StringBuilder query = new StringBuilder();
+            
+           query.append("INSERT INTO loan_system.cliente(nombres\n"
                     + "  ,apellidos\n"
                     + "  ,numCedula\n"
                     + "  ,sexo\n"
@@ -325,15 +290,25 @@ public class ClienteDAO {
                     + obj.getTelefonoLaboral() + "',"
                     + "current_timestamp(),"
                     + obj.getIdEmpresa() + ");");
+                    
+      System.out.println("QUERY: " + query.toString());
+
+         exito = s.execute(query.toString());
+
+            ResultSet rs = s.getGeneratedKeys();
+            if (rs.next()) {
+                id = rs.getInt(1);
+            }
 
             exito = true;
 
         } catch (SQLException ex) {
             Logger.getLogger(ClienteDAO.class.getName()).log(Level.SEVERE, null, ex);
+            id = 0;
         }
-        return exito;
+        return id;
     }
-
+    
     /* ACTUALIZAR CLEINTE
      */
     public boolean updateCliente(ClienteEntidad obj, int id) {

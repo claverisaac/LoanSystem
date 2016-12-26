@@ -5,12 +5,7 @@
  */
 package loansystem.visual.panel;
 
-import java.io.UnsupportedEncodingException;
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import loansystem.Principal;
 import loansystem.bd.Conexion;
@@ -20,7 +15,6 @@ import loansystem.dao.UsuarioDAO;
 import loansystem.entidad.CargoEntidad;
 import loansystem.entidad.PersonalEntidad;
 import loansystem.entidad.UsuarioEntidad;
-import loansystem.visual.modal.BuscarCliente;
 import loansystem.visual.modal.BuscarPersona;
 
 /**
@@ -31,7 +25,7 @@ public class Usuario extends javax.swing.JPanel {
 
     private Conexion con;
     private Principal prin;
-    private boolean inact = false, passw = false,nuevo=false, save = false;
+    private boolean inact = false, passw = false, nuevo = false, save = false;
 
     /**
      * Creates new form Usuario
@@ -70,7 +64,6 @@ public class Usuario extends javax.swing.JPanel {
         txtNombre = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
         txtCargo = new javax.swing.JTextField();
-        btnBuscarPersona = new javax.swing.JButton();
         jLabel10 = new javax.swing.JLabel();
         txtId = new javax.swing.JTextField();
         jPanel2 = new javax.swing.JPanel();
@@ -83,20 +76,23 @@ public class Usuario extends javax.swing.JPanel {
         lblPass2 = new javax.swing.JLabel();
         txtPass = new javax.swing.JPasswordField();
         txtPass2 = new javax.swing.JPasswordField();
-        btnGuardar = new javax.swing.JButton();
-        btnPass = new javax.swing.JButton();
-        btnInact = new javax.swing.JButton();
-        jButton1 = new javax.swing.JButton();
-        btnLimpiar = new javax.swing.JButton();
         lblPass3 = new javax.swing.JLabel();
         txtPass3 = new javax.swing.JPasswordField();
         jLabel8 = new javax.swing.JLabel();
+        jToolBar1 = new javax.swing.JToolBar();
+        btnBuscarPersona = new javax.swing.JButton();
+        btnPass = new javax.swing.JButton();
+        btnInact = new javax.swing.JButton();
+        btnGuardar = new javax.swing.JButton();
+        btnLimpiar = new javax.swing.JButton();
+        jButton1 = new javax.swing.JButton();
 
         jLabel2.setText("jLabel2");
 
         jLabel9.setText("jLabel9");
 
         setBackground(new java.awt.Color(255, 255, 255));
+        setLayout(new java.awt.BorderLayout());
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Información del Usuario", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Calibri", 1, 12))); // NOI18N
@@ -110,13 +106,6 @@ public class Usuario extends javax.swing.JPanel {
 
         txtCargo.setEditable(false);
         txtCargo.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-
-        btnBuscarPersona.setText("...");
-        btnBuscarPersona.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnBuscarPersonaActionPerformed(evt);
-            }
-        });
 
         jLabel10.setText("Id:");
 
@@ -140,12 +129,8 @@ public class Usuario extends javax.swing.JPanel {
                             .addComponent(jLabel10))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(txtId, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addComponent(btnBuscarPersona)
-                                .addGap(0, 123, Short.MAX_VALUE))
-                            .addComponent(txtNombre))))
+                            .addComponent(txtId, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 302, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
@@ -154,9 +139,8 @@ public class Usuario extends javax.swing.JPanel {
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel10)
-                    .addComponent(txtId, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnBuscarPersona, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGap(9, 9, 9)
+                    .addComponent(txtId, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(11, 11, 11)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
                     .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -166,6 +150,8 @@ public class Usuario extends javax.swing.JPanel {
                     .addComponent(txtCargo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap())
         );
+
+        add(jPanel1, java.awt.BorderLayout.CENTER);
 
         jPanel2.setBackground(new java.awt.Color(255, 255, 255));
         jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Información de la Cuenta", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Calibri", 1, 12))); // NOI18N
@@ -180,41 +166,6 @@ public class Usuario extends javax.swing.JPanel {
 
         lblPass2.setText("Nueva Contraseña:");
 
-        btnGuardar.setText("Guardar");
-        btnGuardar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnGuardarActionPerformed(evt);
-            }
-        });
-
-        btnPass.setText("Cambiar Pass");
-        btnPass.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnPassActionPerformed(evt);
-            }
-        });
-
-        btnInact.setText("Inactivar");
-        btnInact.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnInactActionPerformed(evt);
-            }
-        });
-
-        jButton1.setText("Cancelar");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
-            }
-        });
-
-        btnLimpiar.setText("Limpiar");
-        btnLimpiar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnLimpiarActionPerformed(evt);
-            }
-        });
-
         lblPass3.setText("Repita Contraseña:");
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
@@ -223,41 +174,23 @@ public class Usuario extends javax.swing.JPanel {
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
+                .addComponent(jLabel5)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(jLabel5)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addComponent(jLabel4)
-                                .addGap(88, 88, 88)
-                                .addComponent(txtLogin))
-                            .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(lblPass)
-                                    .addComponent(jLabel7)
-                                    .addComponent(lblPass2)
-                                    .addComponent(lblPass3))
-                                .addGap(22, 22, 22)
-                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(txtPass2, javax.swing.GroupLayout.PREFERRED_SIZE, 149, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                        .addComponent(cboEstado, 0, 147, Short.MAX_VALUE)
-                                        .addComponent(txtPass))
-                                    .addComponent(txtPass3, javax.swing.GroupLayout.PREFERRED_SIZE, 149, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGap(0, 0, Short.MAX_VALUE))))
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGap(287, 287, 287)
-                        .addComponent(btnLimpiar))
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(btnPass)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(btnInact)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jButton1)
-                        .addGap(18, 18, 18)
-                        .addComponent(btnGuardar)))
-                .addContainerGap())
+                    .addComponent(lblPass)
+                    .addComponent(jLabel7)
+                    .addComponent(lblPass2)
+                    .addComponent(lblPass3)
+                    .addComponent(jLabel4))
+                .addGap(22, 22, 22)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(txtLogin, javax.swing.GroupLayout.PREFERRED_SIZE, 229, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtPass2, javax.swing.GroupLayout.PREFERRED_SIZE, 149, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addComponent(cboEstado, 0, 147, Short.MAX_VALUE)
+                        .addComponent(txtPass))
+                    .addComponent(txtPass3, javax.swing.GroupLayout.PREFERRED_SIZE, 149, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(105, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -289,16 +222,10 @@ public class Usuario extends javax.swing.JPanel {
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblPass3)
                     .addComponent(txtPass3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 16, Short.MAX_VALUE)
-                .addComponent(btnLimpiar)
-                .addGap(18, 18, 18)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnGuardar)
-                    .addComponent(btnPass)
-                    .addComponent(btnInact)
-                    .addComponent(jButton1))
-                .addContainerGap())
+                .addContainerGap(29, Short.MAX_VALUE))
         );
+
+        add(jPanel2, java.awt.BorderLayout.PAGE_END);
 
         jLabel8.setBackground(new java.awt.Color(0, 0, 102));
         jLabel8.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
@@ -306,30 +233,70 @@ public class Usuario extends javax.swing.JPanel {
         jLabel8.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel8.setText("Administración de Usuarios ");
         jLabel8.setOpaque(true);
+        add(jLabel8, java.awt.BorderLayout.PAGE_START);
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
-        this.setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 384, javax.swing.GroupLayout.PREFERRED_SIZE)
-            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-            .addComponent(jPanel2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(jLabel8)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
+        jToolBar1.setOrientation(javax.swing.SwingConstants.VERTICAL);
+        jToolBar1.setRollover(true);
+
+        btnBuscarPersona.setIcon(new javax.swing.ImageIcon(getClass().getResource("/loansystem/recursos/paneles/search.png"))); // NOI18N
+        btnBuscarPersona.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnBuscarPersonaActionPerformed(evt);
+            }
+        });
+        jToolBar1.add(btnBuscarPersona);
+
+        btnPass.setText("Cambiar Pass");
+        btnPass.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnPassActionPerformed(evt);
+            }
+        });
+        jToolBar1.add(btnPass);
+
+        btnInact.setText("Estado");
+        btnInact.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnInactActionPerformed(evt);
+            }
+        });
+        jToolBar1.add(btnInact);
+
+        btnGuardar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/loansystem/recursos/paneles/save.png"))); // NOI18N
+        btnGuardar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnGuardarActionPerformed(evt);
+            }
+        });
+        jToolBar1.add(btnGuardar);
+
+        btnLimpiar.setText("Limpiar");
+        btnLimpiar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnLimpiarActionPerformed(evt);
+            }
+        });
+        jToolBar1.add(btnLimpiar);
+
+        jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/loansystem/recursos/paneles/cerrar.png"))); // NOI18N
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+        jToolBar1.add(jButton1);
+
+        add(jToolBar1, java.awt.BorderLayout.WEST);
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnBuscarPersonaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarPersonaActionPerformed
         // TODO add your handling code here:
         BuscarPersona bp = new BuscarPersona(prin, true, con, this);
         bp.setVisible(true);
+        /*inact = false;
+        passw = false;
+        nuevo = false;
+        save = false;*/
     }//GEN-LAST:event_btnBuscarPersonaActionPerformed
 
     private void btnInactActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInactActionPerformed
@@ -349,15 +316,16 @@ public class Usuario extends javax.swing.JPanel {
         inact = false;
         txtPass.setVisible(true);
         txtPass2.setVisible(true);
+        txtPass3.setVisible(true);
+
         lblPass2.setVisible(true);
         lblPass.setVisible(true);
+        lblPass3.setVisible(true);
 
         txtPass2.setEditable(true);
         txtPass.setEditable(true);
+        txtPass3.setEditable(true);
 
-        txtPass3.setVisible(true);
-        lblPass3.setVisible(true);
-        
         btnPass.setEnabled(false);
         btnPass.setEnabled(false);
         btnInact.setEnabled(false);
@@ -401,17 +369,14 @@ public class Usuario extends javax.swing.JPanel {
             String passNueva = txtPass2.getText();
             String passNueva2 = txtPass3.getText();
 
-             
-             UsuarioEntidad passEntidad = new UsuarioEntidad();
-             passEntidad = dao.conv_md5(passActual);
-             
-             
-                System.out.println("md5 es: " +passEntidad.getPass_new());
-                if (passNueva.equals(passNueva2) ){
-                if (passEntidad.getPass_new().equals(entidadUser.getPass()))
-                  {
-                    System.out.println(passEntidad.getPass_new()+" == "+entidadUser.getPass() );      
-                                    
+            UsuarioEntidad passEntidad = new UsuarioEntidad();
+            passEntidad = dao.conv_md5(passActual);
+
+            System.out.println("md5 es: " + passEntidad.getPass_new());
+            if (passNueva.equals(passNueva2)) {
+                if (passEntidad.getPass_new().equals(entidadUser.getPass())) {
+                    System.out.println(passEntidad.getPass_new() + " == " + entidadUser.getPass());
+
                     UsuarioEntidad UsuarioEnti = new UsuarioEntidad();
                     UsuarioEnti.setPass(passNueva);
                     save = dao.updatePassUsuario(UsuarioEnti, txtLogin.getText(), passActual);
@@ -427,19 +392,55 @@ public class Usuario extends javax.swing.JPanel {
                         JOptionPane.showMessageDialog(this, "No se pudo actualizar la contraseña", "Administración de Usuarios", JOptionPane.ERROR_MESSAGE);
                     }
 
-                }else{
-                      JOptionPane.showMessageDialog(this, "La contraseña actual ingresada no coincide", "Administración de Usuarios", JOptionPane.ERROR_MESSAGE);
-                      System.out.println(passActual+" != "+entidadUser.getPass());
-                      System.out.println("---------------------------------------------");
-                      System.out.println(passEntidad.getPass_new()+" != "+entidadUser.getPass() );
-                      passw = true;
-                      
-                }}else{
-                      JOptionPane.showMessageDialog(this, "La Nueva Contraseña no coincide en su verificación", "Administración de Usuarios", JOptionPane.ERROR_MESSAGE);
+                } else {
+                    JOptionPane.showMessageDialog(this, "La contraseña actual ingresada no coincide", "Administración de Usuarios", JOptionPane.ERROR_MESSAGE);
+                    System.out.println(passActual + " != " + entidadUser.getPass());
+                    System.out.println("---------------------------------------------");
+                    System.out.println(passEntidad.getPass_new() + " != " + entidadUser.getPass());
+                    passw = true;
+
+                }
+            } else {
+                JOptionPane.showMessageDialog(this, "La Nueva Contraseña no coincide en su verificación", "Administración de Usuarios", JOptionPane.ERROR_MESSAGE);
+            }
+
+        }
+
+        if (nuevo) {
+
+            ArrayList<UsuarioEntidad> user = new ArrayList<UsuarioEntidad>();
+            user = dao.obtenerUsuariosXlogiin(txtLogin.getText());
+            if (user.size() > 0) {
+                JOptionPane.showMessageDialog(this, "El login ingresado ya existe! Favor ingresar otro login", "Administración de Usuarios", JOptionPane.ERROR_MESSAGE);
+            } else if (txtPass2.getText().equals(txtPass3.getText())) {
+                UsuarioEntidad UsuarioEnti = new UsuarioEntidad();
+                UsuarioEnti.setIdPersona(Integer.parseInt(txtId.getText()));
+                UsuarioEnti.setLogin(txtLogin.getText());
+                UsuarioEnti.setPass(txtPass2.getText());
+                if (cboEstado.getSelectedItem().equals("Activo")) {
+                    UsuarioEnti.setEstado(1);
+                } else {
+                    UsuarioEnti.setEstado(0);
                 }
 
-      
+                save = dao.insertarUsuario(UsuarioEnti);
 
+                if (save) {
+                    JOptionPane.showMessageDialog(this, "Usuario guardado exitosamente!!", "Administración de Usuarios", JOptionPane.INFORMATION_MESSAGE);
+                    btnGuardar.setEnabled(false);
+                    nuevo = false;
+                    txtPass.setEditable(false);
+                    txtPass2.setEditable(false);
+                    txtPass3.setEditable(false);
+                    txtLogin.setEditable(false);
+                    cboEstado.setEnabled(false);
+                } else {
+                    JOptionPane.showMessageDialog(this, "No se pudo guardar el usuario", "Administración de Usuarios", JOptionPane.ERROR_MESSAGE);
+                }
+
+            } else {
+                JOptionPane.showMessageDialog(this, "Contraseñas no coinciden", "Administración de Usuarios", JOptionPane.ERROR_MESSAGE);
+            }
         }
     }//GEN-LAST:event_btnGuardarActionPerformed
 
@@ -450,6 +451,7 @@ public class Usuario extends javax.swing.JPanel {
         txtNombre.setText("");
         txtPass.setText("");
         txtPass2.setText("");
+        txtPass3.setText("");
     }
 
     private void btnLimpiarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLimpiarActionPerformed
@@ -470,10 +472,19 @@ public class Usuario extends javax.swing.JPanel {
     }//GEN-LAST:event_btnLimpiarActionPerformed
 
     public void cargarDatosPersonal(PersonalEntidad perso) {
+        limpiarForm();
+
+        txtPass.setVisible(false);
+        txtPass2.setVisible(false);
+        txtPass3.setVisible(false);
+
+        lblPass2.setVisible(false);
+        lblPass.setVisible(false);
+        lblPass3.setVisible(false);
+
         CargoDAO cargoDao = new CargoDAO(con.getCon());
         CargoEntidad cargoenti = cargoDao.obtenerCargo(perso.getIdCargo());
 
-      
         //Buscar cuenta
         UsuarioEntidad usuEnti;
         UsuarioDAO daoUsu = new UsuarioDAO(con.getCon());
@@ -481,70 +492,69 @@ public class Usuario extends javax.swing.JPanel {
 
         if (usuEnti == null) //No hay cuenta de usuario
         {
-            
-            int resp = JOptionPane.showConfirmDialog(null,"La persona seleccionada no tiene cuenta de usuario. ¿Requiere crearle una cuenta?");
-            if(JOptionPane.OK_OPTION==resp){
-            
-            nuevo = true;
-            btnPass.setEnabled(false);
-            btnInact.setEnabled(false);
-            btnGuardar.setEnabled(true);
-            
-            lblPass2.setVisible(true);
-            lblPass3.setVisible(true);
-            txtPass3.setVisible(true);
-            txtPass2.setVisible(true);
-            
-            txtPass2.setEditable(true);
-            txtPass3.setEditable(true);
-            
-            cboEstado.setEnabled(true);
-                
-                     //Crear login
-            PersonalDAO daoPerso = new PersonalDAO(con.getCon());
-            PersonalEntidad enti = daoPerso.obtenerLoginPropuesto(perso.getIdPersona());
-            String loginDos = null;
-            String login = enti.getLogin();
 
-            ArrayList<UsuarioEntidad> usuarioEnti;
-            UsuarioEntidad usua;
-            UsuarioDAO usuDAO = new UsuarioDAO(con.getCon());
-            usuarioEnti = usuDAO.obtenerTodosUsuarios();
+            int resp = JOptionPane.showConfirmDialog(null, "La persona seleccionada no tiene cuenta de usuario. ¿Requiere crearle una cuenta?");
+            if (JOptionPane.OK_OPTION == resp) {
 
-            for (int i = 0; i < usuarioEnti.size(); i++) {
-                System.out.println("Login: " + login);
+                this.txtId.setText(String.valueOf(perso.getIdPersona()));
+                this.txtNombre.setText(perso.getNombres().concat(" ").concat(perso.getApellidos()));
+                this.txtCargo.setText(cargoenti.getCargo());
 
-                if (usuarioEnti.get(i).getLogin().contains(login)) {
-                    //Login ya existe
-                    usua = usuDAO.obtenerCantLogins(login);
-                    loginDos = login.concat(String.valueOf(usua.getCantidad()));
-                    System.out.println("Login " + loginDos + " existe");
-                    txtLogin.setText(loginDos);
+                nuevo = true;
+                btnPass.setEnabled(false);
+                btnInact.setEnabled(false);
+                btnGuardar.setEnabled(true);
 
-                } else {
-                    //Login no existe
-                    System.out.println("Login " + loginDos + " No existe");
-                    loginDos = login;
-                    txtLogin.setText(loginDos);
-                }
+                lblPass2.setVisible(true);
+                lblPass3.setVisible(true);
+                txtPass3.setVisible(true);
+                txtPass2.setVisible(true);
 
+                txtPass2.setEditable(true);
+                txtPass3.setEditable(true);
+
+                cboEstado.setEnabled(true);
+
+                txtLogin.setEditable(true);
+
+                //Crear login
+                PersonalDAO daoPerso = new PersonalDAO(con.getCon());
+                PersonalEntidad enti = daoPerso.obtenerLoginPropuesto(perso.getIdPersona());
+                String loginDos = null;
+                String login = enti.getLogin();
+
+                ArrayList<UsuarioEntidad> usuarioEnti;
+                UsuarioEntidad usua;
+                UsuarioDAO usuDAO = new UsuarioDAO(con.getCon());
+                usuarioEnti = usuDAO.obtenerTodosUsuarios();
+
+                /*   for (int i = 0; i < usuarioEnti.size(); i++) {
+                    System.out.println("Login: " + login);
+
+                    if (usuarioEnti.get(i).getLogin().contains(login)) {
+                        //Login ya existe
+                        usua = usuDAO.obtenerCantLogins(login);
+                        loginDos = login.concat(String.valueOf(usua.getCantidad()));
+                        System.out.println("Login " + loginDos + " existe");
+                        txtLogin.setText(loginDos);
+
+                    } else {
+                        //Login no existe
+                        System.out.println("Login " + loginDos + " No existe");
+                        loginDos = login;
+                        txtLogin.setText(loginDos);
+                    }
+
+                }*/
+                //  txtPass3.setText("123");
+                //   txtPass2.setText("123");
+            } else {
             }
-            
-            txtPass.setText("123");
-            txtPass2.setText("123");
-            }
-            else{}
-            
-            
-   
-
-           
 
         } else { //Si hay cuenta de usuario
-              this.txtId.setText(String.valueOf(perso.getIdPersona()));
-        this.txtNombre.setText(perso.getNombres().concat(" ").concat(perso.getApellidos()));
-        this.txtCargo.setText(cargoenti.getCargo());
-
+            this.txtId.setText(String.valueOf(perso.getIdPersona()));
+            this.txtNombre.setText(perso.getNombres().concat(" ").concat(perso.getApellidos()));
+            this.txtCargo.setText(cargoenti.getCargo());
 
             txtLogin.setEditable(false);
             cboEstado.setEnabled(false);
@@ -582,6 +592,7 @@ public class Usuario extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
+    private javax.swing.JToolBar jToolBar1;
     private javax.swing.JLabel lblPass;
     private javax.swing.JLabel lblPass2;
     private javax.swing.JLabel lblPass3;

@@ -136,7 +136,7 @@ public class Cliente extends javax.swing.JPanel {
 
         jPanel2.setBackground(new java.awt.Color(255, 255, 255));
         jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Clientes Registrados", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Calibri", 1, 12))); // NOI18N
-        jPanel2.setLayout(new java.awt.GridLayout());
+        jPanel2.setLayout(new java.awt.GridLayout(1, 0));
 
         jPanel3.setBackground(new java.awt.Color(255, 255, 255));
         jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder("Búsqueda por:"));
@@ -148,6 +148,12 @@ public class Cliente extends javax.swing.JPanel {
         jLabel22.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jLabel22.setForeground(new java.awt.Color(153, 153, 153));
         jLabel22.setText("Nombres:");
+
+        txtNombre.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtNombreKeyReleased(evt);
+            }
+        });
 
         try {
             txtCed.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("###-######-####U")));
@@ -402,6 +408,11 @@ public class Cliente extends javax.swing.JPanel {
         jLabel18.setText("Fecha Alta:");
 
         txtcentroLabo.setEditable(false);
+        txtcentroLabo.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtcentroLaboKeyReleased(evt);
+            }
+        });
 
         txtFecha.setEditable(false);
 
@@ -801,11 +812,11 @@ public class Cliente extends javax.swing.JPanel {
              
                 
                 if (nuevo) {
-                    save = clieDAO.insertarCliente(setDatos());
-                    if (save) {
+                   int id = clieDAO.insertarCliente(setDatos());
+                    if (id>0) {
 
-                        clieEnti = clieDAO.obtenerUltimoIdInsertado();
-                        txtId2.setText(util.completarCerosID(clieEnti.getIdCliente(),6));
+                    //    clieEnti = clieDAO.obtenerUltimoIdInsertado();
+                        txtId2.setText(util.completarCerosID(id,6));
                                             
                        txtFecha.setText(String.valueOf(format.format(new Date())));
                        
@@ -963,6 +974,35 @@ public class Cliente extends javax.swing.JPanel {
        JOptionPane.showMessageDialog(prin, "Aqui va la logica para el reporte de impresion!","Imprimir datos del cliente!",JOptionPane.INFORMATION_MESSAGE,
                new javax.swing.ImageIcon(getClass().getResource("/loansystem/recursos/nuevo_cliente.png")));
     }//GEN-LAST:event_btnImprimirActionPerformed
+
+    private void txtcentroLaboKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtcentroLaboKeyReleased
+        // TODO add your handling code here:
+                 char c = evt.getKeyChar();
+                if (!(Character.isDigit(c)
+                        || (c == KeyEvent.VK_BACK_SPACE)
+                        || (c == KeyEvent.VK_DELETE)
+                        //|| (c == KeyEvent.VK_PERIOD)
+                        || (c == KeyEvent.VK_ENTER))) {
+                    
+            String a = txtNombres.getText().toUpperCase();
+            txtNombres.setText(a);
+            evt.consume();}
+    }//GEN-LAST:event_txtcentroLaboKeyReleased
+
+    private void txtNombreKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtNombreKeyReleased
+        // TODO add your handling code here:
+                char c = evt.getKeyChar();
+        if (!(Character.isDigit(c)
+                || (c == KeyEvent.VK_BACK_SPACE)
+                || (c == KeyEvent.VK_DELETE)
+                //|| (c == KeyEvent.VK_PERIOD)
+                || (c == KeyEvent.VK_ENTER))) {
+
+            String a = txtNombres.getText().toUpperCase();
+            txtNombres.setText(a);
+            evt.consume();
+        }
+    }//GEN-LAST:event_txtNombreKeyReleased
 
     public void cargarTablaClientes() {
         if (aClieEnti != null) {
