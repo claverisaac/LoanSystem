@@ -5,9 +5,9 @@
  */
 package loansystem.visual.panel;
 
-import java.text.DecimalFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.logging.Level;
@@ -23,6 +23,7 @@ import loansystem.entidad.ClienteEntidad;
 import loansystem.entidad.CuotasEntidad;
 import loansystem.entidad.MunicipioEntidad;
 import loansystem.entidad.PrestamoEntidad;
+import loansystem.utilidades.IndicesCatalogos;
 import loansystem.utilidades.MetodosGenerales;
 import loansystem.utilidades.NumberToLetterConverter;
 import loansystem.visual.modal.BuscarCliente;
@@ -515,9 +516,8 @@ public class Prestamo extends javax.swing.JPanel {
                                         .addComponent(cboDiasFrec, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                         .addComponent(spnFrecuencia, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addComponent(spnDiasPenalidad, javax.swing.GroupLayout.PREFERRED_SIZE, 57, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(txtMontoPenalidad, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                    .addComponent(spnDiasPenalidad, javax.swing.GroupLayout.PREFERRED_SIZE, 57, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(txtMontoPenalidad, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addGap(0, 0, Short.MAX_VALUE))))
                     .addComponent(jXTitledSeparator1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -865,7 +865,7 @@ public class Prestamo extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
-       prin.removerTab(this);
+        prin.removerTab(this);
     }//GEN-LAST:event_btnCancelarActionPerformed
 
     private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
@@ -875,8 +875,8 @@ public class Prestamo extends javax.swing.JPanel {
 
     private void btnCalcularActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCalcularActionPerformed
         calcularPrestamo();
-        
-         if (totalPrestamo <= 0) {
+
+        if (totalPrestamo <= 0) {
             JOptionPane.showMessageDialog(prin, "Por favor complete los datos del Prestamo!", "Cálculo de Préstamo!", JOptionPane.ERROR_MESSAGE);
         } else {
             calcularCuotas();
@@ -910,7 +910,7 @@ public class Prestamo extends javax.swing.JPanel {
     }//GEN-LAST:event_cboMonedaItemStateChanged
 
     private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
-        try {            
+        try {
             guardarPrestamo();
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, "Por favor complete los datos del préstamo correctamente!");
@@ -922,13 +922,22 @@ public class Prestamo extends javax.swing.JPanel {
     }//GEN-LAST:event_btnLimpiarActionPerformed
 
     private void btnImprimirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnImprimirActionPerformed
-        JOptionPane.showMessageDialog(prin, "Aqui va la logica para el reporte de impresion!","Imprimir datos del Préstamo",JOptionPane.INFORMATION_MESSAGE,
-            new javax.swing.ImageIcon(getClass().getResource("/loansystem/recursos/nuevo_cliente.png")));
+        JOptionPane.showMessageDialog(prin, "Aqui va la logica para el reporte de impresion!", "Imprimir datos del Préstamo", JOptionPane.INFORMATION_MESSAGE,
+                new javax.swing.ImageIcon(getClass().getResource("/loansystem/recursos/nuevo_cliente.png")));
     }//GEN-LAST:event_btnImprimirActionPerformed
+
+    public void cargarDatosCliente(ClienteEntidad cliente, PrestamoEntidad p) {
+        cargarDatosCliente(cliente);
+        cargarPrestamo(p);
+        cargarCuotas(p.getIdPrestamo());
+
+    }
 
     public void cargarDatosCliente(ClienteEntidad cliente) {
         this.cliente = cliente;
-
+        
+        limpiarCampos();
+        
         MunicipioDAO muDao = new MunicipioDAO(con.getCon());
         MunicipioEntidad municipio = muDao.obtenerMunicipioXId(cliente.getIdMunicipio());
 
@@ -971,13 +980,13 @@ public class Prestamo extends javax.swing.JPanel {
             }
 
             lstTelefono.setModel(modelo);
+            
+            
         } catch (Exception e) {
             e.printStackTrace();
         }
 
     }
-
-   
 
     /**
      * Logica para realizar el calculo del prestamo.
@@ -1006,10 +1015,10 @@ public class Prestamo extends javax.swing.JPanel {
                 montoCargos = (montoPrestamo * tasaCargos);
                 totalPrestamo = montoPrestamo + montoInteres + montoCargos;
 
-                txtMontoInteres.setText(String.valueOf(formatearMoneda(montoInteres, moneda)));
-                txtMontoCargos.setText(String.valueOf(formatearMoneda(montoCargos, moneda)));
+                txtMontoInteres.setText(String.valueOf(util.formatearMoneda(montoInteres, moneda)));
+                txtMontoCargos.setText(String.valueOf(util.formatearMoneda(montoCargos, moneda)));
 
-                txtTotalPrestamo.setText(String.valueOf(formatearMoneda(totalPrestamo, moneda)));
+                txtTotalPrestamo.setText(String.valueOf(util.formatearMoneda(totalPrestamo, moneda)));
                 txtMontoLetras.setText(NumberToLetterConverter.convertNumberToLetter(totalPrestamo, descMoneda));
 
             } else {
@@ -1070,7 +1079,7 @@ public class Prestamo extends javax.swing.JPanel {
         cantCuota = dias / diasFrecPago;
         cuota = totalPrestamo / cantCuota;
 
-        txtMontoCuota.setText(String.valueOf(formatearMoneda(util.round(cuota, 2), moneda)) + " por " + plazoFrec);
+        txtMontoCuota.setText(String.valueOf(util.formatearMoneda(util.round(cuota, 2), moneda)) + " por " + plazoFrec);
 
         int cantCuotasT = (int) util.round(cantCuota, 2);
         txtCantCuotas.setText(String.valueOf(util.round(cantCuota, 2)));
@@ -1125,25 +1134,6 @@ public class Prestamo extends javax.swing.JPanel {
         }
 
         return fecha;
-    }
-
-    
-
-    /**
-     *
-     * @param monto
-     * @param moneda
-     * @return
-     */
-    private String formatearMoneda(double monto, String moneda) {
-        StringBuilder dinero = new StringBuilder();
-        DecimalFormat formatter = new DecimalFormat("#,###.00");
-        String formateado = formatter.format(monto);
-
-        dinero.append(moneda);
-        dinero.append(" ");
-        dinero.append(formateado);
-        return dinero.toString();
     }
 
     /**
@@ -1210,7 +1200,6 @@ public class Prestamo extends javax.swing.JPanel {
         return fechasPago;
     }
 
-    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnBuscar;
@@ -1300,11 +1289,10 @@ public class Prestamo extends javax.swing.JPanel {
     private void guardarPrestamo() {
         PrestamoEntidad p = new PrestamoEntidad();
         PrestamoDAO pDao = new PrestamoDAO(con.getCon());
-        
+
         CuotasEntidad c = new CuotasEntidad();
         CuotasDAO cDao = new CuotasDAO(con.getCon());
-        
-        
+
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
         SimpleDateFormat format2 = new SimpleDateFormat("dd/MM/yyyy");
 
@@ -1323,43 +1311,39 @@ public class Prestamo extends javax.swing.JPanel {
             p.setMontoCargos(montoCargos);
             p.setMontoTotal(totalPrestamo);
             p.setCantidadCuotas(cantCuota);
-            p.setMontoCuota(util.round(cuota,2));
+            p.setMontoCuota(util.round(cuota, 2));
             p.setIdFrecuenciaPago(cboDiasFrec.getSelectedIndex() + 1);
             p.setCantFrecuencia(cantPlazoFrec);
             p.setFrecuenciaDias(diasFrecPago);
-                      
-            p.setMontoPenalidad((txtMontoPenalidad.getText().length()>0?Double.parseDouble(txtMontoPenalidad.getText()):0 ));
-            
+
+            p.setMontoPenalidad((txtMontoPenalidad.getText().length() > 0 ? Double.parseDouble(txtMontoPenalidad.getText()) : 0));
+
             p.setDiasPenalidad((int) spnDiasPenalidad.getValue());
             p.setEstado(1);
 
             int id = pDao.insertarPrestamo(p);
 
             if (id > 0) {
-                JOptionPane.showMessageDialog(prin, "Se guardo el prestamo para el cliente [" + cliente.getNombres()+" "+cliente.getApellidos() +"]", "Insertando Prestamo", JOptionPane.INFORMATION_MESSAGE);
-                
-                
-                for(int i=0; i<tabCuotas.getRowCount();i++)
-                {
+                JOptionPane.showMessageDialog(prin, "Se guardo el prestamo para el cliente [" + cliente.getNombres() + " " + cliente.getApellidos() + "]", "Insertando Prestamo", JOptionPane.INFORMATION_MESSAGE);
+
+                for (int i = 0; i < tabCuotas.getRowCount(); i++) {
                     c = new CuotasEntidad();
                     c.setIdPrestamo(id);
                     c.setPagoNumero(tabCuotas.getValueAt(i, 0).toString());
                     try {
-                        c.setFecha( format.format(format2.parse(tabCuotas.getValueAt(i, 1).toString())) );
+                        c.setFecha(format.format(format2.parse(tabCuotas.getValueAt(i, 1).toString())));
                     } catch (ParseException ex) {
                         Logger.getLogger(Prestamo.class.getName()).log(Level.SEVERE, null, ex);
-                        System.out.println("ERROR al convertir fecha: "+ex.getMessage());
+                        System.out.println("ERROR al convertir fecha: " + ex.getMessage());
                     }
-                    
+
                     c.setDia(tabCuotas.getValueAt(i, 2).toString());
                     c.setMonto(Double.parseDouble(tabCuotas.getValueAt(i, 3).toString()));
                     c.setSaldo(Double.parseDouble(tabCuotas.getValueAt(i, 4).toString()));
                     c.setCancelado(0);
                     cDao.insertarCuota(c);
                 }
-                
-                
-                
+
             } else {
                 JOptionPane.showMessageDialog(prin, "Hubo un error al guardar el Préstamo!!", "Insertando Prestamo", JOptionPane.INFORMATION_MESSAGE);
             }
@@ -1367,9 +1351,9 @@ public class Prestamo extends javax.swing.JPanel {
         }
 
     }
-    
-    private void limpiarCampos(){
-        
+
+    private void limpiarCampos() {
+
         //LIMPIAR DATOS DEL CLIENTE        
         this.txtNombres.setText("");
         this.txtApellidos.setText("");
@@ -1379,43 +1363,107 @@ public class Prestamo extends javax.swing.JPanel {
         this.txtDepartamento.setText("");
         this.txtMunicipio.setText("");
         this.txtDireccionPrin.setText("");
-        this.txtDireccionSec.setText(""); 
+        this.txtDireccionSec.setText("");
         rbtnMasculino.setSelected(false);
         rbtnFemenino.setSelected(false);
 
         DefaultListModel modelo = new DefaultListModel();
         this.lstTelefono.setModel(modelo);
-        
+
         //LIMPIAR PRESTAMO
         this.txtMontoPrestamo.setText("0");
         this.txtTasa.setText("0");
         this.txtTasaCargo.setText("0");
-        
+
         this.txtMontoInteres.setText("0");
         this.txtMontoCargos.setText("0");
 
         this.txtTotalPrestamo.setText("0");
         this.txtMontoLetras.setText("0");
         this.txtMontoPenalidad.setText("0");
-        
+
         this.spnPlazo.setValue(0);
         this.spnFrecuencia.setValue(0);
         this.spnDiasPenalidad.setValue(0);
-        
-        
+
         this.txtCantCuotas.setText("0");
         this.txtCantDias.setText("0");
         this.txtMontoCuota.setText("0");
-        
+
         dtFechaInicio.setDate(null);
         dtFechaFin.setDate(null);
-        
+
         cboMoneda.setSelectedIndex(0);
         cboDias.setSelectedIndex(0);
         cboDiasFrec.setSelectedIndex(0);
-        
+
         util.limpiarTabla(tabCuotas);
+
+    }
+
+    /**
+     * Cargamos el detalle del prestamo!!
+     * @param p 
+     */
+    private void cargarPrestamo(PrestamoEntidad p) {
+        moneda =  p.getSimboloMoneda();
+        descMoneda = p.getMoneda();
         
+        //CARGAR PRESTAMO
+        txtMontoPrestamo.setText(String.valueOf(util.formatearMoneda(p.getMontoOriginal(), moneda))); 
+        
+        this.txtTasa.setText(String.valueOf(p.getTasa()));
+        this.txtTasaCargo.setText(String.valueOf(p.getTasaCargo()));
+
+        txtMontoInteres.setText(String.valueOf(util.formatearMoneda(p.getMontoTasa(), moneda)));
+        txtMontoCargos.setText(String.valueOf(util.formatearMoneda(p.getMontoCargos(), moneda)));
+
+        txtTotalPrestamo.setText(String.valueOf(util.formatearMoneda(p.getMontoTotal(), moneda)));
+        txtMontoLetras.setText(NumberToLetterConverter.convertNumberToLetter(p.getMontoTotal(), descMoneda));
+        this.txtMontoPenalidad.setText(String.valueOf(p.getMontoPenalidad()));
+
+        this.spnPlazo.setValue(p.getCantPeriodo());
+        this.spnFrecuencia.setValue(p.getCantFrecuencia());
+        this.spnDiasPenalidad.setValue(p.getDiasPenalidad());
+
+        txtCantCuotas.setText(String.valueOf(util.round(p.getCantidadCuotas(), 2)));
+        txtCantDias.setText(String.valueOf(p.getPlazoDias()));
+        txtMontoCuota.setText(String.valueOf(util.formatearMoneda(util.round(p.getMontoCuota(), 2), moneda)) + " por " + p.getPlazoPrestamo()); 
+
+        dtFechaInicio.setDate(util.formatearFecha(p.getFechaInicio(),"dd/MM/yyyy"));
+        dtFechaFin.setDate(util.formatearFecha(p.getFechaVencimiento(),"dd/MM/yyyy"));
+
+        IndicesCatalogos indice = new IndicesCatalogos();
+        cboMoneda.setSelectedIndex(indice.getIndiceMoneda(p.getMoneda()));
+        cboDias.setSelectedIndex(indice.getIndicePeriodo(p.getPlazoPrestamo()));
+        cboDiasFrec.setSelectedIndex(indice.getIndicePeriodo(p.getFrecueciaPago()));
+        
+        
+    }
+    
+    private void cargarCuotas(int idPrestamo){
+        ArrayList<CuotasEntidad> arrayCuota = null;
+        CuotasDAO cuotaDao = new CuotasDAO(con.getCon());
+        
+        arrayCuota = cuotaDao.obtenerCuotasPorPrestamo(idPrestamo);
+        if(arrayCuota.size()>0)
+        {
+             util.limpiarTabla(tabCuotas);
+             int i = 0;
+            for(CuotasEntidad cuota : arrayCuota)
+            {
+                util.agregarFila(tabCuotas);
+
+                tabCuotas.setValueAt(cuota.getPagoNumero(), i, 0); //ID
+                tabCuotas.setValueAt(cuota.getFecha(), i, 1); //ID
+                tabCuotas.setValueAt(cuota.getDia(), i, 2); //ID
+                tabCuotas.setValueAt(cuota.getMonto(), i, 3); //ID
+                tabCuotas.setValueAt(cuota.getSaldo(), i, 4); //ID
+                tabCuotas.setValueAt(  cuota.getCancelado()==1?true:false , i, 5);
+                
+                i++;
+            }
+        }
     }
 
 }

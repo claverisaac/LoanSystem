@@ -20,6 +20,7 @@ public class CuotasEntidad {
     private double monto;
     private double saldo;
     private int cancelado;
+    private double abonado;
 
     /**
      * @return the idCuota
@@ -131,6 +132,20 @@ public class CuotasEntidad {
      */
     public void setCancelado(int cancelado) {
         this.cancelado = cancelado;
+    }
+
+    /**
+     * @return the abonado
+     */
+    public double getAbonado() {
+        return abonado;
+    }
+
+    /**
+     * @param abonado the abonado to set
+     */
+    public void setAbonado(double abonado) {
+        this.abonado = abonado;
     }
     
     

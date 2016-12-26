@@ -162,7 +162,12 @@ public class ListaPrestamos extends javax.swing.JDialog {
     }//GEN-LAST:event_tabPrestamosMouseClicked
 
     private void btnAceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAceptarActionPerformed
-
+        int fila = 0;
+        fila = tabPrestamos.getSelectedRow();
+        PrestamoEntidad p = prestamosArr.get(fila);
+                
+        
+        pres.cargarDatosCliente(cliente, p );
         this.dispose();
     }//GEN-LAST:event_btnAceptarActionPerformed
 
@@ -206,13 +211,14 @@ public class ListaPrestamos extends javax.swing.JDialog {
                 tabPrestamos.setValueAt(p.getIdPrestamo(),i ,0 );
                 tabPrestamos.setValueAt(p.getFechaInicio(),i ,1 );
                 tabPrestamos.setValueAt(p.getFechaVencimiento(),i ,2 );
-                tabPrestamos.setValueAt(p.getMontoTotal(),i ,3 );
+                tabPrestamos.setValueAt(p.getSimboloMoneda() +" "+ p.getMontoTotal(),i ,3 );
                 tabPrestamos.setValueAt(p.getCantPeriodo() + " "+p.getPlazoPrestamo(),i ,4 );
-                tabPrestamos.setValueAt(util.round(p.getMontoCuota(),2),i ,5 );
-                tabPrestamos.setValueAt(p.getCantFrecuencia() + " "+p.getFrecueciaPago(),i ,6 );
-                tabPrestamos.setValueAt(0,i ,7 );
+                tabPrestamos.setValueAt(p.getSimboloMoneda() +" "+util.round(p.getMontoCuota(),2),i ,5 );
+                tabPrestamos.setValueAt("Cada "+p.getCantFrecuencia() + " "+p.getFrecueciaPago()+(p.getCantFrecuencia()>0?"s":""   ) ,i ,6 );
+                tabPrestamos.setValueAt(p.getSimboloMoneda() +" "+p.getSaldoActual(),i ,7 );
                 tabPrestamos.setValueAt(p.getDescEstado(),i ,8);
-                
+                tabPrestamos.setValueAt(p.getFechaUltimoPago(),i ,9);
+                tabPrestamos.setValueAt(p.getSimboloMoneda() +" "+p.getUltimoPago(),i ,10);
                 
                 i++;
 

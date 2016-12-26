@@ -7,13 +7,18 @@ package loansystem.utilidades;
 
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.text.DecimalFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.DefaultListModel;
 import javax.swing.JList;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
+import loansystem.visual.panel.Prestamo;
 
 /**
  *
@@ -46,7 +51,7 @@ public class MetodosGenerales {
         }}
 
     //validar texfield solo numerico
-    public void soloNumeroSinPoint(JTextField txt) {
+    public void soloNumeroSinPoint(final JTextField txt) {
         txt.addKeyListener(new KeyAdapter() {
             @Override
             public void keyTyped(KeyEvent e) {
@@ -64,7 +69,7 @@ public class MetodosGenerales {
     }
     
 //validar texfield solo numerico
-    public void soloNumero(JTextField txt) {
+    public void soloNumero(final JTextField txt) {
         txt.addKeyListener(new KeyAdapter() {
             @Override
             public void keyTyped(KeyEvent e) {
@@ -107,6 +112,31 @@ public class MetodosGenerales {
     
     return fecha;
     }
+    
+    /**
+     * 
+     * @param fecha
+     * @param formatoAnt
+     * @return 
+     */
+    public Date formatearFecha(String fecha, String formatoAnt)
+    {
+        Date fechaRetorno = null;
+        
+        SimpleDateFormat formato = new SimpleDateFormat(formatoAnt);
+        
+        try {
+            fechaRetorno = formato.parse(fecha);
+        } catch (ParseException ex) {
+            Logger.getLogger(Prestamo.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        
+        return fechaRetorno;        
+    }
+            
+            
+    
 
     public void limpiarTabla(JTable tabla) {
 
@@ -196,6 +226,24 @@ public class MetodosGenerales {
         }
 
         return nuevoId;
+    }
+    
+    
+    /**
+     *
+     * @param monto
+     * @param moneda
+     * @return
+     */
+    public String formatearMoneda(double monto, String moneda) {
+        StringBuilder dinero = new StringBuilder();
+        DecimalFormat formatter = new DecimalFormat("#,###.00");
+        String formateado = formatter.format(monto);
+
+        dinero.append(moneda); 
+        dinero.append(" ");
+        dinero.append(formateado);
+        return dinero.toString();
     }
 
 }
