@@ -313,7 +313,7 @@ public class BuscarCliente extends javax.swing.JDialog {
                 tabClientes.setValueAt(aClieEnti.get(i).getNombres(), i, 1); //nombres
                 tabClientes.setValueAt(aClieEnti.get(i).getApellidos(), i, 2); //apellidios
                 tabClientes.setValueAt(aClieEnti.get(i).getNumCedula(), i, 3); //cedula
-                tabClientes.setValueAt((aClieEnti.get(i).getSexo().equals("M")?"Masculino":"Femenino")  , i, 4); //sexo
+                tabClientes.setValueAt(aClieEnti.get(i).getSexo()  , i, 4); //sexo
                 tabClientes.setValueAt(municipio.getDepartamento(), i, 5); //departamento
                 tabClientes.setValueAt(municipio.getMunicipio(), i, 6); //municipio
                 tabClientes.setValueAt(aClieEnti.get(i).getTelefonoMovil(), i, 7); //movil

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="ReportePrestamo" language="groovy" pageWidth="612" pageHeight="792" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="c3469c41-f3f5-4ba6-9acb-75e277c84241">
 	<property name="ireport.zoom" value="1.7715610000000017"/>
-	<property name="ireport.x" value="0"/>
+	<property name="ireport.x" value="332"/>
 	<property name="ireport.y" value="0"/>
 	<style name="generalesPrestamo" forecolor="#000000" fontSize="10" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false"/>
 	<style name="Secundarios" fontSize="7" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false"/>
@@ -199,7 +199,7 @@ where idPrestamo = $P{idPrestamo}]]>
 			<staticText>
 				<reportElement x="451" y="27" width="110" height="20" forecolor="#666666" uuid="31a3f9b4-4327-43d6-aab0-fe9cf384cd78"/>
 				<textElement textAlignment="Center"/>
-				<text><![CDATA[Número de Préstamo]]></text>
+				<text><![CDATA[Número]]></text>
 			</staticText>
 		</band>
 	</title>

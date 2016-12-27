@@ -10,6 +10,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.DefaultListModel;
@@ -56,6 +57,7 @@ public class Prestamo extends javax.swing.JPanel {
     private double montoInteres;
     private double montoCargos;
     private int idMoneda = 1;
+    private PrestamoEntidad p=null;
 
     /**
      * Creates new form Prestamo
@@ -922,11 +924,19 @@ public class Prestamo extends javax.swing.JPanel {
     }//GEN-LAST:event_btnLimpiarActionPerformed
 
     private void btnImprimirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnImprimirActionPerformed
-        JOptionPane.showMessageDialog(prin, "Aqui va la logica para el reporte de impresion!", "Imprimir datos del Préstamo", JOptionPane.INFORMATION_MESSAGE,
+       /* JOptionPane.showMessageDialog(prin, "Aqui va la logica para el reporte de impresion!", "Imprimir datos del Préstamo", JOptionPane.INFORMATION_MESSAGE,
                 new javax.swing.ImageIcon(getClass().getResource("/loansystem/recursos/nuevo_cliente.png")));
+        */
+       HashMap<String,Object> param = new HashMap<String,Object>(); //aquí construyo un HashMap para parámetros adicionales
+       param.put("idPrestamo", p.getIdPrestamo());
+       param.put("prestamoNumero", util.completarCerosID(p.getIdPrestamo(), 6));
+      
+       
+       prin.abrirReporte("ReportePrestamo", param,"Prestamo "+util.completarCerosID(p.getIdPrestamo(), 6),"registrar_prestamo");
     }//GEN-LAST:event_btnImprimirActionPerformed
 
     public void cargarDatosCliente(ClienteEntidad cliente, PrestamoEntidad p) {
+        this.p = p;
         cargarDatosCliente(cliente);
         cargarPrestamo(p);
         cargarCuotas(p.getIdPrestamo());
@@ -1287,7 +1297,7 @@ public class Prestamo extends javax.swing.JPanel {
     // End of variables declaration//GEN-END:variables
 
     private void guardarPrestamo() {
-        PrestamoEntidad p = new PrestamoEntidad();
+        p = new PrestamoEntidad();
         PrestamoDAO pDao = new PrestamoDAO(con.getCon());
 
         CuotasEntidad c = new CuotasEntidad();

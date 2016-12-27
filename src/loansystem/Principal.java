@@ -5,73 +5,181 @@
  */
 package loansystem;
 
+import java.awt.BorderLayout;
+import java.awt.Cursor;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.io.File;
+import java.net.URL;
+import java.util.HashMap;
 import javax.swing.Icon;
+import javax.swing.JButton;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.SwingUtilities;
 import loansystem.bd.Conexion;
 import loansystem.visual.panel.*;
 import loansystem.visual.panel.Prestamo;
+import net.sf.jasperreports.engine.JasperCompileManager;
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.engine.JasperReport;
+import net.sf.jasperreports.engine.design.JasperDesign;
+import net.sf.jasperreports.engine.xml.JRXmlLoader;
+import net.sf.jasperreports.swing.JRViewer;
 
 /**
  *
  * @author cgarcia
  */
 public class Principal extends javax.swing.JFrame {
-private static Conexion con;
 
-    Cliente panelCliente ;
+    private static Conexion con;
+
+    Cliente panelCliente;
     Prestamo panelPrestamo;
     Usuario panelUsuarios;
     Personal panelPersonal;
+    private ActionListener actionListener;
+    private int pestania = 0;
+
     /**
-     * Creates new form Principal
-     * Otro comentario mas..
+     * Creates new form Principal Otro comentario mas..
      */
     public Principal(Conexion con) {
-        this.con =con;
+        this.con = con;
         initComponents();
-        
+
         setExtendedState(MAXIMIZED_BOTH);
-        
+
+        actionListener = new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                JButton button = (JButton) e.getSource();
+                for (int i = 0; i < tabPrincipal.getTabCount(); i++) {
+                    if (SwingUtilities.isDescendingFrom(button, tabPrincipal.getTabComponentAt(i))) {
+                        tabPrincipal.remove(i);
+                        pestania--;
+                        break;
+                    }
+                }
+            }
+        };
+
         tabPrincipal.add("Asignación de Préstamo", new Prestamo(con, this));
-       
+
     }
 
-       private void cargarModulo(JPanel panel, String titulo, String tooltip, String icono) {
-        tabPrincipal.add(titulo, panel);
+    private void cargarModulo(JPanel panel, String titulo, String tooltip, String icono) {
+        JLabel label = new JLabel(titulo, cargarIconoTab(icono), JLabel.RIGHT);
+        label.setFont(new java.awt.Font("Arial Rounded MT Bold", 1, 14));
+        JButton closeButton = new JButton(cargarIconoTab("close"));
+        closeButton.addActionListener(actionListener);
+        closeButton.setOpaque(false);
+        closeButton.setContentAreaFilled(false);
+        closeButton.setBorderPainted(false);
+        closeButton.setCursor(new Cursor(Cursor.HAND_CURSOR));
+
+        JPanel tabComponent = new JPanel(new BorderLayout(5, 5));
+        tabComponent.add(label, BorderLayout.WEST);
+        tabComponent.add(closeButton, BorderLayout.EAST);
+        tabComponent.setOpaque(false);
+
+        pestania++;
+        tabPrincipal.addTab(null, panel);
+        tabPrincipal.setTabComponentAt(pestania, tabComponent);
+        tabPrincipal.setSelectedIndex(pestania);
+
+        /*tabPrincipal.add(titulo, panel);
         tabPrincipal.setSelectedComponent(panel);
         // tabPrincipal.setSelectedIndex(tabPrincipal.getComponentCount() - 1);
         tabPrincipal.setToolTipTextAt(tabPrincipal.getSelectedIndex(), tooltip);
         if (icono.length() > 0) {
             tabPrincipal.setIconAt(tabPrincipal.getSelectedIndex(), cargarIconoTab(icono));
-        }
+        }*/
     }
-   
-     public Icon cargarIconoTab(String nombreIcono) {
+
+    public void removerModulo(JPanel panel) {
+        this.tabPrincipal.remove(panel);
+        pestania--;
+    }
+
+    public Icon cargarIconoTab(String nombreIcono) {
         return new javax.swing.ImageIcon(getClass().getResource("/loansystem/recursos/" + nombreIcono + ".png"));
     }
-       public void seleccionarTab(JPanel panel) {
-           if(panel==null){
-       }else{tabPrincipal.setSelectedComponent(panel);}
+
+    public void seleccionarTab(JPanel panel) {
+        if (panel == null) {
+        } else {
+            tabPrincipal.setSelectedComponent(panel);
+        }
 
     }
-         public void removerTab(JPanel panel) {
+
+    public void removerTab(JPanel panel) {
         tabPrincipal.remove(panel);
-          if (panel == panelCliente) {
-            panelCliente= null;
-                }   
-          
-             if (panel == panelPrestamo) {
-            panelPrestamo= null;
-                }  
-             
-             if (panel == panelUsuarios) {
-            panelUsuarios= null;
-                }   
-             
-              if (panel == panelPersonal) {
-            panelPersonal= null;
+        if (panel == panelCliente) {
+            panelCliente = null;
+        }
+
+        if (panel == panelPrestamo) {
+            panelPrestamo = null;
+        }
+
+        if (panel == panelUsuarios) {
+            panelUsuarios = null;
+        }
+
+        if (panel == panelPersonal) {
+            panelPersonal = null;
+        }
+        
+        pestania--;
+        
+    }
+    
+    
+    /**
+     * Abrir reporte
+     * @param reporte
+     * @param parametros
+     * @param titulo
+     * @param icono 
+     */
+    public void abrirReporte(String reporte, HashMap parametros, String titulo, String icono) 
+    { 
+        
+        
+        try
+                {  
+                     URL fileName = getClass().getResource("/loansystem/reportes/"+reporte+".jrxml");
+                    String archivo = fileName.getPath();
+                    System.out.println("reporte: "+archivo);
+                    
+                    
+                    if (fileName == null) 
+                    {                
+                        System.out.println("No encuentro el archivo del reporte.");
+                        System.exit(2);
+                    }
+                    
+                File theFile = new File(archivo);
+                JasperDesign jasperDesign = JRXmlLoader.load(theFile);               
+                
+                 JasperReport jasperReport = JasperCompileManager.compileReport(jasperDesign);
+                 JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, parametros, con.getCon());
+                 
+                 this.cargarModulo((JPanel) new JPanel().add(new JRViewer(jasperPrint)), titulo, titulo, icono);
+                 
                 }
-         }
+                catch (Exception j)
+                {
+                    System.out.println("Mensaje de Error:"+j.getMessage());
+                    javax.swing.JOptionPane.showMessageDialog(null, j.getLocalizedMessage()); 
+                }
+ 
+    }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -294,32 +402,32 @@ private static Conexion con;
 
     private void lnkNuevoPrestamoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_lnkNuevoPrestamoActionPerformed
         // TODO add your handling code here:
-          if (panelPrestamo == null) {
-                  panelPrestamo= new Prestamo(con,this);
-                  cargarModulo(panelPrestamo, "Prestamos", "Prestamoss", "registrar_prestamo");
-                  } else {
-                          this.seleccionarTab(panelPrestamo);
-                  }
-        
+        if (panelPrestamo == null) {
+            panelPrestamo = new Prestamo(con, this);
+            cargarModulo(panelPrestamo, "Prestamos", "Prestamoss", "registrar_prestamo");
+        } else {
+            this.seleccionarTab(panelPrestamo);
+        }
+
     }//GEN-LAST:event_lnkNuevoPrestamoActionPerformed
 
     private void mnuSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuSalirActionPerformed
-       System.exit(0);
+        System.exit(0);
     }//GEN-LAST:event_mnuSalirActionPerformed
 
 
     private void lnkNuevoClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_lnkNuevoClienteActionPerformed
         // TODO add your handling code here:
-           if (panelCliente == null) {
-                  panelCliente= new Cliente(con,this);
-                  cargarModulo(panelCliente, "Clientes", "Catalogo de Clientes", "nuevo_cliente");
-                  } else {
-                          this.seleccionarTab(panelCliente);
-                  }
-       /* Cliente panelCliente = new Cliente(con, this);
+        if (panelCliente == null) {
+            panelCliente = new Cliente(con, this);
+            cargarModulo(panelCliente, "Clientes", "Catalogo de Clientes", "nuevo_cliente");
+        } else {
+            this.seleccionarTab(panelCliente);
+        }
+        /* Cliente panelCliente = new Cliente(con, this);
         tabPrincipal.add(panelCliente);
         panelCliente.setVisible(true);*/
-        
+
     }//GEN-LAST:event_lnkNuevoClienteActionPerformed
 
     private void lnkNuevoPrestamo1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_lnkNuevoPrestamo1ActionPerformed
@@ -328,25 +436,25 @@ private static Conexion con;
 
     private void lnkUsuariosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_lnkUsuariosActionPerformed
         // TODO add your handling code here:
-          if (panelUsuarios == null) {
-                  panelUsuarios = new Usuario(con,this);
-                  cargarModulo(panelUsuarios, "Usuarios", "Administración de Usuarios", "usuarios");
-                  } else {
-                          this.seleccionarTab(panelUsuarios);
-                  }
+        if (panelUsuarios == null) {
+            panelUsuarios = new Usuario(con, this);
+            cargarModulo(panelUsuarios, "Usuarios", "Administración de Usuarios", "usuarios");
+        } else {
+            this.seleccionarTab(panelUsuarios);
+        }
     }//GEN-LAST:event_lnkUsuariosActionPerformed
 
     private void lnkCargoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_lnkCargoActionPerformed
         // TODO add your handling code here:
-          if (panelPersonal == null) {
-                  panelPersonal = new Personal(con,this);
-                  cargarModulo(panelPersonal, "Personal", "Administración de Personal", "cargo");
-                  } else {
-                          this.seleccionarTab(panelPersonal);
-                  }
+        if (panelPersonal == null) {
+            panelPersonal = new Personal(con, this);
+            cargarModulo(panelPersonal, "Personal", "Administración de Personal", "cargo");
+        } else {
+            this.seleccionarTab(panelPersonal);
+        }
     }//GEN-LAST:event_lnkCargoActionPerformed
 
-    
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
@@ -378,4 +486,3 @@ private static Conexion con;
     private com.l2fprod.common.swing.JTaskPaneGroup tskReportes;
     // End of variables declaration//GEN-END:variables
 }
-   
