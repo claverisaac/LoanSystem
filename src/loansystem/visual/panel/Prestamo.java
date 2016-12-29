@@ -5,6 +5,7 @@
  */
 package loansystem.visual.panel;
 
+import java.awt.Color;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -91,6 +92,7 @@ public class Prestamo extends javax.swing.JPanel {
         btnLimpiar = new javax.swing.JButton();
         btnGuardar = new javax.swing.JButton();
         btnImprimir = new javax.swing.JButton();
+        btnEstado = new javax.swing.JButton();
         btnCancelar = new javax.swing.JButton();
         pnelContenedor = new javax.swing.JPanel();
         pnelCliente = new javax.swing.JPanel();
@@ -166,6 +168,8 @@ public class Prestamo extends javax.swing.JPanel {
         txtCantDias = new javax.swing.JTextField();
         txtMontoCuota = new javax.swing.JTextField();
         btnCalcular = new javax.swing.JButton();
+        jLabel30 = new javax.swing.JLabel();
+        txtEstado = new javax.swing.JTextField();
 
         setBackground(new java.awt.Color(255, 255, 255));
         setLayout(new java.awt.BorderLayout());
@@ -223,6 +227,7 @@ public class Prestamo extends javax.swing.JPanel {
 
         btnImprimir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/loansystem/recursos/paneles/printer.png"))); // NOI18N
         btnImprimir.setToolTipText("Cancelar");
+        btnImprimir.setEnabled(false);
         btnImprimir.setFocusable(false);
         btnImprimir.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         btnImprimir.setOpaque(false);
@@ -233,6 +238,19 @@ public class Prestamo extends javax.swing.JPanel {
             }
         });
         toolOpciones.add(btnImprimir);
+
+        btnEstado.setIcon(new javax.swing.ImageIcon(getClass().getResource("/loansystem/recursos/paneles/estado.png"))); // NOI18N
+        btnEstado.setToolTipText("Cambiar estado");
+        btnEstado.setFocusable(false);
+        btnEstado.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        btnEstado.setOpaque(false);
+        btnEstado.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        btnEstado.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEstadoActionPerformed(evt);
+            }
+        });
+        toolOpciones.add(btnEstado);
 
         btnCancelar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/loansystem/recursos/paneles/cerrar.png"))); // NOI18N
         btnCancelar.setToolTipText("Cerrar");
@@ -557,7 +575,7 @@ public class Prestamo extends javax.swing.JPanel {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel27, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(txtMontoPenalidad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(17, Short.MAX_VALUE))
         );
 
         jPanel2.setOpaque(false);
@@ -781,6 +799,13 @@ public class Prestamo extends javax.swing.JPanel {
             }
         });
 
+        jLabel30.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        jLabel30.setForeground(new java.awt.Color(153, 153, 153));
+        jLabel30.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        jLabel30.setText("Estado:");
+
+        txtEstado.setEditable(false);
+
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
@@ -796,19 +821,23 @@ public class Prestamo extends javax.swing.JPanel {
                         .addGap(10, 10, 10))
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addComponent(jLabel30, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(jLabel18, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 112, Short.MAX_VALUE)
                             .addComponent(jLabel26, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel3Layout.createSequentialGroup()
-                                .addComponent(txtCantCuotas, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jLabel23, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addGroup(jPanel3Layout.createSequentialGroup()
+                                        .addComponent(txtCantCuotas, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                        .addComponent(jLabel23, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(txtCantDias, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addComponent(txtMontoCuota))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(txtCantDias, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(txtMontoCuota))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btnCalcular, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(btnCalcular, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(txtEstado, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
         );
         jPanel3Layout.setVerticalGroup(
@@ -829,7 +858,11 @@ public class Prestamo extends javax.swing.JPanel {
                             .addComponent(jLabel23)
                             .addComponent(txtCantDias, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addComponent(btnCalcular, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel30)
+                    .addComponent(txtEstado, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
                 .addContainerGap())
         );
@@ -912,15 +945,22 @@ public class Prestamo extends javax.swing.JPanel {
     }//GEN-LAST:event_cboMonedaItemStateChanged
 
     private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
-        try {
+       if(p!=null)
+       { 
+           try {
             guardarPrestamo();
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, "Por favor complete los datos del préstamo correctamente!");
         }
+       }else
+       {
+           JOptionPane.showMessageDialog(this, "Por favor complete los datos del préstamo correctamente!","Guardar Prestamo", JOptionPane.WARNING_MESSAGE);
+       }
     }//GEN-LAST:event_btnGuardarActionPerformed
 
     private void btnLimpiarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLimpiarActionPerformed
         limpiarCampos();
+        activarCampos(true);
     }//GEN-LAST:event_btnLimpiarActionPerformed
 
     private void btnImprimirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnImprimirActionPerformed
@@ -935,11 +975,43 @@ public class Prestamo extends javax.swing.JPanel {
        prin.abrirReporte("ReportePrestamo", param,"Prestamo "+util.completarCerosID(p.getIdPrestamo(), 6),"registrar_prestamo");
     }//GEN-LAST:event_btnImprimirActionPerformed
 
+    private void btnEstadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEstadoActionPerformed
+        if(p!=null)
+        {
+            PrestamoDAO pDao = new PrestamoDAO(con.getCon());
+            
+            int estadoActual = p.getEstado();
+            String estadoNuevo = (estadoActual==1?"Incobrable":"Activo");
+                            
+            if(JOptionPane.showConfirmDialog(prin, "¿Esta seguro que desea cambiar el estado del Prestamo a "+estadoNuevo+"?","Cambiar estado", 
+                    JOptionPane.YES_OPTION,
+                    JOptionPane.NO_OPTION,
+                     new javax.swing.ImageIcon(getClass().getResource("/loansystem/recursos/prestamo.png"))) == JOptionPane.YES_OPTION)
+            {
+                boolean res = pDao.cambiarEstado(p.getIdPrestamo(), (estadoActual==1?4:1));
+                if(res)
+                {
+                    cargarPrestamo(p);
+                }else
+                {
+                     JOptionPane.showMessageDialog(prin, "No se pudo realizar el cambio de estado!","Cambiar estado",JOptionPane.ERROR_MESSAGE, new javax.swing.ImageIcon(getClass().getResource("/loansystem/recursos/close.png")));
+                }
+            } 
+                
+        }else
+        {
+            JOptionPane.showMessageDialog(prin, "Debe cargar datos de un préstamo primero!!","Cambiar estado",JOptionPane.ERROR_MESSAGE, new javax.swing.ImageIcon(getClass().getResource("/loansystem/recursos/close.png")));
+        }
+            
+           
+    }//GEN-LAST:event_btnEstadoActionPerformed
+
     public void cargarDatosCliente(ClienteEntidad cliente, PrestamoEntidad p) {
         this.p = p;
         cargarDatosCliente(cliente);
         cargarPrestamo(p);
         cargarCuotas(p.getIdPrestamo());
+        
 
     }
 
@@ -991,6 +1063,8 @@ public class Prestamo extends javax.swing.JPanel {
 
             lstTelefono.setModel(modelo);
             
+            activarCampos(true);
+            btnGuardar.setEnabled(true);
             
         } catch (Exception e) {
             e.printStackTrace();
@@ -1215,6 +1289,7 @@ public class Prestamo extends javax.swing.JPanel {
     private javax.swing.JButton btnBuscar;
     private javax.swing.JButton btnCalcular;
     private javax.swing.JButton btnCancelar;
+    private javax.swing.JButton btnEstado;
     private javax.swing.JButton btnGuardar;
     private javax.swing.JButton btnImprimir;
     private javax.swing.JButton btnLimpiar;
@@ -1245,6 +1320,7 @@ public class Prestamo extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel28;
     private javax.swing.JLabel jLabel29;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel30;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
@@ -1283,6 +1359,7 @@ public class Prestamo extends javax.swing.JPanel {
     private javax.swing.JTextField txtDepartamento;
     private javax.swing.JTextArea txtDireccionPrin;
     private javax.swing.JTextArea txtDireccionSec;
+    private javax.swing.JTextField txtEstado;
     private javax.swing.JFormattedTextField txtMontoCargos;
     private javax.swing.JTextField txtMontoCuota;
     private javax.swing.JFormattedTextField txtMontoInteres;
@@ -1362,6 +1439,9 @@ public class Prestamo extends javax.swing.JPanel {
 
     }
 
+    /**
+     * Limpiamos todos los campos
+     */
     private void limpiarCampos() {
 
         //LIMPIAR DATOS DEL CLIENTE        
@@ -1374,6 +1454,8 @@ public class Prestamo extends javax.swing.JPanel {
         this.txtMunicipio.setText("");
         this.txtDireccionPrin.setText("");
         this.txtDireccionSec.setText("");
+        this.txtEstado.setText("");
+        
         rbtnMasculino.setSelected(false);
         rbtnFemenino.setSelected(false);
 
@@ -1408,7 +1490,63 @@ public class Prestamo extends javax.swing.JPanel {
         cboDiasFrec.setSelectedIndex(0);
 
         util.limpiarTabla(tabCuotas);
+        
+        btnImprimir.setEnabled(false);
+        
+        p = null;
 
+    }
+    
+    /**
+     * Activar los campos
+     * @param activo 
+     */
+    private void activarCampos(boolean activo) {
+
+        //LIMPIAR DATOS DEL CLIENTE        
+        this.txtNombres.setEnabled(activo);
+        this.txtApellidos.setEnabled(activo);
+        this.txtCentroLab.setEnabled(activo);
+        this.txtCedula.setEnabled(activo);
+        this.txtCodigo.setEnabled(activo);
+        this.txtDepartamento.setEnabled(activo);
+        this.txtMunicipio.setEnabled(activo);
+        this.txtDireccionPrin.setEnabled(activo);
+        this.txtDireccionSec.setEnabled(activo);
+        this.txtEstado.setEnabled(activo);
+        
+        rbtnMasculino.setEnabled(activo);
+        rbtnFemenino.setEnabled(activo);
+
+        DefaultListModel modelo = new DefaultListModel();
+        this.lstTelefono.setModel(modelo);
+
+        //LIMPIAR PRESTAMO
+        this.txtMontoPrestamo.setEnabled(activo);
+        this.txtTasa.setEnabled(activo);
+        this.txtTasaCargo.setEnabled(activo);
+
+        this.txtMontoInteres.setEnabled(activo);
+        this.txtMontoCargos.setEnabled(activo);
+
+        this.txtTotalPrestamo.setEnabled(activo);
+        this.txtMontoLetras.setEnabled(activo);
+        this.txtMontoPenalidad.setEnabled(activo);
+
+        this.spnPlazo.setEnabled(activo);
+        this.spnFrecuencia.setEnabled(activo);
+        this.spnDiasPenalidad.setEnabled(activo);
+
+        this.txtCantCuotas.setEnabled(activo);
+        this.txtCantDias.setEnabled(activo);
+        this.txtMontoCuota.setEnabled(activo);
+
+        dtFechaInicio.setEnabled(activo);
+        //dtFechaFin.setDate(null);
+     
+        cboMoneda.setEnabled(activo);
+        cboDias.setEnabled(activo);
+        cboDiasFrec.setEnabled(activo);
     }
 
     /**
@@ -1416,6 +1554,7 @@ public class Prestamo extends javax.swing.JPanel {
      * @param p 
      */
     private void cargarPrestamo(PrestamoEntidad p) {
+        this.p = p;
         moneda =  p.getSimboloMoneda();
         descMoneda = p.getMoneda();
         
@@ -1448,6 +1587,19 @@ public class Prestamo extends javax.swing.JPanel {
         cboDias.setSelectedIndex(indice.getIndicePeriodo(p.getPlazoPrestamo()));
         cboDiasFrec.setSelectedIndex(indice.getIndicePeriodo(p.getFrecueciaPago()));
         
+        if(p.getEstado()==1){
+            txtEstado.setForeground(Color.green);
+        }else
+        {
+            txtEstado.setForeground(Color.red);
+        }
+        
+        txtEstado.setText(p.getDescEstado());
+        
+        btnImprimir.setEnabled(true);
+        btnGuardar.setEnabled(false);
+        
+        activarCampos(false);
         
     }
     

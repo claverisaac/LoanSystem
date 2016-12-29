@@ -264,7 +264,7 @@ public class BuscarCliente extends javax.swing.JDialog {
         
         ArrayList<PrestamoEntidad> arrP = new ArrayList<PrestamoEntidad>();
         PrestamoDAO pDao = new PrestamoDAO(con.getCon());
-        arrP = pDao.obtenerPrestamosPorClienteEstado(cliente.getIdCliente(),1); //Prestamos abiertos
+        arrP = pDao.obtenerPrestamosPorClienteEstado(cliente.getIdCliente(),0); //Prestamos abiertos
         
         if(arrP.size()>0) {
             if(JOptionPane.showConfirmDialog(prin, "El cliente "+cliente.getNombres()+" "+cliente.getApellidos()+" tiene "+arrP.size()+" préstamos abiertos. \n¿Desea editar uno de estos?", 

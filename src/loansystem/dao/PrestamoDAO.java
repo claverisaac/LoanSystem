@@ -131,7 +131,11 @@ public class PrestamoDAO {
             query.append("FROM prestamo as p  ");
             query.append("inner join estadoprestamo as ep on p.estado = ep.idEstado  ");
             query.append("inner join moneda as m on m.idMoneda = p.idMoneda  ");
-            query.append("where idCliente = " + idCliente + " and estado = "+estado+";");
+            query.append("where idCliente = " + idCliente);
+            if(estado!=0)
+                query.append(" and estado = "+estado);
+            query.append(" ;"); 
+             
 
             System.out.println(query.toString());
             rs = s.executeQuery(query.toString());
@@ -145,6 +149,41 @@ public class PrestamoDAO {
         }
 
         return lista;
+    }
+    
+    /**
+     * Cambiamos el estado del prestamo
+     * @param idPrestamo
+     * @param estado
+     * @return 
+     */
+    public boolean cambiarEstado(int idPrestamo, int estado) {
+        //ProductoEntidad id = null;
+        boolean exito = false;
+        int id = 0;
+        try {
+            s = con.createStatement();
+            StringBuilder query = new StringBuilder();
+
+            query.append("UPDATE prestamo SET estado = "+estado+" WHERE idPrestamo = "+idPrestamo+"; ");
+           
+            
+            System.out.println("QUERY: " + query.toString());
+
+            exito = s.execute(query.toString());
+
+            ResultSet rs = s.getGeneratedKeys();
+            if (rs.next()) {
+                id = rs.getInt(1);
+            }
+
+            exito = true;
+
+        } catch (SQLException ex) {
+            Logger.getLogger(ClienteDAO.class.getName()).log(Level.SEVERE, null, ex);
+            id = 0;
+        }
+        return exito;
     }
     
     private PrestamoEntidad convertir(ResultSet r) {
