@@ -1494,6 +1494,7 @@ public class Prestamo extends javax.swing.JPanel {
         btnImprimir.setEnabled(false);
         
         p = null;
+        
 
     }
     
