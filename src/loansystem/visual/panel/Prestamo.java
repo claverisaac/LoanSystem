@@ -945,17 +945,13 @@ public class Prestamo extends javax.swing.JPanel {
     }//GEN-LAST:event_cboMonedaItemStateChanged
 
     private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
-       if(p!=null)
-       { 
+       
            try {
             guardarPrestamo();
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, "Por favor complete los datos del préstamo correctamente!");
         }
-       }else
-       {
-           JOptionPane.showMessageDialog(this, "Por favor complete los datos del préstamo correctamente!","Guardar Prestamo", JOptionPane.WARNING_MESSAGE);
-       }
+       
     }//GEN-LAST:event_btnGuardarActionPerformed
 
     private void btnLimpiarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLimpiarActionPerformed
