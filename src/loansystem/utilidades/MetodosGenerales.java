@@ -19,6 +19,7 @@ import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
 import loansystem.visual.panel.Prestamo;
+import org.jdesktop.swingx.JXDatePicker;
 
 /**
  *
@@ -244,6 +245,17 @@ public class MetodosGenerales {
         dinero.append(" ");
         dinero.append(formateado);
         return dinero.toString();
+    }
+    
+    
+    /**
+     *
+     * @param picker
+     */
+    public void formatoDatePicker(JXDatePicker picker) {
+        SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
+
+        picker.setFormats(format);
     }
 
 }
