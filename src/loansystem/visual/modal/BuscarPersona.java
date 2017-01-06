@@ -49,7 +49,7 @@ public class BuscarPersona extends javax.swing.JDialog {
         
         initComponents();
         
-        cargarTablaPersonal(persoDAO.obtenerTodosPersonas());
+        cargarTablaPersonal(persoDAO.obtenerTodosPersonasSinCuenta());
         
          setLocationRelativeTo(null);
     }
@@ -76,7 +76,7 @@ public class BuscarPersona extends javax.swing.JDialog {
         setTitle("Personal");
 
         jPanel3.setBackground(new java.awt.Color(255, 255, 255));
-        jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder("Búsqueda por:"));
+        jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Personal sin cuenta de usuario", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Calibri", 1, 12))); // NOI18N
 
         jLabel22.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jLabel22.setText("Buscar:");
@@ -219,13 +219,18 @@ public class BuscarPersona extends javax.swing.JDialog {
     }//GEN-LAST:event_btnCancelarActionPerformed
 
     private void btnAceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAceptarActionPerformed
-       int id = Integer.parseInt(tabPersonal.getValueAt(tabPersonal.getSelectedRow(), 0).toString());
+       if(tabPersonal.getSelectedRow() >= 0){
+        int id = Integer.parseInt(tabPersonal.getValueAt(tabPersonal.getSelectedRow(), 0).toString());
         PersonalEntidad persoE = persoDAO.obtenerXPersona(id);
 
         System.out.print("++++++++++++++++++++++++++++++++valores  " +persoE.getApellidos());
         this.usu.cargarDatosPersonal(persoE);
 
-        this.dispose();
+        this.dispose();}
+       else{
+          JOptionPane.showMessageDialog(null, "Debe seleccionar una persona", "Loan System", JOptionPane.ERROR_MESSAGE); 
+       }
+        
     }//GEN-LAST:event_btnAceptarActionPerformed
     public void cargarTablaPersonal(ArrayList<PersonalEntidad> persoEnti) {
         if (persoEnti != null) {

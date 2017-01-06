@@ -65,6 +65,42 @@ public class PersonalDAO {
         return lista;
     }
 
+        public ArrayList<PersonalEntidad> obtenerTodosPersonasSinCuenta() {
+        ArrayList<PersonalEntidad> lista = new ArrayList<PersonalEntidad>();
+        try {
+            s = con.createStatement();
+            System.out.println("SELECT idPersona,\n"
+                    + "    nombres,\n"
+                    + "    apellidos,\n"
+                    + "    numCedula,\n"
+                    + "    sexo,\n"
+                    + "    idCargo,\n"
+                    + "    fechaRegistro,\n"
+                    + "    idEmpresa\n"
+                    + "FROM personal where idPersona not in (select idPersona from usuario);");
+
+            rs = s.executeQuery("SELECT idPersona,\n"
+                    + "    nombres,\n"
+                    + "    apellidos,\n"
+                    + "    numCedula,\n"
+                    + "    sexo,\n"
+                    + "    idCargo,\n"
+                    + "    fechaRegistro,\n"
+                    + "    idEmpresa\n"
+                    + "FROM personal where idPersona not in (select idPersona from usuario);");
+
+            while (rs.next()) {
+                lista.add(this.convertir(rs));
+
+            }
+
+        } catch (SQLException ex) {
+            Logger.getLogger(PersonalDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        return lista;
+    }
+        
     public ArrayList<PersonalEntidad> obtenerePersonalNombreIDCed(String nom, String cedula, int id) {
 
         ArrayList<PersonalEntidad> lista = new ArrayList<PersonalEntidad>();

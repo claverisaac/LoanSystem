@@ -115,7 +115,7 @@ public class Personal extends javax.swing.JPanel {
         jToolBar1.setMinimumSize(new java.awt.Dimension(45, 228));
 
         btnNuevo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/loansystem/recursos/paneles/nuevo.png"))); // NOI18N
-        btnNuevo.setToolTipText("Nuevo Cliente");
+        btnNuevo.setToolTipText("Nueva Persona");
         btnNuevo.setFocusable(false);
         btnNuevo.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         btnNuevo.setOpaque(false);
@@ -128,7 +128,7 @@ public class Personal extends javax.swing.JPanel {
         jToolBar1.add(btnNuevo);
 
         btnModificar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/loansystem/recursos/modificar_cliente.png"))); // NOI18N
-        btnModificar.setToolTipText("Modificar Datos del Clietne");
+        btnModificar.setToolTipText("Modificar Datos de la Persona");
         btnModificar.setFocusable(false);
         btnModificar.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         btnModificar.setOpaque(false);
@@ -141,7 +141,7 @@ public class Personal extends javax.swing.JPanel {
         jToolBar1.add(btnModificar);
 
         btnSave.setIcon(new javax.swing.ImageIcon(getClass().getResource("/loansystem/recursos/paneles/save.png"))); // NOI18N
-        btnSave.setToolTipText("Guardar Datos del Cliente");
+        btnSave.setToolTipText("Guardar Datos de la Persona");
         btnSave.setFocusable(false);
         btnSave.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         btnSave.setOpaque(false);
@@ -657,6 +657,7 @@ public class Personal extends javax.swing.JPanel {
                     nuevo = false;
                     entiPerso = daoP.obtenerTodosPersonas();
                     cargarTablaPersonal();
+                    limpiar_form();
                 } else {
                     JOptionPane.showMessageDialog(this, "Lo sentimos no se regitró la persona!!", "Catalogo de Personal", JOptionPane.ERROR_MESSAGE);
                 }

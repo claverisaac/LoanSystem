@@ -5,6 +5,7 @@
  */
 package loansystem.visual.panel;
 
+import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
 import loansystem.Principal;
@@ -16,6 +17,7 @@ import loansystem.entidad.CargoEntidad;
 import loansystem.entidad.PersonalEntidad;
 import loansystem.entidad.UsuarioEntidad;
 import loansystem.visual.modal.BuscarPersona;
+import loansystem.utilidades.MetodosGenerales;
 
 /**
  *
@@ -26,6 +28,12 @@ public class Usuario extends javax.swing.JPanel {
     private Conexion con;
     private Principal prin;
     private boolean inact = false, passw = false, nuevo = false, save = false;
+    ArrayList<UsuarioEntidad> us;
+    UsuarioEntidad usu;
+    MetodosGenerales util;
+    UsuarioDAO dao;
+    PersonalEntidad perso;
+    PersonalDAO da;
 
     /**
      * Creates new form Usuario
@@ -33,6 +41,7 @@ public class Usuario extends javax.swing.JPanel {
     public Usuario(Conexion con, Principal prin) {
         this.con = con;
         this.prin = prin;
+        util = new MetodosGenerales();
 
         initComponents();
         txtPass.setVisible(false);
@@ -46,6 +55,12 @@ public class Usuario extends javax.swing.JPanel {
         btnPass.setEnabled(false);
         btnInact.setEnabled(false);
         btnGuardar.setEnabled(false);
+
+        dao = new UsuarioDAO(con.getCon());
+        us = dao.obtenerTodosUsuarios();
+        da = new PersonalDAO(con.getCon());
+        cargarTablaUsuarios();
+
     }
 
     /**
@@ -59,7 +74,17 @@ public class Usuario extends javax.swing.JPanel {
 
         jLabel2 = new javax.swing.JLabel();
         jLabel9 = new javax.swing.JLabel();
-        jPanel1 = new javax.swing.JPanel();
+        jLabel8 = new javax.swing.JLabel();
+        jToolBar1 = new javax.swing.JToolBar();
+        btnBuscarPersona = new javax.swing.JButton();
+        btnPass = new javax.swing.JButton();
+        btnInact = new javax.swing.JButton();
+        btnGuardar = new javax.swing.JButton();
+        btnLimpiar = new javax.swing.JButton();
+        jButton1 = new javax.swing.JButton();
+        jPanel4 = new javax.swing.JPanel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        tabUs = new javax.swing.JTable();
         jPanel3 = new javax.swing.JPanel();
         jLabel10 = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
@@ -79,14 +104,6 @@ public class Usuario extends javax.swing.JPanel {
         txtPass2 = new javax.swing.JPasswordField();
         lblPass3 = new javax.swing.JLabel();
         txtPass3 = new javax.swing.JPasswordField();
-        jLabel8 = new javax.swing.JLabel();
-        jToolBar1 = new javax.swing.JToolBar();
-        btnBuscarPersona = new javax.swing.JButton();
-        btnPass = new javax.swing.JButton();
-        btnInact = new javax.swing.JButton();
-        btnGuardar = new javax.swing.JButton();
-        btnLimpiar = new javax.swing.JButton();
-        jButton1 = new javax.swing.JButton();
 
         jLabel2.setText("jLabel2");
 
@@ -95,10 +112,110 @@ public class Usuario extends javax.swing.JPanel {
         setBackground(new java.awt.Color(255, 255, 255));
         setLayout(new java.awt.BorderLayout());
 
-        jPanel1.setBackground(new java.awt.Color(255, 255, 255));
-        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Información del Usuario", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Calibri", 1, 12))); // NOI18N
+        jLabel8.setBackground(new java.awt.Color(0, 0, 102));
+        jLabel8.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jLabel8.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel8.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel8.setText("Administración de Usuarios ");
+        jLabel8.setOpaque(true);
+        add(jLabel8, java.awt.BorderLayout.PAGE_START);
+
+        jToolBar1.setBackground(new java.awt.Color(255, 255, 255));
+        jToolBar1.setFloatable(false);
+        jToolBar1.setOrientation(javax.swing.SwingConstants.VERTICAL);
+        jToolBar1.setRollover(true);
+
+        btnBuscarPersona.setIcon(new javax.swing.ImageIcon(getClass().getResource("/loansystem/recursos/paneles/nuevo.png"))); // NOI18N
+        btnBuscarPersona.setToolTipText("Nuevo Usuario");
+        btnBuscarPersona.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnBuscarPersonaActionPerformed(evt);
+            }
+        });
+        jToolBar1.add(btnBuscarPersona);
+
+        btnPass.setText("Cambiar Pass");
+        btnPass.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnPassActionPerformed(evt);
+            }
+        });
+        jToolBar1.add(btnPass);
+
+        btnInact.setIcon(new javax.swing.ImageIcon(getClass().getResource("/loansystem/recursos/paneles/estado.png"))); // NOI18N
+        btnInact.setToolTipText("Estado");
+        btnInact.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnInactActionPerformed(evt);
+            }
+        });
+        jToolBar1.add(btnInact);
+
+        btnGuardar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/loansystem/recursos/paneles/save.png"))); // NOI18N
+        btnGuardar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnGuardarActionPerformed(evt);
+            }
+        });
+        jToolBar1.add(btnGuardar);
+
+        btnLimpiar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/loansystem/recursos/paneles/repeat.png"))); // NOI18N
+        btnLimpiar.setToolTipText("Limpiar");
+        btnLimpiar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnLimpiarActionPerformed(evt);
+            }
+        });
+        jToolBar1.add(btnLimpiar);
+
+        jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/loansystem/recursos/paneles/cerrar.png"))); // NOI18N
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+        jToolBar1.add(jButton1);
+
+        add(jToolBar1, java.awt.BorderLayout.WEST);
+
+        jPanel4.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel4.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Usuarios del Sistema", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Calibri", 1, 12))); // NOI18N
+
+        tabUs.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "ID", "Nombres", "Apellidos", "Cargo", "Login", "Estado"
+            }
+        ) {
+            Class[] types = new Class [] {
+                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
+            };
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, false, false
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        tabUs.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tabUsMouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                tabUsMouseEntered(evt);
+            }
+        });
+        jScrollPane1.setViewportView(tabUs);
 
         jPanel3.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Información del Usuario", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Calibri", 1, 12))); // NOI18N
 
         jLabel10.setText("Id:");
 
@@ -134,7 +251,7 @@ public class Usuario extends javax.swing.JPanel {
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(txtId, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(txtNombre))))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(44, Short.MAX_VALUE))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -164,6 +281,11 @@ public class Usuario extends javax.swing.JPanel {
                 txtLoginActionPerformed(evt);
             }
         });
+        txtLogin.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtLoginKeyReleased(evt);
+            }
+        });
 
         lblPass.setText("Contraseña actual: ");
 
@@ -180,7 +302,7 @@ public class Usuario extends javax.swing.JPanel {
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addContainerGap()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jLabel5)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -196,8 +318,7 @@ public class Usuario extends javax.swing.JPanel {
                     .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                         .addComponent(cboEstado, 0, 147, Short.MAX_VALUE)
                         .addComponent(txtPass))
-                    .addComponent(txtPass3, javax.swing.GroupLayout.PREFERRED_SIZE, 149, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(txtPass3, javax.swing.GroupLayout.PREFERRED_SIZE, 149, javax.swing.GroupLayout.PREFERRED_SIZE)))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -229,91 +350,68 @@ public class Usuario extends javax.swing.JPanel {
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblPass3)
                     .addComponent(txtPass3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(42, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
+        javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
+        jPanel4.setLayout(jPanel4Layout);
+        jPanel4Layout.setHorizontalGroup(
+            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jScrollPane1)
                 .addContainerGap())
+            .addGroup(jPanel4Layout.createSequentialGroup()
+                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        jPanel4Layout.setVerticalGroup(
+            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel4Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 236, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        add(jPanel1, java.awt.BorderLayout.CENTER);
-
-        jLabel8.setBackground(new java.awt.Color(0, 0, 102));
-        jLabel8.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        jLabel8.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel8.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel8.setText("Administración de Usuarios ");
-        jLabel8.setOpaque(true);
-        add(jLabel8, java.awt.BorderLayout.PAGE_START);
-
-        jToolBar1.setBackground(new java.awt.Color(255, 255, 255));
-        jToolBar1.setFloatable(false);
-        jToolBar1.setOrientation(javax.swing.SwingConstants.VERTICAL);
-        jToolBar1.setRollover(true);
-
-        btnBuscarPersona.setIcon(new javax.swing.ImageIcon(getClass().getResource("/loansystem/recursos/paneles/search.png"))); // NOI18N
-        btnBuscarPersona.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnBuscarPersonaActionPerformed(evt);
-            }
-        });
-        jToolBar1.add(btnBuscarPersona);
-
-        btnPass.setText("Cambiar Pass");
-        btnPass.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnPassActionPerformed(evt);
-            }
-        });
-        jToolBar1.add(btnPass);
-
-        btnInact.setText("Estado");
-        btnInact.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnInactActionPerformed(evt);
-            }
-        });
-        jToolBar1.add(btnInact);
-
-        btnGuardar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/loansystem/recursos/paneles/save.png"))); // NOI18N
-        btnGuardar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnGuardarActionPerformed(evt);
-            }
-        });
-        jToolBar1.add(btnGuardar);
-
-        btnLimpiar.setText("Limpiar");
-        btnLimpiar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnLimpiarActionPerformed(evt);
-            }
-        });
-        jToolBar1.add(btnLimpiar);
-
-        jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/loansystem/recursos/paneles/cerrar.png"))); // NOI18N
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
-            }
-        });
-        jToolBar1.add(jButton1);
-
-        add(jToolBar1, java.awt.BorderLayout.WEST);
+        add(jPanel4, java.awt.BorderLayout.CENTER);
     }// </editor-fold>//GEN-END:initComponents
+    public void cargarTablaUsuarios() {
+        if (us != null) {
+
+            util.limpiarTabla(tabUs);
+            String estado;
+            for (int i = 0; i < us.size(); i++) {
+                util.agregarFila(tabUs);
+                tabUs.setValueAt(us.get(i).getIdUsuario(), i, 0); //ID usuario
+                //Infor personal
+                PersonalEntidad per;
+                PersonalDAO daoP = new PersonalDAO(con.getCon());
+                per = daoP.obtenerPersonal(us.get(i).getIdPersona());
+
+                tabUs.setValueAt(per.getNombres(), i, 1); //NOmbres
+                tabUs.setValueAt(per.getApellidos(), i, 2); //Apellidos
+                //Cargo
+                CargoDAO cargoDao = new CargoDAO(con.getCon());
+                CargoEntidad cargoenti = cargoDao.obtenerCargo(per.getIdCargo());
+                tabUs.setValueAt(cargoenti.getCargo(), i, 3); //Cargo
+                tabUs.setValueAt(us.get(i).getLogin(), i, 4); //Login
+                if (us.get(i).getEstado() == 1) {
+                    tabUs.setValueAt("Activo", i, 5);
+                }//Estado
+                else {
+                    tabUs.setValueAt("Inactivo", i, 5);
+                }
+
+            }
+
+        }
+    }
 
     private void btnBuscarPersonaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarPersonaActionPerformed
         // TODO add your handling code here:
@@ -385,8 +483,17 @@ public class Usuario extends javax.swing.JPanel {
                 inact = false;
                 btnGuardar.setEnabled(false);
                 cboEstado.setEnabled(false);
+                us = dao.obtenerTodosUsuarios();
+                cargarTablaUsuarios();
+                nuevo = false;
+                passw = false;
+                inact = false;
+
             } else {
                 JOptionPane.showMessageDialog(this, "No se pudo actualizar el estado", "Administración de Usuarios", JOptionPane.ERROR_MESSAGE);
+                nuevo = false;
+                passw = false;
+                inact = true;
             }
         }
 
@@ -414,8 +521,14 @@ public class Usuario extends javax.swing.JPanel {
                         txtPass.setEditable(false);
                         txtPass2.setEditable(false);
                         txtPass3.setEditable(false);
+                        nuevo = false;
+                        passw = false;
+                        inact = false;
                     } else {
                         JOptionPane.showMessageDialog(this, "No se pudo actualizar la contraseña", "Administración de Usuarios", JOptionPane.ERROR_MESSAGE);
+                        nuevo = false;
+                        passw = true;
+                        inact = false;
                     }
 
                 } else {
@@ -434,6 +547,13 @@ public class Usuario extends javax.swing.JPanel {
 
         if (nuevo) {
 
+          if(txtLogin.getText().length() < 0 || txtLogin.getText().equals("") || txtPass2.getText().length() < 0 
+                  || txtPass2.getText().equals("")
+                  || txtPass3.getText().length() < 0 || txtPass3.getText().equals("")){  
+              JOptionPane.showMessageDialog(this, "Lo sentimos, debe ingresar datos obligatorios!!", "Administración de Usuarios",
+                    JOptionPane.ERROR_MESSAGE);
+        } else {
+                      
             ArrayList<UsuarioEntidad> user = new ArrayList<UsuarioEntidad>();
             user = dao.obtenerUsuariosXlogiin(txtLogin.getText());
             if (user.size() > 0) {
@@ -454,20 +574,32 @@ public class Usuario extends javax.swing.JPanel {
                 if (save) {
                     JOptionPane.showMessageDialog(this, "Usuario guardado exitosamente!!", "Administración de Usuarios", JOptionPane.INFORMATION_MESSAGE);
                     btnGuardar.setEnabled(false);
-                    nuevo = false;
+
                     txtPass.setEditable(false);
                     txtPass2.setEditable(false);
                     txtPass3.setEditable(false);
                     txtLogin.setEditable(false);
                     cboEstado.setEnabled(false);
+                    us = dao.obtenerTodosUsuarios();
+                    cargarTablaUsuarios();
+                    nuevo = false;
+                    passw = false;
+                    inact = false;
                 } else {
                     JOptionPane.showMessageDialog(this, "No se pudo guardar el usuario", "Administración de Usuarios", JOptionPane.ERROR_MESSAGE);
+                    nuevo = true;
+                    passw = false;
+                    inact = false;
                 }
 
             } else {
                 JOptionPane.showMessageDialog(this, "Contraseñas no coinciden", "Administración de Usuarios", JOptionPane.ERROR_MESSAGE);
             }
+        }      
+        
         }
+        
+  
     }//GEN-LAST:event_btnGuardarActionPerformed
 
     public void limpiarForm() {
@@ -501,6 +633,71 @@ public class Usuario extends javax.swing.JPanel {
         // TODO add your handling code here:
     }//GEN-LAST:event_txtLoginActionPerformed
 
+    private void tabUsMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tabUsMouseEntered
+        // TODO add your handling code here:
+    }//GEN-LAST:event_tabUsMouseEntered
+
+    private void tabUsMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tabUsMouseClicked
+        // TODO add your handling code here:
+        cargarFormulario();
+        btnPass.setEnabled(true);
+        btnInact.setEnabled(true);
+//        btnSave.setEnabled(false);*/
+    }//GEN-LAST:event_tabUsMouseClicked
+
+    private void txtLoginKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtLoginKeyReleased
+        // TODO add your handling code here:
+        char c = evt.getKeyChar();
+        if (!(Character.isDigit(c)
+                || (c == KeyEvent.VK_BACK_SPACE)
+                || (c == KeyEvent.VK_DELETE)
+                //|| (c == KeyEvent.VK_PERIOD)
+                || (c == KeyEvent.VK_ENTER))) {
+
+            String a = txtLogin.getText().toUpperCase();
+            txtLogin.setText(a);
+            evt.consume();
+        }
+    }//GEN-LAST:event_txtLoginKeyReleased
+
+    void cargarFormulario() {
+        int row = tabUs.getSelectedRow();
+        //cargarCboPresentacion();
+        if (tabUs.getValueAt(row, 0) != null) {
+            int id_user = Integer.parseInt(tabUs.getValueAt(row, 0).toString());
+            //obtener toda la info del usuario
+            usu = dao.obtenerUsuariosXid(id_user);
+
+            txtId.setText(String.valueOf(usu.getIdUsuario()));
+            txtLogin.setText(String.valueOf(usu.getLogin()));
+            if (usu.getEstado() == 1) {
+                cboEstado.setSelectedItem("Activo");
+            } else {
+                cboEstado.setSelectedItem("Inactivo");
+            }
+
+            perso = da.obtenerPersonal(usu.getIdPersona());
+            String nom = perso.getNombres().concat(" ").concat(perso.getApellidos());
+            txtNombre.setText(nom);
+
+            CargoDAO cargoDao = new CargoDAO(con.getCon());
+            CargoEntidad cargoenti = cargoDao.obtenerCargo(perso.getIdCargo());
+            txtCargo.setText(cargoenti.getCargo());
+
+            txtPass.setVisible(false);
+            txtPass2.setVisible(false);
+            lblPass2.setVisible(false);
+            lblPass.setVisible(false);
+            txtPass3.setVisible(false);
+            lblPass3.setVisible(false);
+            txtLogin.setEditable(false);
+            cboEstado.setEnabled(false);
+            btnPass.setEnabled(false);
+            btnInact.setEnabled(false);
+            btnGuardar.setEnabled(false);
+        }
+    }
+
     public void cargarDatosPersonal(PersonalEntidad perso) {
         limpiarForm();
 
@@ -523,42 +720,41 @@ public class Usuario extends javax.swing.JPanel {
         if (usuEnti == null) //No hay cuenta de usuario
         {
 
-            int resp = JOptionPane.showConfirmDialog(null, "La persona seleccionada no tiene cuenta de usuario. ¿Requiere crearle una cuenta?");
-            if (JOptionPane.OK_OPTION == resp) {
+            //int resp = JOptionPane.showConfirmDialog(null, "La persona seleccionada no tiene cuenta de usuario. ¿Requiere crearle una cuenta?");
+            //if (JOptionPane.OK_OPTION == resp) {
+            this.txtId.setText(String.valueOf(perso.getIdPersona()));
+            this.txtNombre.setText(perso.getNombres().concat(" ").concat(perso.getApellidos()));
+            this.txtCargo.setText(cargoenti.getCargo());
 
-                this.txtId.setText(String.valueOf(perso.getIdPersona()));
-                this.txtNombre.setText(perso.getNombres().concat(" ").concat(perso.getApellidos()));
-                this.txtCargo.setText(cargoenti.getCargo());
+            nuevo = true;
+            btnPass.setEnabled(false);
+            btnInact.setEnabled(false);
+            btnGuardar.setEnabled(true);
 
-                nuevo = true;
-                btnPass.setEnabled(false);
-                btnInact.setEnabled(false);
-                btnGuardar.setEnabled(true);
+            lblPass2.setVisible(true);
+            lblPass3.setVisible(true);
+            txtPass3.setVisible(true);
+            txtPass2.setVisible(true);
 
-                lblPass2.setVisible(true);
-                lblPass3.setVisible(true);
-                txtPass3.setVisible(true);
-                txtPass2.setVisible(true);
+            txtPass2.setEditable(true);
+            txtPass3.setEditable(true);
 
-                txtPass2.setEditable(true);
-                txtPass3.setEditable(true);
+            cboEstado.setEnabled(true);
 
-                cboEstado.setEnabled(true);
+            txtLogin.setEditable(true);
 
-                txtLogin.setEditable(true);
+            //Crear login
+            PersonalDAO daoPerso = new PersonalDAO(con.getCon());
+            PersonalEntidad enti = daoPerso.obtenerLoginPropuesto(perso.getIdPersona());
+            String loginDos = null;
+            String login = enti.getLogin();
 
-                //Crear login
-                PersonalDAO daoPerso = new PersonalDAO(con.getCon());
-                PersonalEntidad enti = daoPerso.obtenerLoginPropuesto(perso.getIdPersona());
-                String loginDos = null;
-                String login = enti.getLogin();
+            ArrayList<UsuarioEntidad> usuarioEnti;
+            UsuarioEntidad usua;
+            UsuarioDAO usuDAO = new UsuarioDAO(con.getCon());
+            usuarioEnti = usuDAO.obtenerTodosUsuarios();
 
-                ArrayList<UsuarioEntidad> usuarioEnti;
-                UsuarioEntidad usua;
-                UsuarioDAO usuDAO = new UsuarioDAO(con.getCon());
-                usuarioEnti = usuDAO.obtenerTodosUsuarios();
-
-                /*   for (int i = 0; i < usuarioEnti.size(); i++) {
+            /*   for (int i = 0; i < usuarioEnti.size(); i++) {
                     System.out.println("Login: " + login);
 
                     if (usuarioEnti.get(i).getLogin().contains(login)) {
@@ -576,11 +772,11 @@ public class Usuario extends javax.swing.JPanel {
                     }
 
                 }*/
-                //  txtPass3.setText("123");
-                //   txtPass2.setText("123");
-            } else {
-            }
-
+            //  txtPass3.setText("123");
+            //   txtPass2.setText("123");
+            // } 
+            //else {
+            //}
         } else { //Si hay cuenta de usuario
             this.txtId.setText(String.valueOf(perso.getIdPersona()));
             this.txtNombre.setText(perso.getNombres().concat(" ").concat(perso.getApellidos()));
@@ -620,13 +816,15 @@ public class Usuario extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
-    private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
+    private javax.swing.JPanel jPanel4;
+    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JToolBar jToolBar1;
     private javax.swing.JLabel lblPass;
     private javax.swing.JLabel lblPass2;
     private javax.swing.JLabel lblPass3;
+    private javax.swing.JTable tabUs;
     private javax.swing.JTextField txtCargo;
     private javax.swing.JTextField txtId;
     private javax.swing.JTextField txtLogin;

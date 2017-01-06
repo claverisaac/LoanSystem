@@ -1,0 +1,180 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Resumen_Cliente_Prestamo" language="groovy" pageWidth="612" pageHeight="792" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="aaa67835-22ec-4356-a74a-fa7754b6ec92">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<queryString>
+		<![CDATA[SELECT c.idCliente, concat(nombres,' ', apellidos) as nomCliente, numCedula, sexo,m.Departamento, m.Municipio, direccionPrincipal,
+telefonoMovil, ifnull(telefonoCasa,''), ifnull(telefonoVario_uno,''),ifnull(telefonoVario_dos,''), ifnull(centroLaboral,''), ifnull(telefonoLaboral,'')
+FROM cliente as c
+inner join municipio as m on m.idMunicipio = c.idMunicipio order by c.idCliente;]]>
+	</queryString>
+	<field name="idCliente" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="nomCliente" class="java.lang.String"/>
+	<field name="numCedula" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="sexo" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="Departamento" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="Municipio" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="direccionPrincipal" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="telefonoMovil" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="ifnull(telefonoCasa,&apos;&apos;)" class="java.lang.String"/>
+	<field name="ifnull(telefonoVario_uno,&apos;&apos;)" class="java.lang.String"/>
+	<field name="ifnull(telefonoVario_dos,&apos;&apos;)" class="java.lang.String"/>
+	<field name="ifnull(centroLaboral,&apos;&apos;)" class="java.lang.String"/>
+	<field name="ifnull(telefonoLaboral,&apos;&apos;)" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="57" splitType="Stretch">
+			<staticText>
+				<reportElement x="150" y="10" width="299" height="20" forecolor="#99CCFF" uuid="8c7f49a9-5309-41d1-84fc-66272e4a4819"/>
+				<textElement textAlignment="Center" verticalAlignment="Bottom">
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[SISTEMA DE CONTROL DE PRESTAMOS]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="150" y="30" width="299" height="27" forecolor="#666666" uuid="a13924ce-5343-4c6c-8d45-e5b0a791b16e"/>
+				<textElement textAlignment="Center">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Resumen de Clientes]]></text>
+			</staticText>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="1" splitType="Stretch">
+			<line>
+				<reportElement x="12" y="0" width="560" height="1" forecolor="#000066" uuid="f78ae37d-0962-4190-b8c8-55f9a3ab6e3e"/>
+			</line>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="17" splitType="Stretch"/>
+	</columnHeader>
+	<detail>
+		<band height="134" splitType="Stretch">
+			<textField>
+				<reportElement x="114" y="40" width="100" height="20" uuid="f8b8a0c6-abaf-4a75-be04-d890cd76be54"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{numCedula}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="12" y="40" width="100" height="20" forecolor="#666666" uuid="4940f160-ed25-4225-a6be-97b3eb965807"/>
+				<text><![CDATA[Número de Cédula:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="12" y="60" width="100" height="20" forecolor="#666666" uuid="2f1d6042-97c7-42b0-9c6a-7e91cac96f84"/>
+				<text><![CDATA[Sexo:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="114" y="60" width="100" height="20" uuid="898fe324-6581-4ee4-bd8f-ad9a324f062f"/>
+				<textFieldExpression><![CDATA[$F{sexo}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="318" y="0" width="100" height="20" forecolor="#666666" uuid="85c88ff6-379d-4921-8656-9469e8581b6d"/>
+				<text><![CDATA[Dirección:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="318" y="20" width="254" height="20" uuid="404b2e22-6de7-44dc-9a6f-1d1175b9a40e"/>
+				<textFieldExpression><![CDATA[$F{direccionPrincipal}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="354" y="40" width="100" height="20" uuid="481be18d-c18a-42fd-a0bf-8fdda6680afd"/>
+				<textFieldExpression><![CDATA[$F{telefonoMovil}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="318" y="40" width="36" height="20" forecolor="#666666" uuid="fac5f22a-d6ce-41c8-b073-f88160ed56c0"/>
+				<text><![CDATA[Móvil:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="114" y="80" width="100" height="20" uuid="b3510a3f-b912-46e3-9adf-eddd6aa0c0be"/>
+				<textFieldExpression><![CDATA[$F{centroLaboral}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="13" y="80" width="101" height="20" forecolor="#666666" uuid="9ced421c-0db3-4513-b3ba-d98626de1813"/>
+				<text><![CDATA[Centro Laboral:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="12" y="20" width="57" height="20" forecolor="#666666" uuid="bb9f7579-4798-4581-a5a6-e4363d7c0ad9"/>
+				<text><![CDATA[Id Cliente:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="114" y="20" width="57" height="20" uuid="c7012171-08f4-4d06-9685-565737df8c3d"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{idCliente}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="114" y="0" width="175" height="20" uuid="e224bd04-47c9-46cb-b950-f6f2ed3fa1b0"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{nomCliente}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="12" y="0" width="102" height="20" forecolor="#666666" uuid="36982642-c552-42fa-9ce5-4501d87cb8ee"/>
+				<text><![CDATA[Nombre del Cliente:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="114" y="100" width="100" height="20" uuid="8308158f-5ece-4626-ab93-a2afa902fc74"/>
+				<textFieldExpression><![CDATA[$F{telefonoLaboral}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="12" y="100" width="101" height="20" forecolor="#666666" uuid="e9714112-6020-4d7e-9a72-e477043a301b"/>
+				<text><![CDATA[Teléfono Laboral:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="318" y="60" width="87" height="20" forecolor="#666666" uuid="215dcc6d-bc3d-4b16-94b1-111053e19735"/>
+				<text><![CDATA[Teléfono Casa:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="405" y="60" width="100" height="20" uuid="1f497301-67dd-4f4a-91eb-f7d239ec404c"/>
+				<textFieldExpression><![CDATA[$F{telefonoCasa}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="405" y="80" width="100" height="20" uuid="47be4cab-61a2-4c84-a036-c1c4ad13befa"/>
+				<textFieldExpression><![CDATA[$F{telefonoVario_uno}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="405" y="101" width="100" height="20" uuid="aa727c68-ab04-433b-8230-c58434c9846f"/>
+				<textFieldExpression><![CDATA[$F{telefonoVario_uno}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="318" y="80" width="87" height="20" forecolor="#666666" uuid="d09d5136-6eb5-4683-83ce-1448080b1834"/>
+				<text><![CDATA[Móvil #1:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="318" y="101" width="87" height="20" forecolor="#666666" uuid="a457b862-ce93-432c-958c-7105cd2e7062"/>
+				<text><![CDATA[Móvil #2:]]></text>
+			</staticText>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="45" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="54" splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="42" splitType="Stretch"/>
+	</summary>
+</jasperReport>

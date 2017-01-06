@@ -63,7 +63,7 @@ Conexion con;
 
         jLabel2.setText("Login:");
 
-        txtLogin.setText("JCHAVARRIA");
+        txtLogin.setText("CIGA282");
         txtLogin.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtLoginActionPerformed(evt);
@@ -167,7 +167,8 @@ Conexion con;
 
     private void btnIniciarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIniciarActionPerformed
     //Conectarse a la BD
-        Conexion con = new Conexion("root", "159951", "loan_system", "localhost");
+      //  Conexion con = new Conexion("root", "159951", "loan_system", "192.168.0.17");
+          Conexion con = new Conexion("root", "", "loan_system", "LOCALHOST");
         boolean conexion_abierta = con.abrirConeccion();
       
         //Verificamos si la conexion esta abierta

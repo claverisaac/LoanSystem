@@ -161,6 +161,25 @@ public class UsuarioDAO {
         return lista;
     }
          
+                public UsuarioEntidad obtenerUsuariosXid(int idUsuario) {
+        UsuarioEntidad lista = new UsuarioEntidad();
+        try {
+            s = con.createStatement();
+            System.out.println("select idUsuario,idPersona, login, pass,estado from loan_system.usuario where idUsuario = '"+idUsuario+"';");
+
+            rs = s.executeQuery("select idUsuario,idPersona, login, pass,estado from loan_system.usuario where idUsuario = '"+idUsuario+"';");
+
+       
+            while (rs.next()) {
+                lista= this.convertir(rs);
+            }
+
+        } catch (SQLException ex) {
+            Logger.getLogger(UsuarioDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        return lista;
+    }
     public boolean insertarUsuario(UsuarioEntidad obj) {
         //ProductoEntidad id = null;
         boolean exito = false;
