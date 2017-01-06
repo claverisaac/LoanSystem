@@ -151,6 +151,49 @@ public class PrestamoDAO {
         return lista;
     }
     
+    public PrestamoEntidad obtenerPrestamosPorIdPrestamo(int idPrestamo) {
+
+        PrestamoEntidad lista = null;
+
+        try {
+            //preparamos la ejecucion del query
+            s = con.createStatement();
+
+            StringBuilder query = new StringBuilder();
+            query.append("SELECT p.idPrestamo, idCliente, fechaInicio, fechaVencimiento, idPlazo, ");
+            query.append("(select plazo from plazo as pl where p.idPlazo = pl.idPlazo) as 'PlazoPrestamo', ");
+            query.append("cantPeriodo, p.idMoneda, plazoDias, montoOriginal, tasa, montoTasa, tasaCargos, montoCargos, montoTotal, ");
+            query.append("cantidadCuotas, montoCuota, idFrecuenciaPago, ");
+            query.append("(select plazo from plazo as pl where p.idFrecuenciaPago = pl.idPlazo) as 'FrecuenciaPago', ");
+            query.append("cantFrecuencia, frecuenciaDias, ");
+            query.append("montoPenalidad, diasPenalidad, estado,ep.nombre as 'descEstado', fechaCreacion, ");
+            query.append("(select IFNULL(MAX(a.fecha),'No hay Pago') from abono as a where a.idPrestamo = p.idPrestamo)  as 'fechaUltimoPago', ");
+            query.append("(select IFNULL(SUM(a.montoAbonado),0) from abono as a where a.idPrestamo = p.idPrestamo) as 'ultimoPago', ");
+            query.append("(montoTotal - (select ifnull(sum(montoAbonado),0) from abono as a where a.idPrestamo = p.idPrestamo) ) as 'saldoActual', ");
+            query.append("m.simbolo as 'SimboloMoneda', ");
+            query.append("m.nombre as 'moneda' ");
+            query.append("FROM prestamo as p  ");
+            query.append("inner join estadoprestamo as ep on p.estado = ep.idEstado  ");
+            query.append("inner join moneda as m on m.idMoneda = p.idMoneda  ");
+            query.append("where idPrestamo = " + idPrestamo);
+           
+            query.append(" ;"); 
+             
+
+            System.out.println(query.toString());
+            rs = s.executeQuery(query.toString());
+
+            //Recorremos cada registro agregandolo al ArrayList
+            while (rs.next()) {
+                lista = this.convertir(rs);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(ClienteDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        return lista;
+    }
+    
     /**
      * Cambiamos el estado del prestamo
      * @param idPrestamo
