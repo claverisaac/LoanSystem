@@ -7,7 +7,11 @@ package loansystem.dao;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import loansystem.entidad.AbonoEntidad;
 
 /**
  *
@@ -22,10 +26,35 @@ public AbonoDAO(Connection con) {
         this.con = con;
 }
 
-//Obtener todos los abonos de un cliente a un prestamos especifico
+ public int insertarPrestamo(AbonoEntidad obj) {
+        //ProductoEntidad id = null;
+        boolean exito = false;
+        int id = 0;
+        try {
+            s = con.createStatement();
+            StringBuilder query = new StringBuilder();
 
-//
-    
+            query.append("INSERT INTO abono (idPrestamo, fecha, montoAbonado, nuevoSaldo) ");
+         
+            query.append("VALUES ("+obj.getIdPrestamo() +", '"+obj.getFecha()+"', "+obj.getMontoAbonado()+", "+obj.getMontoAbonado() +")");
+            
+            System.out.println("QUERY: " + query.toString());
+
+            exito = s.execute(query.toString());
+
+            ResultSet rs = s.getGeneratedKeys();
+            if (rs.next()) {
+                id = rs.getInt(1);
+            }
+
+            exito = true;
+
+        } catch (SQLException ex) {
+            Logger.getLogger(ClienteDAO.class.getName()).log(Level.SEVERE, null, ex);
+            id = 0;
+        }
+        return id;
+    }
     
  
 }

@@ -5,8 +5,13 @@
  */
 package loansystem.visual.modal;
 
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import javax.swing.JOptionPane;
 import loansystem.Principal;
 import loansystem.bd.Conexion;
+import loansystem.dao.AbonoDAO;
+import loansystem.entidad.AbonoEntidad;
 import loansystem.entidad.ClienteEntidad;
 import loansystem.entidad.PrestamoEntidad;
 import loansystem.utilidades.MetodosGenerales;
@@ -41,6 +46,8 @@ public class RegistroPago extends javax.swing.JDialog {
         
         util.formatoDatePicker(this.dtFechaPago);
         cargarDatosGenerales();
+        
+        util.soloNumero(txtAbono);
     }
 
     
@@ -86,7 +93,7 @@ public class RegistroPago extends javax.swing.JDialog {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Registro de Pago");
-        getContentPane().setLayout(new java.awt.GridLayout());
+        getContentPane().setLayout(new java.awt.GridLayout(1, 0));
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
 
@@ -167,6 +174,11 @@ public class RegistroPago extends javax.swing.JDialog {
         jLabel16.setText("Monto del Pago:");
 
         txtAbono.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        txtAbono.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtAbonoKeyReleased(evt);
+            }
+        });
 
         txtNuevoSaldo.setEditable(false);
         txtNuevoSaldo.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
@@ -285,14 +297,64 @@ public class RegistroPago extends javax.swing.JDialog {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnAplicarPagoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAplicarPagoActionPerformed
+        try {
+           
+       AbonoEntidad abono = new AbonoEntidad();
+       AbonoDAO abonoDao = new AbonoDAO(con.getCon());
        
-        this.dispose();
+       abono.setIdPrestamo(p.getIdPrestamo());
+       SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+       String fecha = format.format(dtFechaPago.getDate());
+       abono.setFecha(fecha);
+       double abonado = Double.parseDouble(txtAbono.getText());   
+       abono.setMontoAbonado(abonado);
+       abono.setNuevoSaldo(getNuevoSaldo());
+       
+       abonoDao.insertarPrestamo(abono);
+       
+            JOptionPane.showMessageDialog(prin, "Pago aplicado Correctamente");
+       this.dispose();
+       
+       } catch (Exception e) {
+        JOptionPane.showMessageDialog(prin, "Por favor valide los datos","Error al Registrar Pago!",JOptionPane.ERROR_MESSAGE);
+       
+       }
+        
     }//GEN-LAST:event_btnAplicarPagoActionPerformed
 
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
         this.dispose();
     }//GEN-LAST:event_btnCancelarActionPerformed
 
+    private void txtAbonoKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtAbonoKeyReleased
+        try {
+        
+        
+        txtNuevoSaldo.setText(this.p.getSimboloMoneda()+" "+  String.valueOf(getNuevoSaldo()));
+        } catch (Exception e) {
+            txtNuevoSaldo.setText(this.p.getSimboloMoneda()+" "+  String.valueOf(p.getSaldoActual()));
+        }
+        
+    }//GEN-LAST:event_txtAbonoKeyReleased
+
+   private void cargarAbonos()
+   {
+       ArrayList<AbonoEntidad> abonosArray;
+       AbonoDAO abonoDao = new AbonoDAO(con.getCon());
+       
+               
+       
+   }
+   
+   private double getNuevoSaldo()
+   {
+       double abono = 0;
+        abono = Double.parseDouble(txtAbono.getText());        
+        double saldo = this.p.getSaldoActual() - abono;
+       
+       return saldo;
+   }
+   
    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
