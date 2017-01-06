@@ -20,23 +20,24 @@ import loansystem.entidad.ClienteEntidad;
  * @author JChavarria
  */
 public class CargoDAO {
-      private Connection con;
+
+    private Connection con;
     private Statement s;
     private ResultSet rs;
 
     public CargoDAO(Connection con) {
         this.con = con;
     }
-    
-      public ArrayList<CargoEntidad> obtenerTodosCargos() {
+
+    public ArrayList<CargoEntidad> obtenerTodosCargos() {
         ArrayList<CargoEntidad> lista = new ArrayList<CargoEntidad>();
         try {
             s = con.createStatement();
-            System.out.println("SELECT idCargo, cargo, descripcion \n" +
-"FROM loan_system.cargo;");
+            System.out.println("SELECT idCargo, cargo, descripcion \n"
+                    + "FROM loan_system.cargo;");
 
-            rs = s.executeQuery("SELECT idCargo, cargo, descripcion \n" +
-"FROM loan_system.cargo;");
+            rs = s.executeQuery("SELECT idCargo, cargo, descripcion \n"
+                    + "FROM loan_system.cargo;");
 
             while (rs.next()) {
                 lista.add(this.convertir(rs));
@@ -49,16 +50,16 @@ public class CargoDAO {
 
         return lista;
     }
-      
-                public CargoEntidad obtenerCargoXnombre(String cargo) {
+
+    public CargoEntidad obtenerCargoXnombre(String cargo) {
         CargoEntidad lista = null;
         try {
             s = con.createStatement();
-            System.out.println("SELECT idCargo, cargo, descripcion \n" +
-"FROM loan_system.cargo WHERE cargo ='" + cargo+ "';");
+            System.out.println("SELECT idCargo, cargo, descripcion \n"
+                    + "FROM loan_system.cargo WHERE cargo ='" + cargo + "';");
 
-            rs = s.executeQuery("SELECT idCargo, cargo, descripcion \n" +
-"FROM loan_system.cargo WHERE cargo ='" + cargo+ "';");
+            rs = s.executeQuery("SELECT idCargo, cargo, descripcion \n"
+                    + "FROM loan_system.cargo WHERE cargo ='" + cargo + "';");
 
             while (rs.next()) {
                 lista = this.convertir(rs);
@@ -70,16 +71,16 @@ public class CargoDAO {
 
         return lista;
     }
-      
-          public CargoEntidad obtenerCargo(int idCargo) {
+
+    public CargoEntidad obtenerCargo(int idCargo) {
         CargoEntidad lista = null;
         try {
             s = con.createStatement();
-            System.out.println("SELECT idCargo, cargo, descripcion \n" +
-"FROM loan_system.cargo WHERE idCargo =" + idCargo+ ";");
+            System.out.println("SELECT idCargo, cargo, descripcion \n"
+                    + "FROM loan_system.cargo WHERE idCargo =" + idCargo + ";");
 
-            rs = s.executeQuery("SELECT idCargo, cargo, descripcion \n" +
-"FROM loan_system.cargo WHERE idCargo =" + idCargo+ ";");
+            rs = s.executeQuery("SELECT idCargo, cargo, descripcion \n"
+                    + "FROM loan_system.cargo WHERE idCargo =" + idCargo + ";");
 
             while (rs.next()) {
                 lista = this.convertir(rs);
@@ -91,14 +92,14 @@ public class CargoDAO {
 
         return lista;
     }
-          private CargoEntidad convertir(ResultSet respuesta) {
+
+    private CargoEntidad convertir(ResultSet respuesta) {
         CargoEntidad obj = new CargoEntidad();
         try {
 
             obj.setIdCargo(respuesta.getInt("idCargo"));
             obj.setCargo(respuesta.getString("cargo"));
             obj.setDescripcion(respuesta.getString("descripcion"));
-           
 
         } catch (SQLException ex) {
             Logger.getLogger(ClienteDAO.class.getName()).log(Level.SEVERE, null, ex);

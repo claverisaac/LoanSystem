@@ -1032,8 +1032,7 @@ public class Prestamo extends javax.swing.JPanel {
         cargarDatosCliente(cliente);
         cargarPrestamo(p);
         cargarCuotas(p.getIdPrestamo());
-        
-
+        this.btnCalcular.setEnabled(false);
     }
 
     public void cargarDatosCliente(ClienteEntidad cliente) {
@@ -1086,6 +1085,7 @@ public class Prestamo extends javax.swing.JPanel {
             
             activarCampos(true);
             btnGuardar.setEnabled(true);
+            btnCalcular.setEnabled(true);
             
         } catch (Exception e) {
             e.printStackTrace();

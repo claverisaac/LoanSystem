@@ -5,9 +5,17 @@
  */
 package loansystem.visual.modal;
 
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import javax.swing.JOptionPane;
 import loansystem.Principal;
 import loansystem.bd.Conexion;
+import loansystem.dao.AbonoDAO;
+import loansystem.dao.CuotasDAO;
+import loansystem.dao.PrestamoDAO;
+import loansystem.entidad.AbonoEntidad;
 import loansystem.entidad.ClienteEntidad;
+import loansystem.entidad.CuotasEntidad;
 import loansystem.entidad.PrestamoEntidad;
 import loansystem.utilidades.MetodosGenerales;
 import loansystem.visual.panel.Prestamo;
@@ -17,12 +25,14 @@ import loansystem.visual.panel.Prestamo;
  * @author cgarcia
  */
 public class RegistroPago extends javax.swing.JDialog {
+
     private Conexion con;
     private Principal prin;
     private Prestamo pres;
     private MetodosGenerales util;
-    private PrestamoEntidad p=null;
+    private PrestamoEntidad p = null;
     private ClienteEntidad cliente = null;
+
     /**
      * Creates new form RegistroPago
      */
@@ -33,26 +43,37 @@ public class RegistroPago extends javax.swing.JDialog {
         this.pres = pres;
 
         util = new MetodosGenerales();
-        
+
         this.p = pres.getPrestamo();
         this.cliente = pres.getCliente();
-       
+
         initComponents();
-        
+
         util.formatoDatePicker(this.dtFechaPago);
         cargarDatosGenerales();
+
+        util.soloNumero(txtAbono);
+        cargarAbonos();
     }
 
-    
-    private void cargarDatosGenerales(){
-        this.txtNombres.setText(cliente.getNombres()+" "+cliente.getApellidos());
-        this.txtMontoOriginal.setText(p.getSimboloMoneda()+" "+String.valueOf(p.getMontoTotal()));
-        this.txtCuota.setText(p.getSimboloMoneda()+" "+String.valueOf(p.getMontoCuota()));
-        this.txtSaldo.setText(p.getSimboloMoneda()+" "+String.valueOf(p.getSaldoActual()));
-        this.txtNuevoSaldo.setText(p.getSimboloMoneda()+" "+String.valueOf(p.getSaldoActual()));
-        
+    private void cargarDatosGenerales() {
+        this.txtNombres.setText(cliente.getNombres() + " " + cliente.getApellidos());
+        this.txtMontoOriginal.setText(p.getSimboloMoneda() + " " + String.valueOf(p.getMontoTotal()));
+        this.txtCuota.setText(p.getSimboloMoneda() + " " + String.valueOf(p.getMontoCuota()));
+        this.txtSaldo.setText(p.getSimboloMoneda() + " " + String.valueOf(p.getSaldoActual()));
+        this.txtNuevoSaldo.setText(p.getSimboloMoneda() + " " + String.valueOf(p.getSaldoActual()));
+
+        this.txtAbono.setText("");
+
+        if (p.getSaldoActual() > 0) {
+            btnAplicarPago.setEnabled(true);
+
+        } else {
+            btnAplicarPago.setEnabled(false);
+        }
+
     }
-    
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -79,14 +100,14 @@ public class RegistroPago extends javax.swing.JDialog {
         txtAbono = new javax.swing.JTextField();
         txtNuevoSaldo = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        tblAbonos = new javax.swing.JTable();
         jLabel17 = new javax.swing.JLabel();
         jLabel18 = new javax.swing.JLabel();
         txtCuota = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Registro de Pago");
-        getContentPane().setLayout(new java.awt.GridLayout());
+        getContentPane().setLayout(new java.awt.GridLayout(1, 0));
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
 
@@ -167,27 +188,32 @@ public class RegistroPago extends javax.swing.JDialog {
         jLabel16.setText("Monto del Pago:");
 
         txtAbono.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        txtAbono.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtAbonoKeyReleased(evt);
+            }
+        });
 
         txtNuevoSaldo.setEditable(false);
         txtNuevoSaldo.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        tblAbonos.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
             new String [] {
-                "Numero Abono", "Numero Prestamo", "Fecha", "Monto", "Saldo"
+                "Número de Abono", "Número de Préstamo", "Fecha", "Monto", "Saldo"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, true, true
+                false, false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
                 return canEdit [columnIndex];
             }
         });
-        jScrollPane1.setViewportView(jTable1);
+        jScrollPane1.setViewportView(tblAbonos);
 
         jLabel17.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         jLabel17.setForeground(new java.awt.Color(153, 153, 153));
@@ -285,15 +311,117 @@ public class RegistroPago extends javax.swing.JDialog {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnAplicarPagoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAplicarPagoActionPerformed
-       
-        this.dispose();
+        try {
+
+            AbonoEntidad abono = new AbonoEntidad();
+            AbonoDAO abonoDao = new AbonoDAO(con.getCon());
+
+            abono.setIdPrestamo(p.getIdPrestamo());
+            SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+            String fecha = format.format(dtFechaPago.getDate());
+            abono.setFecha(fecha);
+            double abonado = Double.parseDouble(txtAbono.getText());
+            abono.setMontoAbonado(abonado);
+            abono.setNuevoSaldo(getNuevoSaldo());
+
+            if (getNuevoSaldo() > 0) {
+                abonoDao.insertarPrestamo(abono);
+
+                JOptionPane.showMessageDialog(prin, "Pago aplicado Correctamente");
+                PrestamoDAO prestamoDao = new PrestamoDAO(con.getCon());
+                p = prestamoDao.obtenerPrestamosPorIdPrestamo(p.getIdPrestamo());
+                
+                actualizarCuotas();
+                cargarAbonos();
+                cargarDatosGenerales();
+                pres.cargarDatosCliente(cliente, p);
+
+                //this.dispose();
+            } else {
+                JOptionPane.showMessageDialog(prin, "El Monto abonado no puede ser mayor al Saldo!", "Error al Registrar Pago!", JOptionPane.ERROR_MESSAGE);
+            }
+
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(prin, "Por favor valide los datos", "Error al Registrar Pago!", JOptionPane.ERROR_MESSAGE);
+
+        }
+
     }//GEN-LAST:event_btnAplicarPagoActionPerformed
 
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
+        pres.cargarDatosCliente(cliente, p);
+
         this.dispose();
     }//GEN-LAST:event_btnCancelarActionPerformed
 
-   
+    private void txtAbonoKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtAbonoKeyReleased
+        try {
+
+            txtNuevoSaldo.setText(this.p.getSimboloMoneda() + " " + String.valueOf(getNuevoSaldo()));
+        } catch (Exception e) {
+            txtNuevoSaldo.setText(this.p.getSimboloMoneda() + " " + String.valueOf(p.getSaldoActual()));
+        }
+
+    }//GEN-LAST:event_txtAbonoKeyReleased
+
+    private void cargarAbonos() {
+        ArrayList<AbonoEntidad> abonosArray;
+        AbonoDAO abonoDao = new AbonoDAO(con.getCon());
+
+        abonosArray = abonoDao.obtenerPrestamosPorCliente(p.getIdPrestamo());
+
+        int fila = 0;
+        util.limpiarTabla(tblAbonos);
+
+        for (AbonoEntidad abono : abonosArray) {
+            util.agregarFila(tblAbonos);
+            tblAbonos.setValueAt(util.completarCerosID(abono.getIdAbono(), 6), fila, 0);
+            tblAbonos.setValueAt(util.completarCerosID(abono.getIdPrestamo(), 6), fila, 1);
+            tblAbonos.setValueAt(abono.getFecha(), fila, 2);
+            tblAbonos.setValueAt(util.formatearMoneda(abono.getMontoAbonado(), p.getSimboloMoneda()), fila, 3);
+            tblAbonos.setValueAt(util.formatearMoneda(abono.getNuevoSaldo(), p.getSimboloMoneda()), fila, 4);
+
+            fila++;
+        }
+
+    }
+
+    private double getNuevoSaldo() {
+        double abono = 0;
+        abono = Double.parseDouble(txtAbono.getText());
+        double saldo = this.p.getSaldoActual() - abono;
+
+        return saldo;
+    }
+    
+    /**
+     * Actualizamos la cuotas pagadas!
+     */
+    private void actualizarCuotas()
+    {
+        double mCuota = p.getMontoCuota();
+        double mSaldo = p.getSaldoActual();
+        double mTotal = p.getMontoTotal();
+        int cuotasPagadas = (int) ((mTotal-mSaldo)/mCuota);
+        
+        ArrayList<CuotasEntidad> arrayCuota = null;
+        CuotasDAO cuotaDao = new CuotasDAO(con.getCon());
+        
+        arrayCuota = cuotaDao.obtenerCuotasPorPrestamo(p.getIdPrestamo());
+        if(arrayCuota.size()>0)
+        {
+           
+             int i = 0;
+            for(CuotasEntidad cuota : arrayCuota)
+            {
+                cuotaDao.actualizarEstadoCuota(cuota.getIdCuota(), ((i+1)<=cuotasPagadas?1:0 ) );              
+                
+                i++;
+            }
+        }
+        
+    }
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAplicarPago;
@@ -309,8 +437,8 @@ public class RegistroPago extends javax.swing.JDialog {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
     private javax.swing.JLabel lblTitulo;
+    private javax.swing.JTable tblAbonos;
     private javax.swing.JTextField txtAbono;
     private javax.swing.JTextField txtCuota;
     private javax.swing.JTextField txtMontoOriginal;

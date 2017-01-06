@@ -96,6 +96,35 @@ public CuotasDAO(Connection con) {
 
         return lista;
     }
+  
+  public int actualizarEstadoCuota(int idCuota, int cancelado) {
+        //ProductoEntidad id = null;
+        boolean exito = false;
+         int id = 0;
+         
+        try {
+            s = con.createStatement();
+            StringBuilder query = new StringBuilder();
+            
+            query.append("update detallecuotas set cancelado = "+cancelado+" where idCuota = "+idCuota +";");           
+          
+           
+            System.out.println("QUERY: "+query.toString());
+            
+            exito = s.execute(query.toString());
+           
+             ResultSet rs = s.getGeneratedKeys();
+            if (rs.next()){
+                id=rs.getInt(1);
+            }
+            
+            exito = true;
+
+        } catch (SQLException ex) {
+            Logger.getLogger(ClienteDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return id;
+    }
  
   private CuotasEntidad convertir(ResultSet respuesta) {
         CuotasEntidad obj = new CuotasEntidad();
