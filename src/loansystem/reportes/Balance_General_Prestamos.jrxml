@@ -4,16 +4,20 @@
 	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
 	<queryString>
-		<![CDATA[select m.nombre, m.simbolo,
+		<![CDATA[select
+m.idmoneda,
+m.nombre, m.simbolo,
 ifnull(sum(p.montoOriginal),0) as totalPrestado,
-ifnull(sum(a.montoAbonado),0) as totalRecaudado,
-(ifnull(sum(p.montoOriginal),0) - ifnull(sum( a.montoAbonado),0)) as Pendiente
+(select ifnull(sum(a.montoAbonado),0)  from  abono  as a where a.idPrestamo = p.idPrestamo) as totalRecaudado,
+(ifnull(sum(p.montoOriginal),0) - (select ifnull(sum(a.montoAbonado),0) from  abono  as a where a.idPrestamo = p.idPrestamo)) as Pendiente
 from prestamo as p
-left join abono as a on a.idPrestamo = p.idPrestamo
 inner join moneda as m on m.idMoneda = p.idMoneda
 where p.estado = 1
-group by p.idMoneda;]]>
+group by m.idMoneda;]]>
 	</queryString>
+	<field name="idmoneda" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
 	<field name="nombre" class="java.lang.String">
 		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
@@ -48,58 +52,80 @@ group by p.idMoneda;]]>
 		</band>
 	</title>
 	<pageHeader>
-		<band height="22" splitType="Stretch"/>
+		<band height="23" splitType="Stretch"/>
 	</pageHeader>
 	<columnHeader>
-		<band height="22" splitType="Stretch"/>
+		<band splitType="Stretch"/>
 	</columnHeader>
 	<detail>
-		<band height="125" splitType="Stretch">
+		<band height="219" splitType="Stretch">
+			<rectangle>
+				<reportElement x="3" y="7" width="569" height="20" backcolor="#99CCFF" uuid="62772ff2-2071-4c1d-bd44-d42ae5fa5dff"/>
+				<graphicElement>
+					<pen lineWidth="0.0"/>
+				</graphicElement>
+			</rectangle>
 			<textField>
 				<reportElement x="154" y="7" width="100" height="20" uuid="cdc51e51-43d4-4eae-a159-ff3c8b039dec"/>
 				<textElement>
-					<font isBold="true"/>
+					<font size="12" isBold="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{simbolo}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="54" y="7" width="100" height="20" uuid="9cb380ab-1c75-4a4c-8e63-be6d28b0d0ae"/>
+				<reportElement x="65" y="7" width="74" height="20" uuid="9cb380ab-1c75-4a4c-8e63-be6d28b0d0ae"/>
 				<textElement>
-					<font isBold="true"/>
+					<font size="12" isBold="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{nombre}]]></textFieldExpression>
 			</textField>
-			<textField>
+			<textField pattern="#,##0.00">
 				<reportElement x="116" y="41" width="100" height="20" uuid="6420e3fd-c0cf-4e75-aa6c-e2c31c113ab3"/>
 				<textFieldExpression><![CDATA[$F{totalPrestado}]]></textFieldExpression>
 			</textField>
-			<textField>
+			<textField pattern="#,##0.00">
 				<reportElement x="116" y="76" width="100" height="20" uuid="18889324-c5ad-4f4b-8900-d942f53f5709"/>
 				<textFieldExpression><![CDATA[$F{totalRecaudado}]]></textFieldExpression>
 			</textField>
-			<textField>
-				<reportElement x="339" y="76" width="100" height="20" uuid="b416cf65-2b28-42ac-90f4-5b385c52fc1e"/>
+			<textField pattern="#,##0.00">
+				<reportElement x="321" y="61" width="100" height="20" uuid="b416cf65-2b28-42ac-90f4-5b385c52fc1e"/>
 				<textFieldExpression><![CDATA[$F{Pendiente}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="4" y="76" width="94" height="20" forecolor="#666666" uuid="ca0e483e-4ff1-407c-86ef-3b8f010d2f33"/>
+				<reportElement x="13" y="76" width="94" height="20" forecolor="#666666" uuid="ca0e483e-4ff1-407c-86ef-3b8f010d2f33"/>
 				<text><![CDATA[Total Recaudado:]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="339" y="41" width="146" height="20" forecolor="#666666" uuid="cfe12c7b-9980-4c19-ae49-7d28e3c7e056"/>
+				<reportElement x="321" y="41" width="146" height="20" forecolor="#666666" uuid="cfe12c7b-9980-4c19-ae49-7d28e3c7e056"/>
 				<text><![CDATA[Prestado vs Recaudado]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="2" y="7" width="52" height="20" forecolor="#333333" uuid="01b73e53-abfb-4000-b81e-ba2f0ce3cd88"/>
+				<reportElement x="13" y="7" width="52" height="20" forecolor="#333333" uuid="01b73e53-abfb-4000-b81e-ba2f0ce3cd88"/>
 				<textElement>
-					<font isBold="true"/>
+					<font size="12" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Moneda:]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="1" y="41" width="82" height="20" forecolor="#666666" uuid="566f1cd6-d93d-48d6-96e6-4fb51425f195"/>
+				<reportElement x="13" y="41" width="82" height="20" forecolor="#666666" uuid="566f1cd6-d93d-48d6-96e6-4fb51425f195"/>
 				<text><![CDATA[Total Prestado:]]></text>
 			</staticText>
+			<pie3DChart>
+				<chart>
+					<reportElement x="139" y="108" width="200" height="100" uuid="fd7ab68d-e2bc-4fbc-ab85-a3ca716ea989"/>
+					<chartTitle/>
+					<chartSubtitle/>
+					<chartLegend/>
+				</chart>
+				<pieDataset>
+					<keyExpression><![CDATA[$F{nombre}]]></keyExpression>
+					<valueExpression><![CDATA[$F{totalPrestado}]]></valueExpression>
+				</pieDataset>
+				<pie3DPlot>
+					<plot/>
+					<itemLabel/>
+				</pie3DPlot>
+			</pie3DChart>
 		</band>
 	</detail>
 	<columnFooter>

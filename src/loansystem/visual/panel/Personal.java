@@ -706,8 +706,11 @@ public class Personal extends javax.swing.JPanel {
     }
 
     private void btnImprimirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnImprimirActionPerformed
-        JOptionPane.showMessageDialog(prin, "Aqui va la logica para el reporte de impresion!", "Imprimir datos del cliente!", JOptionPane.INFORMATION_MESSAGE,
-                new javax.swing.ImageIcon(getClass().getResource("/loansystem/recursos/nuevo_cliente.png")));
+        /*JOptionPane.showMessageDialog(prin, "Aqui va la logica para el reporte de impresion!", "Imprimir datos del cliente!", JOptionPane.INFORMATION_MESSAGE,
+                new javax.swing.ImageIcon(getClass().getResource("/loansystem/recursos/nuevo_cliente.png")));*/
+        
+       prin.abrirReporte("Resumen_Persona",null,"Resumen de Personal ","cargo"); 
+        
     }//GEN-LAST:event_btnImprimirActionPerformed
 
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed

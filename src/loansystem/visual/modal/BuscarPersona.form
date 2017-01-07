@@ -4,6 +4,7 @@
   <Properties>
     <Property name="defaultCloseOperation" type="int" value="2"/>
     <Property name="title" type="java.lang.String" value="Personal"/>
+    <Property name="resizable" type="boolean" value="false"/>
   </Properties>
   <SyntheticProperties>
     <SyntheticProperty name="formSizePolicy" type="int" value="1"/>
@@ -130,7 +131,10 @@
         </Component>
         <Component class="javax.swing.JButton" name="btnBuscarTodos">
           <Properties>
-            <Property name="text" type="java.lang.String" value="Todos"/>
+            <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+              <Image iconType="3" name="/loansystem/recursos/paneles/repeat.png"/>
+            </Property>
+            <Property name="toolTipText" type="java.lang.String" value="Todos"/>
           </Properties>
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnBuscarTodosActionPerformed"/>

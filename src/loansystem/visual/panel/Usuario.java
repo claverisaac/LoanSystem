@@ -134,7 +134,8 @@ public class Usuario extends javax.swing.JPanel {
         });
         jToolBar1.add(btnBuscarPersona);
 
-        btnPass.setText("Cambiar Pass");
+        btnPass.setIcon(new javax.swing.ImageIcon(getClass().getResource("/loansystem/recursos/botones/cambiar_pass.png"))); // NOI18N
+        btnPass.setToolTipText("Cambiar Contraseña");
         btnPass.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnPassActionPerformed(evt);
@@ -143,7 +144,7 @@ public class Usuario extends javax.swing.JPanel {
         jToolBar1.add(btnPass);
 
         btnInact.setIcon(new javax.swing.ImageIcon(getClass().getResource("/loansystem/recursos/paneles/estado.png"))); // NOI18N
-        btnInact.setToolTipText("Estado");
+        btnInact.setToolTipText("Cambiar Estado");
         btnInact.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnInactActionPerformed(evt);
@@ -152,6 +153,7 @@ public class Usuario extends javax.swing.JPanel {
         jToolBar1.add(btnInact);
 
         btnGuardar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/loansystem/recursos/paneles/save.png"))); // NOI18N
+        btnGuardar.setToolTipText("Guardar");
         btnGuardar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnGuardarActionPerformed(evt);
@@ -169,6 +171,7 @@ public class Usuario extends javax.swing.JPanel {
         jToolBar1.add(btnLimpiar);
 
         jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/loansystem/recursos/paneles/cerrar.png"))); // NOI18N
+        jButton1.setToolTipText("Cerrar");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton1ActionPerformed(evt);
@@ -467,8 +470,9 @@ public class Usuario extends javax.swing.JPanel {
         PersonalEntidad persoE = persoDAO.obtenerXPersona(Integer.parseInt(txtId.getText()));
         UsuarioDAO dao = new UsuarioDAO(con.getCon());
         UsuarioEntidad entidadUser = new UsuarioEntidad();
-        entidadUser = dao.obtenerXUsuarioIdPersona(persoE.getIdPersona()); //obtiene la info de la cuenta de usuario de la persona seleccionada
+      //  entidadUser = dao.obtenerXUsuarioIdPersona(persoE.getIdPersona()); //obtiene la info de la cuenta de usuario de la persona seleccionada
 
+       entidadUser = dao.obtenerUsuariosXid(Integer.parseInt(txtId.getText())); //obtiene la info de la cuenta de usuario
         if (inact) {
             UsuarioEntidad UsuarioEnti = new UsuarioEntidad();
             if (cboEstado.getSelectedItem().equals("Activo")) {
@@ -479,7 +483,8 @@ public class Usuario extends javax.swing.JPanel {
 
             save = dao.updateEstadoUsuario(UsuarioEnti, entidadUser.getIdUsuario());
             if (save) {
-                JOptionPane.showMessageDialog(this, "Estado actualizado exitosamente!!", "Administración de Usuarios", JOptionPane.INFORMATION_MESSAGE);
+                JOptionPane.showMessageDialog(this, "Estado actualizado exitosamente!!", "Administración de Usuarios",
+                        JOptionPane.INFORMATION_MESSAGE);
                 inact = false;
                 btnGuardar.setEnabled(false);
                 cboEstado.setEnabled(false);
@@ -580,11 +585,27 @@ public class Usuario extends javax.swing.JPanel {
                     txtPass3.setEditable(false);
                     txtLogin.setEditable(false);
                     cboEstado.setEnabled(false);
+                    
                     us = dao.obtenerTodosUsuarios();
                     cargarTablaUsuarios();
                     nuevo = false;
                     passw = false;
                     inact = false;
+                    
+                    txtPass2.setText("");
+                    txtPass3.setText("");
+                    txtLogin.setText("");
+                    txtPass.setText("");
+                    txtId.setText("");
+                    txtNombre.setText("");
+                    txtCargo.setText("");
+                    lblPass.setVisible(false);
+                    lblPass2.setVisible(false);
+                    lblPass3.setVisible(false);
+                    txtPass.setVisible(false);
+                    txtPass2.setVisible(false);
+                    txtPass3.setVisible(false);
+                            
                 } else {
                     JOptionPane.showMessageDialog(this, "No se pudo guardar el usuario", "Administración de Usuarios", JOptionPane.ERROR_MESSAGE);
                     nuevo = true;
