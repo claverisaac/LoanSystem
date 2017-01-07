@@ -2,20 +2,32 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Balance_General_Prestamos" language="groovy" pageWidth="612" pageHeight="792" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="141be244-baea-4104-a1e4-a776f76061bc">
 	<property name="ireport.zoom" value="1.0"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="7"/>
+	<property name="ireport.y" value="0"/>
 	<queryString>
 		<![CDATA[select
-m.idmoneda,
-m.nombre, m.simbolo,
-ifnull(sum(p.montoOriginal),0) as totalPrestado,
-(select ifnull(sum(a.montoAbonado),0)  from  abono  as a where a.idPrestamo = p.idPrestamo) as totalRecaudado,
-(ifnull(sum(p.montoOriginal),0) - (select ifnull(sum(a.montoAbonado),0) from  abono  as a where a.idPrestamo = p.idPrestamo)) as Pendiente
-from prestamo as p
-inner join moneda as m on m.idMoneda = p.idMoneda
+idMoneda,
+nombre,
+simbolo,
+sum(totalPrestado) as totalPrestado,
+sum(totalRecaudado) as totalRecaudado,
+sum(Pendiente) as Pendiente
+from(
+SELECT
+m.idMoneda,
+m.nombre,
+m.simbolo,
+p.montoTotal as totalPrestado,
+ifNull((select sum(ifNull(a.montoAbonado,0)) from abono as a where a.idPrestamo = p.idPrestamo group by a.idPrestamo),0) as totalRecaudado,
+(p.montoTotal - ifNull((select sum(ifNull(a.montoAbonado,0)) from abono as a where a.idPrestamo = p.idPrestamo group by a.idPrestamo),0)) as Pendiente
+FROM
+prestamo AS p
+inner join moneda as m on p.idMoneda = m.idMoneda
 where p.estado = 1
-group by m.idMoneda;]]>
+order by m.idMoneda
+) as consulta
+group by idMoneda]]>
 	</queryString>
-	<field name="idmoneda" class="java.lang.Integer">
+	<field name="idMoneda" class="java.lang.Integer">
 		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
 	<field name="nombre" class="java.lang.String">
