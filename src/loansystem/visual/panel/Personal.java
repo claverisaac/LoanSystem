@@ -154,7 +154,7 @@ public class Personal extends javax.swing.JPanel {
         jToolBar1.add(btnSave);
 
         btnImprimir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/loansystem/recursos/paneles/printer.png"))); // NOI18N
-        btnImprimir.setToolTipText("Cancelar");
+        btnImprimir.setToolTipText("Reporte Personal");
         btnImprimir.setFocusable(false);
         btnImprimir.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         btnImprimir.setOpaque(false);
@@ -709,7 +709,7 @@ public class Personal extends javax.swing.JPanel {
         /*JOptionPane.showMessageDialog(prin, "Aqui va la logica para el reporte de impresion!", "Imprimir datos del cliente!", JOptionPane.INFORMATION_MESSAGE,
                 new javax.swing.ImageIcon(getClass().getResource("/loansystem/recursos/nuevo_cliente.png")));*/
         
-       prin.abrirReporte("Resumen_Persona",null,"Resumen de Personal ","cargo"); 
+       prin.abrirReporte("Resumen_Persona",null,"Resumen Personal","cargo"); 
         
     }//GEN-LAST:event_btnImprimirActionPerformed
 

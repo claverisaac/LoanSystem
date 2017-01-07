@@ -278,13 +278,12 @@ public class Principal extends javax.swing.JFrame {
 
         pnelOpcionesColl.add(tskPrestamo);
 
-        tskReportes.setExpanded(false);
         tskReportes.setIcon(new javax.swing.ImageIcon(getClass().getResource("/loansystem/recursos/reportes.png"))); // NOI18N
         tskReportes.setTitle("Reportes");
         tskReportes.setToolTipText("Reportes");
 
         lnkNuevoPrestamo1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/loansystem/recursos/registrar_prestamo.png"))); // NOI18N
-        lnkNuevoPrestamo1.setText("Registrar Préstamo");
+        lnkNuevoPrestamo1.setText("Balance de Prestamos");
         lnkNuevoPrestamo1.setToolTipText("Registrar Nuevo Préstamo");
         lnkNuevoPrestamo1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -433,6 +432,8 @@ public class Principal extends javax.swing.JFrame {
 
     private void lnkNuevoPrestamo1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_lnkNuevoPrestamo1ActionPerformed
         // TODO add your handling code here:
+        
+       abrirReporte("Balance_General_Prestamos",null,"Balance Prestamos","estado_cuenta"); 
     }//GEN-LAST:event_lnkNuevoPrestamo1ActionPerformed
 
     private void lnkUsuariosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_lnkUsuariosActionPerformed

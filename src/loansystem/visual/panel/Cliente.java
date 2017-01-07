@@ -974,7 +974,7 @@ public class Cliente extends javax.swing.JPanel {
      /*  JOptionPane.showMessageDialog(prin, "Aqui va la logica para el reporte de impresion!","Imprimir datos del cliente!",JOptionPane.INFORMATION_MESSAGE,
                new javax.swing.ImageIcon(getClass().getResource("/loansystem/recursos/nuevo_cliente.png")));*/
        
- prin.abrirReporte("Resumen_Cliente",null,"Resumen de Clientes","cliente"); 
+ prin.abrirReporte("Resumen_Cliente",null,"Resumen Clientes","cliente"); 
     }//GEN-LAST:event_btnImprimirActionPerformed
 
     private void txtcentroLaboKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtcentroLaboKeyReleased
