@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Resumen_Persona" language="groovy" pageWidth="612" pageHeight="792" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="0ae1389f-374e-4ec3-b9be-f27f072a7506">
-	<property name="ireport.zoom" value="1.3310000000000004"/>
+	<property name="ireport.zoom" value="1.2100000000000004"/>
 	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
 	<queryString>
@@ -47,63 +47,88 @@ inner join cargo as c on c.idCargo = p.idCargo order by p.idPersona ;]]>
 		</band>
 	</title>
 	<pageHeader>
-		<band height="14" splitType="Stretch"/>
+		<band height="10" splitType="Stretch"/>
 	</pageHeader>
 	<columnHeader>
-		<band height="13" splitType="Stretch"/>
+		<band height="32" splitType="Stretch">
+			<rectangle>
+				<reportElement x="6" y="12" width="559" height="20" backcolor="#999999" uuid="dbea4d26-3c1d-41f9-a2a8-11c048a9d2d8"/>
+				<graphicElement>
+					<pen lineWidth="0.0"/>
+				</graphicElement>
+			</rectangle>
+			<staticText>
+				<reportElement x="40" y="12" width="175" height="20" forecolor="#FFFFFF" uuid="6412374a-05c2-4463-b3a7-1ec74c78e196"/>
+				<textElement textAlignment="Left">
+					<font size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Nombres:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="315" y="12" width="71" height="20" forecolor="#FFFFFF" uuid="5642e61f-0e11-4c6d-a454-fae03def907b"/>
+				<textElement textAlignment="Left">
+					<font size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Sexo:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="215" y="12" width="100" height="20" forecolor="#FFFFFF" uuid="8a8fbc41-9d37-41cc-b1a7-1bb0bf6916b1"/>
+				<textElement textAlignment="Left">
+					<font size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Número de Cédula:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="386" y="12" width="100" height="20" forecolor="#FFFFFF" uuid="f0250c1e-0190-4e15-899f-f7127be6dafd"/>
+				<textElement textAlignment="Left">
+					<font size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Cargo:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="486" y="12" width="68" height="20" forecolor="#FFFFFF" uuid="a7eb3c3f-8fb5-417b-829f-f2c91a3bcd5f"/>
+				<textElement textAlignment="Left">
+					<font size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Usuario:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="16" y="12" width="24" height="20" forecolor="#FFFFFF" uuid="9165669d-a5bd-4a3a-ac96-cfbca72a7f33"/>
+				<textElement textAlignment="Left">
+					<font size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[ID:]]></text>
+			</staticText>
+		</band>
 	</columnHeader>
 	<detail>
-		<band height="125" splitType="Stretch">
+		<band height="48" splitType="Stretch">
 			<staticText>
 				<reportElement x="-125" y="25" width="48" height="20" forecolor="#666666" uuid="0020ac39-a482-47e7-98c5-fb39a9ff07b7"/>
 				<text><![CDATA[Nombres:]]></text>
 			</staticText>
-			<staticText>
-				<reportElement x="15" y="25" width="48" height="20" forecolor="#666666" uuid="6412374a-05c2-4463-b3a7-1ec74c78e196"/>
-				<text><![CDATA[Nombres:]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="15" y="65" width="48" height="20" forecolor="#666666" uuid="5642e61f-0e11-4c6d-a454-fae03def907b"/>
-				<text><![CDATA[Sexo:]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="15" y="45" width="100" height="20" forecolor="#666666" uuid="8a8fbc41-9d37-41cc-b1a7-1bb0bf6916b1"/>
-				<text><![CDATA[Número de Cédula:]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="15" y="85" width="48" height="20" forecolor="#666666" uuid="f0250c1e-0190-4e15-899f-f7127be6dafd"/>
-				<text><![CDATA[Cargo:]]></text>
-			</staticText>
 			<textField>
-				<reportElement x="63" y="105" width="100" height="20" uuid="97889678-b86c-413d-8b23-5a2920bf7e9b"/>
+				<reportElement x="486" y="15" width="68" height="20" uuid="97889678-b86c-413d-8b23-5a2920bf7e9b"/>
 				<textFieldExpression><![CDATA[$F{usuario}]]></textFieldExpression>
 			</textField>
-			<staticText>
-				<reportElement x="15" y="105" width="48" height="20" forecolor="#666666" uuid="a7eb3c3f-8fb5-417b-829f-f2c91a3bcd5f"/>
-				<text><![CDATA[Usuario:]]></text>
-			</staticText>
 			<textField>
-				<reportElement x="63" y="85" width="100" height="20" uuid="2a46086d-137e-4802-a5f3-8d7d9e4e21b0"/>
+				<reportElement x="386" y="16" width="100" height="20" uuid="2a46086d-137e-4802-a5f3-8d7d9e4e21b0"/>
 				<textFieldExpression><![CDATA[$F{cargo}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="63" y="65" width="100" height="20" uuid="bd0949dc-fd69-4202-b96e-e8b8aa2ab646"/>
+				<reportElement x="315" y="16" width="71" height="20" uuid="bd0949dc-fd69-4202-b96e-e8b8aa2ab646"/>
 				<textFieldExpression><![CDATA[$F{sexo}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="115" y="45" width="100" height="20" uuid="5ab826cf-0e17-4021-99ff-7ac1f3490f10"/>
+				<reportElement x="215" y="15" width="100" height="20" uuid="5ab826cf-0e17-4021-99ff-7ac1f3490f10"/>
 				<textFieldExpression><![CDATA[$F{numCedula}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="63" y="25" width="100" height="20" uuid="84f9651c-4f6d-40b4-9473-1531f2912b8c"/>
+				<reportElement x="40" y="16" width="175" height="20" uuid="84f9651c-4f6d-40b4-9473-1531f2912b8c"/>
 				<textFieldExpression><![CDATA[$F{nomPersona}]]></textFieldExpression>
 			</textField>
-			<staticText>
-				<reportElement x="15" y="8" width="21" height="20" forecolor="#666666" uuid="9165669d-a5bd-4a3a-ac96-cfbca72a7f33"/>
-				<text><![CDATA[ID:]]></text>
-			</staticText>
 			<textField>
-				<reportElement x="36" y="9" width="100" height="20" uuid="3eb94857-53d1-4bf0-866c-06948c16ef67"/>
+				<reportElement x="16" y="16" width="24" height="20" uuid="3eb94857-53d1-4bf0-866c-06948c16ef67"/>
 				<textFieldExpression><![CDATA[$F{idPersona}]]></textFieldExpression>
 			</textField>
 		</band>
@@ -112,9 +137,25 @@ inner join cargo as c on c.idCargo = p.idCargo order by p.idPersona ;]]>
 		<band height="45" splitType="Stretch"/>
 	</columnFooter>
 	<pageFooter>
-		<band height="54" splitType="Stretch"/>
+		<band height="54" splitType="Stretch">
+			<textField evaluationTime="Report">
+				<reportElement x="536" y="34" width="40" height="20" uuid="62b005e2-cc68-4bf9-b44e-2eaf5b922206"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<textField pattern="dd/MM/yyyy h.mm a">
+				<reportElement x="19" y="34" width="100" height="20" uuid="69e5572a-1780-4588-ba9a-75f17b3904c0"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="374" y="34" width="162" height="20" uuid="a8d083cd-a3d3-4d0d-a73a-b488bfc5a8f9"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA["Página "+$V{PAGE_NUMBER}+" de"]]></textFieldExpression>
+			</textField>
+		</band>
 	</pageFooter>
 	<summary>
-		<band height="42" splitType="Stretch"/>
+		<band height="9" splitType="Stretch"/>
 	</summary>
 </jasperReport>

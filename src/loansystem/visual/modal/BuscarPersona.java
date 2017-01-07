@@ -74,6 +74,7 @@ public class BuscarPersona extends javax.swing.JDialog {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Personal");
+        setResizable(false);
 
         jPanel3.setBackground(new java.awt.Color(255, 255, 255));
         jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Personal sin cuenta de usuario", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Calibri", 1, 12))); // NOI18N
@@ -88,7 +89,8 @@ public class BuscarPersona extends javax.swing.JDialog {
             }
         });
 
-        btnBuscarTodos.setText("Todos");
+        btnBuscarTodos.setIcon(new javax.swing.ImageIcon(getClass().getResource("/loansystem/recursos/paneles/repeat.png"))); // NOI18N
+        btnBuscarTodos.setToolTipText("Todos");
         btnBuscarTodos.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnBuscarTodosActionPerformed(evt);
@@ -211,7 +213,7 @@ public class BuscarPersona extends javax.swing.JDialog {
 
     private void btnBuscarTodosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarTodosActionPerformed
         txtNombre.setText("");
-         cargarTablaPersonal(persoDAO.obtenerTodosPersonas());
+         cargarTablaPersonal(persoDAO.obtenerTodosPersonasSinCuenta());
     }//GEN-LAST:event_btnBuscarTodosActionPerformed
 
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed

@@ -70,7 +70,7 @@
 	<columnHeader>
 		<band height="22" splitType="Stretch">
 			<rectangle>
-				<reportElement x="0" y="7" width="572" height="15" backcolor="#99CCFF" uuid="32fe6b5f-a0ff-4da7-bad0-4a0a08e5d60e"/>
+				<reportElement mode="Transparent" x="0" y="7" width="572" height="15" backcolor="#99CCFF" uuid="32fe6b5f-a0ff-4da7-bad0-4a0a08e5d60e"/>
 				<graphicElement>
 					<pen lineWidth="0.0"/>
 				</graphicElement>
