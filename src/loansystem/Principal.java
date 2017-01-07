@@ -209,6 +209,8 @@ public class Principal extends javax.swing.JFrame {
         lnkNuevoPrestamo = new com.l2fprod.common.swing.JLinkButton();
         tskReportes = new com.l2fprod.common.swing.JTaskPaneGroup();
         lnkNuevoPrestamo1 = new com.l2fprod.common.swing.JLinkButton();
+        lnkNuevoPrestamo2 = new com.l2fprod.common.swing.JLinkButton();
+        lnkNuevoPrestamo3 = new com.l2fprod.common.swing.JLinkButton();
         tskEmpresa = new com.l2fprod.common.swing.JTaskPaneGroup();
         lnkUsuarios = new com.l2fprod.common.swing.JLinkButton();
         jSeparator1 = new javax.swing.JSeparator();
@@ -224,7 +226,6 @@ public class Principal extends javax.swing.JFrame {
         jMenuBar1 = new javax.swing.JMenuBar();
         mnuArchivo = new javax.swing.JMenu();
         mnuSalir = new javax.swing.JMenuItem();
-        mnuClientes = new javax.swing.JMenu();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Sistema de Administración de Prestamos");
@@ -286,6 +287,26 @@ public class Principal extends javax.swing.JFrame {
             }
         });
         tskReportes.getContentPane().add(lnkNuevoPrestamo1);
+
+        lnkNuevoPrestamo2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/loansystem/recursos/cliente.png"))); // NOI18N
+        lnkNuevoPrestamo2.setText("    Resumen Clientes");
+        lnkNuevoPrestamo2.setToolTipText("Resumen Clientes");
+        lnkNuevoPrestamo2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                lnkNuevoPrestamo2ActionPerformed(evt);
+            }
+        });
+        tskReportes.getContentPane().add(lnkNuevoPrestamo2);
+
+        lnkNuevoPrestamo3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/loansystem/recursos/cargo.png"))); // NOI18N
+        lnkNuevoPrestamo3.setText(" Resumen Personal");
+        lnkNuevoPrestamo3.setToolTipText("Resumen Personal");
+        lnkNuevoPrestamo3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                lnkNuevoPrestamo3ActionPerformed(evt);
+            }
+        });
+        tskReportes.getContentPane().add(lnkNuevoPrestamo3);
 
         pnelOpcionesColl.add(tskReportes);
 
@@ -407,9 +428,6 @@ public class Principal extends javax.swing.JFrame {
 
         jMenuBar1.add(mnuArchivo);
 
-        mnuClientes.setText("Clientes");
-        jMenuBar1.add(mnuClientes);
-
         setJMenuBar(jMenuBar1);
 
         pack();
@@ -516,6 +534,17 @@ public class Principal extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_btnCargoActionPerformed
 
+    private void lnkNuevoPrestamo2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_lnkNuevoPrestamo2ActionPerformed
+        // TODO add your handling code here:
+         abrirReporte("Resumen_Cliente",null,"Resumen Clientes","cliente"); 
+    }//GEN-LAST:event_lnkNuevoPrestamo2ActionPerformed
+
+    
+    private void lnkNuevoPrestamo3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_lnkNuevoPrestamo3ActionPerformed
+        // TODO add your handling code here:
+        abrirReporte("Resumen_Persona",null,"Resumen Personal","cargo"); 
+    }//GEN-LAST:event_lnkNuevoPrestamo3ActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnCargo;
@@ -532,9 +561,10 @@ public class Principal extends javax.swing.JFrame {
     private com.l2fprod.common.swing.JLinkButton lnkNuevoCliente;
     private com.l2fprod.common.swing.JLinkButton lnkNuevoPrestamo;
     private com.l2fprod.common.swing.JLinkButton lnkNuevoPrestamo1;
+    private com.l2fprod.common.swing.JLinkButton lnkNuevoPrestamo2;
+    private com.l2fprod.common.swing.JLinkButton lnkNuevoPrestamo3;
     private com.l2fprod.common.swing.JLinkButton lnkUsuarios;
     private javax.swing.JMenu mnuArchivo;
-    private javax.swing.JMenu mnuClientes;
     private javax.swing.JMenuItem mnuSalir;
     private javax.swing.JPanel pnelOpciones;
     private javax.swing.JPanel pnelOpcionesColl;

@@ -4,7 +4,7 @@
 	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
 	<queryString>
-		<![CDATA[SELECT c.idCliente, concat(nombres,' ', apellidos) as nomCliente, numCedula, sexo,m.Departamento, m.Municipio, direccionPrincipal,
+		<![CDATA[SELECT right(concat('000000',c.idCliente),6) as idCliente, concat(nombres,' ', apellidos) as nomCliente, numCedula, sexo,m.Departamento, m.Municipio, direccionPrincipal,
 telefonoMovil, ifnull(telefonoCasa,'') as telefonoCasa,
  ifnull(telefonoVario_uno,'') as telefonoVario_uno,
 ifnull(telefonoVario_dos,'') as telefonoVario_dos,
@@ -13,7 +13,7 @@ ifnull(telefonoLaboral,'') as telefonoLaboral
 FROM cliente as c
 inner join municipio as m on m.idMunicipio = c.idMunicipio order by c.idCliente;]]>
 	</queryString>
-	<field name="idCliente" class="java.lang.Integer">
+	<field name="idCliente" class="java.lang.String">
 		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
 	<field name="nomCliente" class="java.lang.String"/>
