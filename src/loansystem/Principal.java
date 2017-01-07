@@ -207,7 +207,6 @@ public class Principal extends javax.swing.JFrame {
         lnkNuevoCliente = new com.l2fprod.common.swing.JLinkButton();
         tskPrestamo = new com.l2fprod.common.swing.JTaskPaneGroup();
         lnkNuevoPrestamo = new com.l2fprod.common.swing.JLinkButton();
-        lnkNuevoPago = new com.l2fprod.common.swing.JLinkButton();
         tskReportes = new com.l2fprod.common.swing.JTaskPaneGroup();
         lnkNuevoPrestamo1 = new com.l2fprod.common.swing.JLinkButton();
         tskEmpresa = new com.l2fprod.common.swing.JTaskPaneGroup();
@@ -272,22 +271,13 @@ public class Principal extends javax.swing.JFrame {
         });
         tskPrestamo.getContentPane().add(lnkNuevoPrestamo);
 
-        lnkNuevoPago.setIcon(new javax.swing.ImageIcon(getClass().getResource("/loansystem/recursos/pago.png"))); // NOI18N
-        lnkNuevoPago.setText("Registrar Pago");
-        lnkNuevoPago.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                lnkNuevoPagoActionPerformed(evt);
-            }
-        });
-        tskPrestamo.getContentPane().add(lnkNuevoPago);
-
         pnelOpcionesColl.add(tskPrestamo);
 
         tskReportes.setIcon(new javax.swing.ImageIcon(getClass().getResource("/loansystem/recursos/reportes.png"))); // NOI18N
         tskReportes.setTitle("Reportes");
         tskReportes.setToolTipText("Reportes");
 
-        lnkNuevoPrestamo1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/loansystem/recursos/registrar_prestamo.png"))); // NOI18N
+        lnkNuevoPrestamo1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/loansystem/recursos/estado_cuenta.png"))); // NOI18N
         lnkNuevoPrestamo1.setText("Balance de Prestamos");
         lnkNuevoPrestamo1.setToolTipText("Registrar Nuevo Préstamo");
         lnkNuevoPrestamo1.addActionListener(new java.awt.event.ActionListener() {
@@ -540,7 +530,6 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JToolBar jToolBar1;
     private com.l2fprod.common.swing.JLinkButton lnkCargo;
     private com.l2fprod.common.swing.JLinkButton lnkNuevoCliente;
-    private com.l2fprod.common.swing.JLinkButton lnkNuevoPago;
     private com.l2fprod.common.swing.JLinkButton lnkNuevoPrestamo;
     private com.l2fprod.common.swing.JLinkButton lnkNuevoPrestamo1;
     private com.l2fprod.common.swing.JLinkButton lnkUsuarios;

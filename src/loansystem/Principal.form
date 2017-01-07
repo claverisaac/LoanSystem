@@ -214,17 +214,6 @@
                     <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="lnkNuevoPrestamoActionPerformed"/>
                   </Events>
                 </Component>
-                <Component class="com.l2fprod.common.swing.JLinkButton" name="lnkNuevoPago">
-                  <Properties>
-                    <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                      <Image iconType="3" name="/loansystem/recursos/pago.png"/>
-                    </Property>
-                    <Property name="text" type="java.lang.String" value="Registrar Pago"/>
-                  </Properties>
-                  <Events>
-                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="lnkNuevoPagoActionPerformed"/>
-                  </Events>
-                </Component>
               </SubComponents>
               <LayoutCode>
                 <CodeStatement>
@@ -303,7 +292,7 @@
                 <Component class="com.l2fprod.common.swing.JLinkButton" name="lnkNuevoPrestamo1">
                   <Properties>
                     <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                      <Image iconType="3" name="/loansystem/recursos/registrar_prestamo.png"/>
+                      <Image iconType="3" name="/loansystem/recursos/estado_cuenta.png"/>
                     </Property>
                     <Property name="text" type="java.lang.String" value="Balance de Prestamos"/>
                     <Property name="toolTipText" type="java.lang.String" value="Registrar Nuevo Pr&#xe9;stamo"/>
