@@ -4,11 +4,14 @@
 	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
 	<queryString>
-		<![CDATA[select p.idPersona, concat(nombres,' ', apellidos) as nomPersona, numCedula, sexo, c.cargo, IFNULL(login, '') as usuario from personal as p
+		<![CDATA[select right(concat('000000',p.idPersona),6) as idPersona,
+concat(nombres,' ', apellidos) as nomPersona, numCedula, sexo, c.cargo, IFNULL(login, '') as usuario from personal as p
 left join usuario as u on u.idPersona = p.idPersona
-inner join cargo as c on c.idCargo = p.idCargo order by p.idPersona ;]]>
+inner join cargo as c on c.idCargo = p.idCargo order by p.idPersona ;
+
+]]>
 	</queryString>
-	<field name="idPersona" class="java.lang.Integer">
+	<field name="idPersona" class="java.lang.String">
 		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
 	<field name="nomPersona" class="java.lang.String"/>
@@ -42,7 +45,7 @@ inner join cargo as c on c.idCargo = p.idCargo order by p.idPersona ;]]>
 				<text><![CDATA[SISTEMA DE CONTROL DE PRESTAMOS]]></text>
 			</staticText>
 			<line>
-				<reportElement x="3" y="47" width="569" height="1" forecolor="#000066" uuid="efd6a535-023e-460b-91c3-599af862f6c5"/>
+				<reportElement x="3" y="47" width="569" height="1" forecolor="#666666" uuid="efd6a535-023e-460b-91c3-599af862f6c5"/>
 			</line>
 		</band>
 	</title>
@@ -50,9 +53,9 @@ inner join cargo as c on c.idCargo = p.idCargo order by p.idPersona ;]]>
 		<band height="10" splitType="Stretch"/>
 	</pageHeader>
 	<columnHeader>
-		<band height="32" splitType="Stretch">
+		<band height="35" splitType="Stretch">
 			<rectangle>
-				<reportElement x="6" y="12" width="559" height="20" backcolor="#999999" uuid="dbea4d26-3c1d-41f9-a2a8-11c048a9d2d8"/>
+				<reportElement x="3" y="12" width="562" height="20" backcolor="#999999" uuid="dbea4d26-3c1d-41f9-a2a8-11c048a9d2d8"/>
 				<graphicElement>
 					<pen lineWidth="0.0"/>
 				</graphicElement>
@@ -93,7 +96,7 @@ inner join cargo as c on c.idCargo = p.idCargo order by p.idPersona ;]]>
 				<text><![CDATA[Usuario:]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="16" y="12" width="24" height="20" forecolor="#FFFFFF" uuid="9165669d-a5bd-4a3a-ac96-cfbca72a7f33"/>
+				<reportElement x="3" y="12" width="37" height="20" forecolor="#FFFFFF" uuid="9165669d-a5bd-4a3a-ac96-cfbca72a7f33"/>
 				<textElement textAlignment="Left">
 					<font size="10" isBold="true"/>
 				</textElement>
@@ -102,33 +105,29 @@ inner join cargo as c on c.idCargo = p.idCargo order by p.idPersona ;]]>
 		</band>
 	</columnHeader>
 	<detail>
-		<band height="48" splitType="Stretch">
-			<staticText>
-				<reportElement x="-125" y="25" width="48" height="20" forecolor="#666666" uuid="0020ac39-a482-47e7-98c5-fb39a9ff07b7"/>
-				<text><![CDATA[Nombres:]]></text>
-			</staticText>
+		<band height="33" splitType="Stretch">
 			<textField>
-				<reportElement x="486" y="15" width="68" height="20" uuid="97889678-b86c-413d-8b23-5a2920bf7e9b"/>
+				<reportElement x="486" y="4" width="68" height="20" uuid="97889678-b86c-413d-8b23-5a2920bf7e9b"/>
 				<textFieldExpression><![CDATA[$F{usuario}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="386" y="16" width="100" height="20" uuid="2a46086d-137e-4802-a5f3-8d7d9e4e21b0"/>
+				<reportElement x="386" y="5" width="100" height="20" uuid="2a46086d-137e-4802-a5f3-8d7d9e4e21b0"/>
 				<textFieldExpression><![CDATA[$F{cargo}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="315" y="16" width="71" height="20" uuid="bd0949dc-fd69-4202-b96e-e8b8aa2ab646"/>
+				<reportElement x="315" y="5" width="71" height="20" uuid="bd0949dc-fd69-4202-b96e-e8b8aa2ab646"/>
 				<textFieldExpression><![CDATA[$F{sexo}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="215" y="15" width="100" height="20" uuid="5ab826cf-0e17-4021-99ff-7ac1f3490f10"/>
+				<reportElement x="215" y="4" width="100" height="20" uuid="5ab826cf-0e17-4021-99ff-7ac1f3490f10"/>
 				<textFieldExpression><![CDATA[$F{numCedula}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="40" y="16" width="175" height="20" uuid="84f9651c-4f6d-40b4-9473-1531f2912b8c"/>
+				<reportElement x="40" y="5" width="175" height="20" uuid="84f9651c-4f6d-40b4-9473-1531f2912b8c"/>
 				<textFieldExpression><![CDATA[$F{nomPersona}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="16" y="16" width="24" height="20" uuid="3eb94857-53d1-4bf0-866c-06948c16ef67"/>
+				<reportElement x="3" y="5" width="37" height="20" uuid="3eb94857-53d1-4bf0-866c-06948c16ef67"/>
 				<textFieldExpression><![CDATA[$F{idPersona}]]></textFieldExpression>
 			</textField>
 		</band>
@@ -137,9 +136,9 @@ inner join cargo as c on c.idCargo = p.idCargo order by p.idPersona ;]]>
 		<band height="45" splitType="Stretch"/>
 	</columnFooter>
 	<pageFooter>
-		<band height="54" splitType="Stretch">
+		<band height="61" splitType="Stretch">
 			<textField evaluationTime="Report">
-				<reportElement x="536" y="34" width="40" height="20" uuid="62b005e2-cc68-4bf9-b44e-2eaf5b922206"/>
+				<reportElement x="525" y="34" width="40" height="20" uuid="62b005e2-cc68-4bf9-b44e-2eaf5b922206"/>
 				<textElement verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
 			</textField>
@@ -149,13 +148,13 @@ inner join cargo as c on c.idCargo = p.idCargo order by p.idPersona ;]]>
 				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="374" y="34" width="162" height="20" uuid="a8d083cd-a3d3-4d0d-a73a-b488bfc5a8f9"/>
+				<reportElement x="363" y="34" width="162" height="20" uuid="a8d083cd-a3d3-4d0d-a73a-b488bfc5a8f9"/>
 				<textElement textAlignment="Right" verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA["Página "+$V{PAGE_NUMBER}+" de"]]></textFieldExpression>
 			</textField>
 		</band>
 	</pageFooter>
 	<summary>
-		<band height="9" splitType="Stretch"/>
+		<band height="19" splitType="Stretch"/>
 	</summary>
 </jasperReport>

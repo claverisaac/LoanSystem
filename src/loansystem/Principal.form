@@ -290,7 +290,6 @@
             </Container>
             <Container class="com.l2fprod.common.swing.JTaskPaneGroup" name="tskReportes">
               <Properties>
-                <Property name="expanded" type="boolean" value="false"/>
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
                   <Image iconType="3" name="/loansystem/recursos/reportes.png"/>
                 </Property>
@@ -303,7 +302,7 @@
                     <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
                       <Image iconType="3" name="/loansystem/recursos/registrar_prestamo.png"/>
                     </Property>
-                    <Property name="text" type="java.lang.String" value="Registrar Pr&#xe9;stamo"/>
+                    <Property name="text" type="java.lang.String" value="Balance de Prestamos"/>
                     <Property name="toolTipText" type="java.lang.String" value="Registrar Nuevo Pr&#xe9;stamo"/>
                   </Properties>
                   <Events>
