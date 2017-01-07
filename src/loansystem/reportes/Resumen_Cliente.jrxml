@@ -82,7 +82,7 @@ inner join municipio as m on m.idMunicipio = c.idMunicipio order by c.idCliente;
 		<band height="17" splitType="Stretch"/>
 	</columnHeader>
 	<detail>
-		<band height="174" splitType="Stretch">
+		<band height="158" splitType="Stretch">
 			<textField>
 				<reportElement x="114" y="40" width="100" height="20" uuid="f8b8a0c6-abaf-4a75-be04-d890cd76be54"/>
 				<textElement>
@@ -177,9 +177,15 @@ inner join municipio as m on m.idMunicipio = c.idMunicipio order by c.idCliente;
 				<text><![CDATA[Móvil #2:]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="318" y="0" width="87" height="19" forecolor="#666666" uuid="13d27b53-e9c7-4fb0-a66b-8e6353bd8ad8"/>
+				<reportElement x="318" y="0" width="87" height="20" forecolor="#666666" uuid="13d27b53-e9c7-4fb0-a66b-8e6353bd8ad8"/>
 				<text><![CDATA[Direccón:]]></text>
 			</staticText>
+			<line>
+				<reportElement x="11" y="146" width="561" height="1" uuid="cd96ce7c-4431-4068-a878-1b753be70477"/>
+				<graphicElement>
+					<pen lineStyle="Dotted" lineColor="#CCCCCC"/>
+				</graphicElement>
+			</line>
 		</band>
 	</detail>
 	<columnFooter>

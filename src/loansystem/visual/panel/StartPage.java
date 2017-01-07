@@ -144,7 +144,7 @@ public class StartPage extends javax.swing.JPanel {
             renderer.setBasePositiveItemLabelPosition(position);
 
             int style = Font.BOLD;
-            Font font = new Font("Tahoma", style, 14);
+            Font font = new Font("Tahoma", style, 12);
             renderer.setItemLabelFont(font);
 
             ChartPanel panel = new ChartPanel(grafica);
@@ -215,7 +215,6 @@ public class StartPage extends javax.swing.JPanel {
         pnelPrestamosMes = new javax.swing.JPanel();
         pnelOtorgado = new javax.swing.JPanel();
         pnelOtorgadoRecuperado = new javax.swing.JPanel();
-        pnelOtorgado1 = new javax.swing.JPanel();
         jPanel1 = new javax.swing.JPanel();
         pnelPorEstado = new javax.swing.JPanel();
 
@@ -239,13 +238,14 @@ public class StartPage extends javax.swing.JPanel {
         pnelPrestamos.setLayout(new java.awt.BorderLayout());
 
         pnelPrestamosMes.setBackground(new java.awt.Color(255, 255, 255));
-        pnelPrestamosMes.setPreferredSize(new java.awt.Dimension(500, 300));
+        pnelPrestamosMes.setPreferredSize(new java.awt.Dimension(400, 200));
         pnelPrestamosMes.setLayout(new java.awt.GridLayout(1, 0));
         pnelPrestamos.add(pnelPrestamosMes, java.awt.BorderLayout.CENTER);
 
         pnelCentro.add(pnelPrestamos);
 
         pnelOtorgado.setBackground(new java.awt.Color(255, 255, 255));
+        pnelOtorgado.setPreferredSize(new java.awt.Dimension(400, 200));
         pnelOtorgado.setLayout(new java.awt.BorderLayout());
 
         pnelOtorgadoRecuperado.setBackground(new java.awt.Color(255, 255, 255));
@@ -255,16 +255,12 @@ public class StartPage extends javax.swing.JPanel {
 
         pnelCentro.add(pnelOtorgado);
 
-        pnelOtorgado1.setBackground(new java.awt.Color(255, 255, 255));
-        pnelOtorgado1.setLayout(new java.awt.BorderLayout());
-        pnelCentro.add(pnelOtorgado1);
-
         add(pnelCentro);
 
         jPanel1.setBackground(new java.awt.Color(0, 0, 102));
 
         pnelPorEstado.setBackground(new java.awt.Color(255, 255, 255));
-        pnelPorEstado.setPreferredSize(new java.awt.Dimension(500, 300));
+        pnelPorEstado.setPreferredSize(new java.awt.Dimension(400, 200));
         pnelPorEstado.setLayout(new java.awt.GridLayout(1, 0));
         jPanel1.add(pnelPorEstado);
 
@@ -277,7 +273,6 @@ public class StartPage extends javax.swing.JPanel {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel pnelCentro;
     private javax.swing.JPanel pnelOtorgado;
-    private javax.swing.JPanel pnelOtorgado1;
     private javax.swing.JPanel pnelOtorgadoRecuperado;
     private javax.swing.JPanel pnelPorEstado;
     private javax.swing.JPanel pnelPrestamos;

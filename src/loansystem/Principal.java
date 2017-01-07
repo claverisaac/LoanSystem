@@ -58,8 +58,26 @@ public class Principal extends javax.swing.JFrame {
                 JButton button = (JButton) e.getSource();
                 for (int i = 0; i < tabPrincipal.getTabCount(); i++) {
                     if (SwingUtilities.isDescendingFrom(button, tabPrincipal.getTabComponentAt(i))) {
+                        JPanel panel = (JPanel) tabPrincipal.getComponentAt(i);
                         tabPrincipal.remove(i);
                         pestania--;
+
+                        if (panel == panelCliente) {
+                            panelCliente = null;
+                        }
+
+                        if (panel == panelPrestamo) {
+                            panelPrestamo = null;
+                        }
+
+                        if (panel == panelUsuarios) {
+                            panelUsuarios = null;
+                        }
+
+                        if (panel == panelPersonal) {
+                            panelPersonal = null;
+                        }
+
                         break;
                     }
                 }
@@ -133,51 +151,44 @@ public class Principal extends javax.swing.JFrame {
         if (panel == panelPersonal) {
             panelPersonal = null;
         }
-        
+
         pestania--;
-        
+
     }
-    
-    
+
     /**
      * Abrir reporte
+     *
      * @param reporte
      * @param parametros
      * @param titulo
-     * @param icono 
+     * @param icono
      */
-    public void abrirReporte(String reporte, HashMap parametros, String titulo, String icono) 
-    { 
-        
-        
-        try
-                {  
-                     URL fileName = getClass().getResource("/loansystem/reportes/"+reporte+".jrxml");
-                    String archivo = fileName.getPath();
-                    System.out.println("reporte: "+archivo);
-                    
-                    
-                    if (fileName == null) 
-                    {                
-                        System.out.println("No encuentro el archivo del reporte.");
-                        System.exit(2);
-                    }
-                    
-                File theFile = new File(archivo);
-                JasperDesign jasperDesign = JRXmlLoader.load(theFile);               
-                
-                 JasperReport jasperReport = JasperCompileManager.compileReport(jasperDesign);
-                 JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, parametros, con.getCon());
-                 
-                 this.cargarModulo((JPanel) new JPanel().add(new JRViewer(jasperPrint)), titulo, titulo, icono);
-                 
-                }
-                catch (Exception j)
-                {
-                    System.out.println("Mensaje de Error:"+j.getMessage());
-                    javax.swing.JOptionPane.showMessageDialog(null, j.getLocalizedMessage()); 
-                }
- 
+    public void abrirReporte(String reporte, HashMap parametros, String titulo, String icono) {
+
+        try {
+            URL fileName = getClass().getResource("/loansystem/reportes/" + reporte + ".jrxml");
+            String archivo = fileName.getPath();
+            System.out.println("reporte: " + archivo);
+
+            if (fileName == null) {
+                System.out.println("No encuentro el archivo del reporte.");
+                System.exit(2);
+            }
+
+            File theFile = new File(archivo);
+            JasperDesign jasperDesign = JRXmlLoader.load(theFile);
+
+            JasperReport jasperReport = JasperCompileManager.compileReport(jasperDesign);
+            JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, parametros, con.getCon());
+
+            this.cargarModulo((JPanel) new JPanel().add(new JRViewer(jasperPrint)), titulo, titulo, icono);
+
+        } catch (Exception j) {
+            System.out.println("Mensaje de Error:" + j.getMessage());
+            javax.swing.JOptionPane.showMessageDialog(null, j.getLocalizedMessage());
+        }
+
     }
 
     /**
@@ -200,12 +211,10 @@ public class Principal extends javax.swing.JFrame {
         tskReportes = new com.l2fprod.common.swing.JTaskPaneGroup();
         lnkNuevoPrestamo1 = new com.l2fprod.common.swing.JLinkButton();
         tskEmpresa = new com.l2fprod.common.swing.JTaskPaneGroup();
-        lnkEmpresa = new com.l2fprod.common.swing.JLinkButton();
         lnkUsuarios = new com.l2fprod.common.swing.JLinkButton();
         jSeparator1 = new javax.swing.JSeparator();
         jLabel1 = new javax.swing.JLabel();
         lnkCargo = new com.l2fprod.common.swing.JLinkButton();
-        lnkMonedas = new com.l2fprod.common.swing.JLinkButton();
         tabPrincipal = new javax.swing.JTabbedPane();
         jToolBar1 = new javax.swing.JToolBar();
         jButton1 = new javax.swing.JButton();
@@ -240,7 +249,7 @@ public class Principal extends javax.swing.JFrame {
         tskCliente.setOpaque(true);
 
         lnkNuevoCliente.setIcon(new javax.swing.ImageIcon(getClass().getResource("/loansystem/recursos/nuevo_cliente.png"))); // NOI18N
-        lnkNuevoCliente.setText("Registrar Nuevo Ciente");
+        lnkNuevoCliente.setText("Registrar Cliente");
         lnkNuevoCliente.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 lnkNuevoClienteActionPerformed(evt);
@@ -289,10 +298,6 @@ public class Principal extends javax.swing.JFrame {
         tskEmpresa.setIcon(new javax.swing.ImageIcon(getClass().getResource("/loansystem/recursos/admin.png"))); // NOI18N
         tskEmpresa.setTitle("Administración");
 
-        lnkEmpresa.setIcon(new javax.swing.ImageIcon(getClass().getResource("/loansystem/recursos/empresa.png"))); // NOI18N
-        lnkEmpresa.setText("Empresa");
-        tskEmpresa.getContentPane().add(lnkEmpresa);
-
         lnkUsuarios.setIcon(new javax.swing.ImageIcon(getClass().getResource("/loansystem/recursos/usuarios.png"))); // NOI18N
         lnkUsuarios.setText("Administrar Usuarios");
         lnkUsuarios.addActionListener(new java.awt.event.ActionListener() {
@@ -317,10 +322,6 @@ public class Principal extends javax.swing.JFrame {
             }
         });
         tskEmpresa.getContentPane().add(lnkCargo);
-
-        lnkMonedas.setIcon(new javax.swing.ImageIcon(getClass().getResource("/loansystem/recursos/monedas.png"))); // NOI18N
-        lnkMonedas.setText("Monedas");
-        tskEmpresa.getContentPane().add(lnkMonedas);
 
         pnelOpcionesColl.add(tskEmpresa);
 
@@ -467,8 +468,6 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JToolBar.Separator jSeparator2;
     private javax.swing.JToolBar jToolBar1;
     private com.l2fprod.common.swing.JLinkButton lnkCargo;
-    private com.l2fprod.common.swing.JLinkButton lnkEmpresa;
-    private com.l2fprod.common.swing.JLinkButton lnkMonedas;
     private com.l2fprod.common.swing.JLinkButton lnkNuevoCliente;
     private com.l2fprod.common.swing.JLinkButton lnkNuevoPago;
     private com.l2fprod.common.swing.JLinkButton lnkNuevoPrestamo;
