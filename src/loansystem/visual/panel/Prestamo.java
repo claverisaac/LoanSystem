@@ -19,6 +19,7 @@ import javax.swing.DefaultListModel;
 import javax.swing.JOptionPane;
 import loansystem.Principal;
 import loansystem.bd.Conexion;
+import loansystem.dao.ClienteDAO;
 import loansystem.dao.CuotasDAO;
 import loansystem.dao.MunicipioDAO;
 import loansystem.dao.PrestamoDAO;
@@ -77,6 +78,22 @@ public class Prestamo extends javax.swing.JPanel {
         util.formatoDatePicker(this.dtFechaFin);
        
 
+        //Nuevo comentario
+    }
+    
+        public Prestamo(Conexion con, Principal prin, int idCliente) {
+        this.con = con;
+        this.prin = prin;
+
+        initComponents();
+
+         util = new MetodosGenerales();
+         
+        util.formatoDatePicker(this.dtFechaInicio);
+        util.formatoDatePicker(this.dtFechaFin);
+        ClienteDAO dao = new ClienteDAO(con.getCon());
+        cliente = dao.obtenerCliente(idCliente);
+        cargarDatosCliente(cliente);
         //Nuevo comentario
     }
 

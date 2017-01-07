@@ -10,6 +10,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import javax.swing.JOptionPane;
+import javax.swing.JPanel;
 import loansystem.Principal;
 import loansystem.bd.Conexion;
 import loansystem.dao.ClienteDAO;
@@ -35,6 +36,7 @@ public class Cliente extends javax.swing.JPanel {
     private boolean nuevo = false, modificar = false, save=false;
     private MetodosGenerales util;
     SimpleDateFormat format ;
+    private JPanel panelPrestamo;
 
     /**
      * Creates new form Cliente
@@ -57,6 +59,7 @@ public class Cliente extends javax.swing.JPanel {
          cargarcboDepto();
     
         btnModificar.setEnabled(false);
+        btnPrestamo.setEnabled(false);
     }
 
     /**
@@ -127,6 +130,7 @@ public class Cliente extends javax.swing.JPanel {
         btnModificar = new javax.swing.JButton();
         btnSave = new javax.swing.JButton();
         btnImprimir = new javax.swing.JButton();
+        btnPrestamo = new javax.swing.JButton();
         btnCancelar = new javax.swing.JButton();
 
         setBackground(new java.awt.Color(255, 255, 255));
@@ -716,6 +720,18 @@ public class Cliente extends javax.swing.JPanel {
         });
         jToolBar1.add(btnImprimir);
 
+        btnPrestamo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/loansystem/recursos/prestamo.png"))); // NOI18N
+        btnPrestamo.setToolTipText("Registrar Prestamo");
+        btnPrestamo.setFocusable(false);
+        btnPrestamo.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        btnPrestamo.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        btnPrestamo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnPrestamoActionPerformed(evt);
+            }
+        });
+        jToolBar1.add(btnPrestamo);
+
         btnCancelar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/loansystem/recursos/paneles/cerrar.png"))); // NOI18N
         btnCancelar.setToolTipText("Cancelar");
         btnCancelar.setFocusable(false);
@@ -778,6 +794,7 @@ public class Cliente extends javax.swing.JPanel {
         nuevo = true;
         btnSave.setEnabled(true);
         btnModificar.setEnabled(false);
+                btnPrestamo.setEnabled(false);
         
     }//GEN-LAST:event_btnNuevoActionPerformed
 
@@ -897,6 +914,7 @@ public class Cliente extends javax.swing.JPanel {
         // TODO add your handling code here:
         cargarFormulario();
         btnModificar.setEnabled(true);
+                btnPrestamo.setEnabled(true);
         btnSave.setEnabled(false);
     }//GEN-LAST:event_tabClientesMouseClicked
 
@@ -1005,6 +1023,12 @@ public class Cliente extends javax.swing.JPanel {
             evt.consume();
         }
     }//GEN-LAST:event_txtNombreKeyReleased
+
+    private void btnPrestamoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPrestamoActionPerformed
+        // TODO add your handling code here:
+        int idCliente = Integer.parseInt(String.valueOf(tabClientes.getValueAt(tabClientes.getSelectedRow(), 0)));
+          prin.cargarPrestamoCliente(idCliente);
+    }//GEN-LAST:event_btnPrestamoActionPerformed
 
     public void cargarTablaClientes() {
         if (aClieEnti != null) {
@@ -1161,6 +1185,7 @@ public class Cliente extends javax.swing.JPanel {
     private javax.swing.JButton btnImprimir;
     private javax.swing.JButton btnModificar;
     private javax.swing.JButton btnNuevo;
+    private javax.swing.JButton btnPrestamo;
     private javax.swing.JButton btnSave;
     private javax.swing.JComboBox<String> cboDepto;
     private javax.swing.JComboBox<String> cboMunicipio;

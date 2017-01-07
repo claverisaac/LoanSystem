@@ -37,7 +37,7 @@ public class Principal extends javax.swing.JFrame {
     private static Conexion con;
 
     Cliente panelCliente;
-    Prestamo panelPrestamo;
+    public Prestamo panelPrestamo;
     Usuario panelUsuarios;
     Personal panelPersonal;
     private ActionListener actionListener;
@@ -66,7 +66,7 @@ public class Principal extends javax.swing.JFrame {
                             panelCliente = null;
                         }
 
-                        if (panel == panelPrestamo) {
+                        if (panel == getPanelPrestamo()) {
                             panelPrestamo = null;
                         }
 
@@ -88,7 +88,7 @@ public class Principal extends javax.swing.JFrame {
 
     }
 
-    private void cargarModulo(JPanel panel, String titulo, String tooltip, String icono) {
+    public void cargarModulo(JPanel panel, String titulo, String tooltip, String icono) {
         JLabel label = new JLabel(titulo, cargarIconoTab(icono), JLabel.RIGHT);
         label.setFont(new java.awt.Font("Arial Rounded MT Bold", 1, 14));
         JButton closeButton = new JButton(cargarIconoTab("close"));
@@ -140,7 +140,7 @@ public class Principal extends javax.swing.JFrame {
             panelCliente = null;
         }
 
-        if (panel == panelPrestamo) {
+        if (panel == getPanelPrestamo()) {
             panelPrestamo = null;
         }
 
@@ -217,11 +217,11 @@ public class Principal extends javax.swing.JFrame {
         lnkCargo = new com.l2fprod.common.swing.JLinkButton();
         tabPrincipal = new javax.swing.JTabbedPane();
         jToolBar1 = new javax.swing.JToolBar();
-        jButton1 = new javax.swing.JButton();
+        btnCliente = new javax.swing.JButton();
         jSeparator2 = new javax.swing.JToolBar.Separator();
-        jButton2 = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
-        jButton4 = new javax.swing.JButton();
+        btnPres = new javax.swing.JButton();
+        btnUsua = new javax.swing.JButton();
+        btnCargo = new javax.swing.JButton();
         jMenuBar1 = new javax.swing.JMenuBar();
         mnuArchivo = new javax.swing.JMenu();
         mnuSalir = new javax.swing.JMenuItem();
@@ -274,6 +274,11 @@ public class Principal extends javax.swing.JFrame {
 
         lnkNuevoPago.setIcon(new javax.swing.ImageIcon(getClass().getResource("/loansystem/recursos/pago.png"))); // NOI18N
         lnkNuevoPago.setText("Registrar Pago");
+        lnkNuevoPago.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                lnkNuevoPagoActionPerformed(evt);
+            }
+        });
         tskPrestamo.getContentPane().add(lnkNuevoPago);
 
         pnelOpcionesColl.add(tskPrestamo);
@@ -349,34 +354,54 @@ public class Principal extends javax.swing.JFrame {
 
         jToolBar1.setRollover(true);
 
-        jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/loansystem/recursos/nuevo_cliente.png"))); // NOI18N
-        jButton1.setToolTipText("Nuevo Cliente");
-        jButton1.setFocusable(false);
-        jButton1.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        jButton1.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        jToolBar1.add(jButton1);
+        btnCliente.setIcon(new javax.swing.ImageIcon(getClass().getResource("/loansystem/recursos/nuevo_cliente.png"))); // NOI18N
+        btnCliente.setToolTipText("Nuevo Cliente");
+        btnCliente.setFocusable(false);
+        btnCliente.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        btnCliente.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        btnCliente.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnClienteActionPerformed(evt);
+            }
+        });
+        jToolBar1.add(btnCliente);
         jToolBar1.add(jSeparator2);
 
-        jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/loansystem/recursos/registrar_prestamo.png"))); // NOI18N
-        jButton2.setToolTipText("Nuevo Préstamo");
-        jButton2.setFocusable(false);
-        jButton2.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        jButton2.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        jToolBar1.add(jButton2);
+        btnPres.setIcon(new javax.swing.ImageIcon(getClass().getResource("/loansystem/recursos/registrar_prestamo.png"))); // NOI18N
+        btnPres.setToolTipText("Nuevo Préstamo");
+        btnPres.setFocusable(false);
+        btnPres.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        btnPres.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        btnPres.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnPresActionPerformed(evt);
+            }
+        });
+        jToolBar1.add(btnPres);
 
-        jButton3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/loansystem/recursos/pago.png"))); // NOI18N
-        jButton3.setToolTipText("Registrar Pago");
-        jButton3.setFocusable(false);
-        jButton3.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        jButton3.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        jToolBar1.add(jButton3);
+        btnUsua.setIcon(new javax.swing.ImageIcon(getClass().getResource("/loansystem/recursos/usuarios.png"))); // NOI18N
+        btnUsua.setToolTipText("Administrar Usuarios");
+        btnUsua.setFocusable(false);
+        btnUsua.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        btnUsua.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        btnUsua.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnUsuaActionPerformed(evt);
+            }
+        });
+        jToolBar1.add(btnUsua);
 
-        jButton4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/loansystem/recursos/usuarios.png"))); // NOI18N
-        jButton4.setToolTipText("Administrar Usuarios");
-        jButton4.setFocusable(false);
-        jButton4.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        jButton4.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        jToolBar1.add(jButton4);
+        btnCargo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/loansystem/recursos/cargo.png"))); // NOI18N
+        btnCargo.setToolTipText("Administrar Personal");
+        btnCargo.setFocusable(false);
+        btnCargo.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        btnCargo.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        btnCargo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCargoActionPerformed(evt);
+            }
+        });
+        jToolBar1.add(btnCargo);
 
         getContentPane().add(jToolBar1, java.awt.BorderLayout.PAGE_START);
 
@@ -402,11 +427,11 @@ public class Principal extends javax.swing.JFrame {
 
     private void lnkNuevoPrestamoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_lnkNuevoPrestamoActionPerformed
         // TODO add your handling code here:
-        if (panelPrestamo == null) {
+        if (getPanelPrestamo() == null) {
             panelPrestamo = new Prestamo(con, this);
-            cargarModulo(panelPrestamo, "Prestamos", "Prestamoss", "registrar_prestamo");
+            cargarModulo(getPanelPrestamo(), "Prestamos", "Prestamoss", "registrar_prestamo");
         } else {
-            this.seleccionarTab(panelPrestamo);
+            this.seleccionarTab(getPanelPrestamo());
         }
 
     }//GEN-LAST:event_lnkNuevoPrestamoActionPerformed
@@ -456,12 +481,57 @@ public class Principal extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_lnkCargoActionPerformed
 
+    private void btnClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnClienteActionPerformed
+        // TODO add your handling code here:
+                if (panelCliente == null) {
+            panelCliente = new Cliente(con, this);
+            cargarModulo(panelCliente, "Clientes", "Catalogo de Clientes", "nuevo_cliente");
+        } else {
+            this.seleccionarTab(panelCliente);
+        }
+    }//GEN-LAST:event_btnClienteActionPerformed
+
+    private void btnPresActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPresActionPerformed
+        // TODO add your handling code here:
+              if (getPanelPrestamo() == null) {
+            panelPrestamo = new Prestamo(con, this);
+            cargarModulo(getPanelPrestamo(), "Prestamos", "Prestamoss", "registrar_prestamo");
+        } else {
+            this.seleccionarTab(getPanelPrestamo());
+        }
+    }//GEN-LAST:event_btnPresActionPerformed
+
+    private void lnkNuevoPagoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_lnkNuevoPagoActionPerformed
+        // TODO add your handling code here:
+               
+    }//GEN-LAST:event_lnkNuevoPagoActionPerformed
+
+    private void btnUsuaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUsuaActionPerformed
+        // TODO add your handling code here:
+             if (panelUsuarios == null) {
+            panelUsuarios = new Usuario(con, this);
+            cargarModulo(panelUsuarios, "Usuarios", "Administración de Usuarios", "usuarios");
+        } else {
+            this.seleccionarTab(panelUsuarios);
+        }
+    }//GEN-LAST:event_btnUsuaActionPerformed
+
+    private void btnCargoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCargoActionPerformed
+        // TODO add your handling code here:
+             if (panelPersonal == null) {
+            panelPersonal = new Personal(con, this);
+            cargarModulo(panelPersonal, "Personal", "Administración de Personal", "cargo");
+        } else {
+            this.seleccionarTab(panelPersonal);
+        }
+    }//GEN-LAST:event_btnCargoActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
-    private javax.swing.JButton jButton4;
+    private javax.swing.JButton btnCargo;
+    private javax.swing.JButton btnCliente;
+    private javax.swing.JButton btnPres;
+    private javax.swing.JButton btnUsua;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JMenuBar jMenuBar1;
@@ -485,4 +555,22 @@ public class Principal extends javax.swing.JFrame {
     private com.l2fprod.common.swing.JTaskPaneGroup tskPrestamo;
     private com.l2fprod.common.swing.JTaskPaneGroup tskReportes;
     // End of variables declaration//GEN-END:variables
+
+    /**
+     * @return the panelPrestamo
+     */
+    public Prestamo getPanelPrestamo() {
+        return panelPrestamo;
+    }
+    
+    public void cargarPrestamoCliente(int idCliente)
+    {
+        if (panelPrestamo == null) {
+            panelPrestamo = new Prestamo(con, this,idCliente);
+            cargarModulo(panelPrestamo, "Prestamos", "Prestamoss", "registrar_prestamo");
+        } else {
+          seleccionarTab(panelPrestamo);
+        }
+        
+    }
 }
