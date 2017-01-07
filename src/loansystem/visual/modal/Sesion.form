@@ -103,7 +103,8 @@
         </Component>
         <Component class="javax.swing.JTextField" name="txtLogin">
           <Properties>
-            <Property name="text" type="java.lang.String" value="CIGA282"/>
+            <Property name="text" type="java.lang.String" value="JCHAVARRIA"/>
+            <Property name="toolTipText" type="java.lang.String" value=""/>
           </Properties>
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txtLoginActionPerformed"/>

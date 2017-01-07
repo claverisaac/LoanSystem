@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="ReportePrestamo" language="groovy" pageWidth="612" pageHeight="792" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="c3469c41-f3f5-4ba6-9acb-75e277c84241">
-	<property name="ireport.zoom" value="1.0"/>
-	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="10"/>
+	<property name="ireport.zoom" value="1.7715610000000017"/>
+	<property name="ireport.x" value="29"/>
+	<property name="ireport.y" value="240"/>
 	<style name="generalesPrestamo" forecolor="#000000" fontSize="10" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false"/>
 	<style name="Secundarios" fontSize="7" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false"/>
 	<parameter name="idPrestamo" class="java.lang.Integer">
 		<defaultValueExpression><![CDATA[2]]></defaultValueExpression>
 	</parameter>
 	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
-		<defaultValueExpression><![CDATA["E:\\VENADO\\LOAN SYSTEM\\REPORTES\\"]]></defaultValueExpression>
+		<defaultValueExpression><![CDATA["C:\\Users\\cgarcia\\Documents\\NetBeansProjects\\LoanSystem\\src\\loansystem\\reportes\\"]]></defaultValueExpression>
 	</parameter>
 	<queryString>
 		<![CDATA[SELECT p.idPrestamo,
@@ -176,7 +176,7 @@ where idPrestamo = $P{idPrestamo}]]>
 		<band splitType="Stretch"/>
 	</background>
 	<title>
-		<band height="64" splitType="Stretch">
+		<band height="56" splitType="Stretch">
 			<staticText>
 				<reportElement x="137" y="7" width="299" height="20" forecolor="#99CCFF" uuid="20e6f99e-a5cd-4d45-abb7-dafe1afdcd7c"/>
 				<textElement textAlignment="Center" verticalAlignment="Bottom">
@@ -189,7 +189,7 @@ where idPrestamo = $P{idPrestamo}]]>
 				<textElement textAlignment="Center">
 					<font size="12" isBold="true"/>
 				</textElement>
-				<text><![CDATA[Detalle de Préstamo]]></text>
+				<text><![CDATA[Estado de Cuenta]]></text>
 			</staticText>
 			<textField>
 				<reportElement x="451" y="7" width="110" height="20" forecolor="#99CCFF" uuid="72012b2b-37d4-432d-a564-afa37cb71dbe"/>
@@ -206,7 +206,10 @@ where idPrestamo = $P{idPrestamo}]]>
 		</band>
 	</title>
 	<pageHeader>
-		<band height="242" splitType="Stretch">
+		<band height="213" splitType="Stretch">
+			<rectangle>
+				<reportElement x="420" y="132" width="152" height="81" uuid="68e96d24-7a6f-437e-bfdf-9a93bc699f0d"/>
+			</rectangle>
 			<textField>
 				<reportElement style="generalesPrestamo" x="137" y="0" width="335" height="20" uuid="fa0a817f-1f58-4b4e-a5d5-b3610e78596c"/>
 				<textElement verticalAlignment="Bottom">
@@ -241,42 +244,42 @@ where idPrestamo = $P{idPrestamo}]]>
 				<text><![CDATA[Sexo]]></text>
 			</staticText>
 			<textField>
-				<reportElement style="Secundarios" x="304" y="81" width="126" height="20" uuid="db732fa8-6280-484e-912d-fb91fee81be1"/>
+				<reportElement style="Secundarios" x="11" y="91" width="126" height="20" uuid="db732fa8-6280-484e-912d-fb91fee81be1"/>
 				<textElement verticalAlignment="Bottom">
 					<font fontName="SansSerif" size="8" isBold="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{Departamento}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement style="Secundarios" x="430" y="81" width="142" height="20" uuid="f1cbcae3-26ed-4613-97ea-27847dcf0c7d"/>
+				<reportElement style="Secundarios" x="137" y="91" width="142" height="20" uuid="f1cbcae3-26ed-4613-97ea-27847dcf0c7d"/>
 				<textElement verticalAlignment="Bottom">
 					<font fontName="SansSerif" size="8" isBold="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{Municipio}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="304" y="101" width="83" height="20" forecolor="#666666" uuid="fa0114e3-4f7f-4942-ad35-10483b65821d"/>
+				<reportElement x="11" y="111" width="83" height="20" forecolor="#666666" uuid="fa0114e3-4f7f-4942-ad35-10483b65821d"/>
 				<text><![CDATA[Departamento]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="430" y="101" width="99" height="20" forecolor="#666666" uuid="53423d6e-3be6-4e10-ba6c-896cbe399015"/>
+				<reportElement x="137" y="111" width="99" height="20" forecolor="#666666" uuid="53423d6e-3be6-4e10-ba6c-896cbe399015"/>
 				<text><![CDATA[Municipio]]></text>
 			</staticText>
 			<rectangle radius="5">
-				<reportElement x="304" y="121" width="268" height="70" uuid="6ea6d5b0-2582-40d5-a931-c9dbcbfa8c07"/>
+				<reportElement x="11" y="131" width="268" height="70" uuid="6ea6d5b0-2582-40d5-a931-c9dbcbfa8c07"/>
 				<graphicElement>
 					<pen lineStyle="Dotted" lineColor="#999999"/>
 				</graphicElement>
 			</rectangle>
 			<textField>
-				<reportElement stretchType="RelativeToBandHeight" x="310" y="123" width="258" height="34" isRemoveLineWhenBlank="true" uuid="4e632379-9ee4-4582-94f5-dc0ccaeb3985"/>
+				<reportElement stretchType="RelativeToBandHeight" x="17" y="133" width="258" height="34" isRemoveLineWhenBlank="true" uuid="4e632379-9ee4-4582-94f5-dc0ccaeb3985"/>
 				<textElement>
 					<font size="8" isItalic="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{direccionPrincipal}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement stretchType="RelativeToBandHeight" x="310" y="157" width="258" height="34" isRemoveLineWhenBlank="true" uuid="9809eaa7-6427-4845-8dcf-435698f6619d"/>
+				<reportElement stretchType="RelativeToBandHeight" x="17" y="167" width="258" height="34" isRemoveLineWhenBlank="true" uuid="9809eaa7-6427-4845-8dcf-435698f6619d"/>
 				<textElement>
 					<font size="8" isItalic="true"/>
 				</textElement>
@@ -348,136 +351,88 @@ where idPrestamo = $P{idPrestamo}]]>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{telefonoVario_dos}]]></textFieldExpression>
 			</textField>
+			<staticText>
+				<reportElement x="320" y="171" width="100" height="20" forecolor="#666666" uuid="421fff6f-9cba-45bd-a14f-13f764f03f6d"/>
+				<textElement verticalAlignment="Middle"/>
+				<text><![CDATA[Saldo Actual:]]></text>
+			</staticText>
 			<textField pattern="#,##0.00">
-				<reportElement x="131" y="84" width="137" height="20" uuid="b6d7f20c-4354-47c9-8411-9bcd55d0ea84"/>
+				<reportElement x="448" y="171" width="122" height="20" uuid="89665683-60c3-4330-827e-7c2f3dbb6237"/>
 				<textElement verticalAlignment="Middle"/>
-				<textFieldExpression><![CDATA[$F{montoOriginal}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{saldoActual}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="15" y="84" width="100" height="20" forecolor="#666666" uuid="ddbd6bdc-490e-49bd-9123-9f909a5fc594"/>
+				<reportElement x="320" y="190" width="100" height="20" forecolor="#666666" uuid="1ffbddcd-884a-4088-be18-b3b7e1944418"/>
 				<textElement verticalAlignment="Middle"/>
-				<text><![CDATA[Monto Solicitado:]]></text>
+				<text><![CDATA[Próxima Cuota:]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="15" y="103" width="100" height="20" forecolor="#666666" uuid="421fff6f-9cba-45bd-a14f-13f764f03f6d"/>
-				<textElement verticalAlignment="Middle"/>
-				<text><![CDATA[Tasa de Interés:]]></text>
-			</staticText>
-			<textField pattern="#,##0.00 %">
-				<reportElement x="114" y="103" width="154" height="20" uuid="89665683-60c3-4330-827e-7c2f3dbb6237"/>
-				<textElement verticalAlignment="Middle"/>
-				<textFieldExpression><![CDATA[$F{tasa}]]></textFieldExpression>
-			</textField>
-			<textField>
-				<reportElement x="114" y="84" width="17" height="20" uuid="57299712-0d53-4f72-80ee-5733aa449ecb"/>
-				<textElement textAlignment="Center" verticalAlignment="Middle"/>
-				<textFieldExpression><![CDATA[$F{SimboloMoneda}]]></textFieldExpression>
-			</textField>
-			<staticText>
-				<reportElement x="15" y="122" width="100" height="20" forecolor="#666666" uuid="1ffbddcd-884a-4088-be18-b3b7e1944418"/>
-				<textElement verticalAlignment="Middle"/>
-				<text><![CDATA[Cargos:]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="15" y="141" width="100" height="20" forecolor="#666666" uuid="372ff221-8968-494e-8c76-3702ab1182d1"/>
+				<reportElement x="319" y="152" width="101" height="20" forecolor="#000000" uuid="372ff221-8968-494e-8c76-3702ab1182d1"/>
 				<textElement verticalAlignment="Middle">
 					<font isBold="true"/>
 				</textElement>
 				<text><![CDATA[Total Préstamo:]]></text>
 			</staticText>
-			<textField pattern="#,##0.00 %">
-				<reportElement x="114" y="122" width="154" height="20" uuid="d06867d3-70e9-4a22-aae9-b767366e713e"/>
+			<textField pattern="#,##0.00">
+				<reportElement x="448" y="190" width="122" height="20" uuid="d06867d3-70e9-4a22-aae9-b767366e713e"/>
 				<textElement verticalAlignment="Middle"/>
-				<textFieldExpression><![CDATA[$F{tasaCargos}]]></textFieldExpression>
-			</textField>
-			<textField>
-				<reportElement x="114" y="141" width="17" height="20" uuid="aca69c54-20fc-4b6c-9dd3-146be1f4f2dc"/>
-				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font size="12" isBold="true"/>
-				</textElement>
-				<textFieldExpression><![CDATA[$F{SimboloMoneda}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[( $F{saldoActual}>0 ? $F{montoCuota} : 0 )]]></textFieldExpression>
 			</textField>
 			<textField pattern="#,##0.00">
-				<reportElement x="131" y="141" width="137" height="20" uuid="69343120-b697-4dee-89b6-f1380724a7da"/>
+				<reportElement x="448" y="152" width="122" height="20" uuid="69343120-b697-4dee-89b6-f1380724a7da"/>
 				<textElement verticalAlignment="Middle">
 					<font size="12" isBold="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{montoTotal}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="15" y="161" width="100" height="20" forecolor="#666666" uuid="003c9bb8-9e45-4ad4-b4d6-9bbfc647cd0e"/>
-				<textElement verticalAlignment="Middle"/>
-				<text><![CDATA[Plazo:]]></text>
-			</staticText>
-			<textField>
-				<reportElement x="114" y="161" width="154" height="20" uuid="13fb7df8-4c36-4b27-8c61-6b0a14515470"/>
-				<textElement verticalAlignment="Middle"/>
-				<textFieldExpression><![CDATA[String.valueOf($F{cantPeriodo})+" "+$F{PlazoPrestamo}]]></textFieldExpression>
-			</textField>
-			<staticText>
-				<reportElement x="15" y="180" width="100" height="20" forecolor="#666666" uuid="e52d2c1b-2155-408f-9c50-ebfaa7bcf6e7"/>
+				<reportElement x="319" y="91" width="100" height="20" forecolor="#666666" uuid="e52d2c1b-2155-408f-9c50-ebfaa7bcf6e7"/>
 				<textElement verticalAlignment="Middle"/>
 				<text><![CDATA[Fecha de Inicio:]]></text>
 			</staticText>
 			<textField pattern="dd MMMMM yyyy">
-				<reportElement x="114" y="180" width="154" height="20" uuid="da55c503-2b36-458f-885f-991cf2f6f138"/>
+				<reportElement x="418" y="91" width="154" height="20" uuid="da55c503-2b36-458f-885f-991cf2f6f138"/>
 				<textElement verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[$F{fechaInicio}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="15" y="199" width="100" height="20" forecolor="#666666" uuid="e8d0aea7-f3d2-4db0-8f24-8a22a4b90cc2"/>
+				<reportElement x="319" y="110" width="100" height="20" forecolor="#666666" uuid="e8d0aea7-f3d2-4db0-8f24-8a22a4b90cc2"/>
 				<textElement verticalAlignment="Middle"/>
 				<text><![CDATA[Fecha Vencimiento:]]></text>
 			</staticText>
 			<textField pattern="dd MMMMM yyyy">
-				<reportElement x="114" y="199" width="154" height="20" uuid="d82275bd-feb3-46fd-94a0-af67f808bfb5"/>
+				<reportElement x="418" y="110" width="154" height="20" uuid="d82275bd-feb3-46fd-94a0-af67f808bfb5"/>
 				<textElement verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[$F{fechaVencimiento}]]></textFieldExpression>
 			</textField>
+			<textField pattern="#,##0.00 %">
+				<reportElement x="419" y="131" width="154" height="20" uuid="e550948b-871e-4ff9-9dfc-809adace6c57"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isStrikeThrough="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{moneda}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="420" y="151" width="152" height="1" uuid="4cbc1584-af9c-4293-b5c7-55f7ad00883f"/>
+			</line>
 			<staticText>
-				<reportElement x="15" y="218" width="100" height="20" forecolor="#666666" uuid="07c900cc-8e26-4438-92e8-14982bd6a2a6"/>
-				<textElement verticalAlignment="Middle"/>
-				<text><![CDATA[Frecuencia de Pago:]]></text>
+				<reportElement mode="Transparent" x="50" y="167" width="206" height="43" forecolor="#CCCCCC" uuid="989d1849-523a-4da8-9006-b9972e1b4acc">
+					<printWhenExpression><![CDATA[$F{estado}==2]]></printWhenExpression>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Bottom" rotation="None">
+					<font fontName="Arial Black" size="28"/>
+				</textElement>
+				<text><![CDATA[CANCELADO]]></text>
 			</staticText>
-			<textField>
-				<reportElement x="114" y="218" width="154" height="20" uuid="bfd882b4-4769-4020-b2f2-214c4e9e223d"/>
-				<textElement verticalAlignment="Middle"/>
-				<textFieldExpression><![CDATA["Cada "+String.valueOf($F{cantFrecuencia})+" "+$F{FrecuenciaPago}]]></textFieldExpression>
-			</textField>
-			<staticText>
-				<reportElement x="304" y="200" width="100" height="20" forecolor="#666666" uuid="8724333d-04f9-4efa-8aec-8bdd872eabec"/>
-				<textElement verticalAlignment="Middle"/>
-				<text><![CDATA[Dias para Penalidad:]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="304" y="219" width="100" height="20" forecolor="#666666" uuid="303336ca-e9e8-42e8-b433-2f4377570261"/>
-				<textElement verticalAlignment="Middle"/>
-				<text><![CDATA[Monto Penalidad:]]></text>
-			</staticText>
-			<textField>
-				<reportElement x="403" y="200" width="100" height="20" uuid="c0b0ba73-1b58-424e-8c5f-3f5cad8b0bca"/>
-				<textElement verticalAlignment="Middle"/>
-				<textFieldExpression><![CDATA[$F{diasPenalidad}]]></textFieldExpression>
-			</textField>
-			<textField>
-				<reportElement x="403" y="219" width="17" height="20" uuid="9d08a7ed-4894-47de-a3b3-5785197d67f1"/>
-				<textElement textAlignment="Center" verticalAlignment="Middle"/>
-				<textFieldExpression><![CDATA[$F{SimboloMoneda}]]></textFieldExpression>
-			</textField>
-			<textField>
-				<reportElement x="419" y="219" width="84" height="20" uuid="389e64b3-2252-46b6-b328-aed5e7db5c03"/>
-				<textElement verticalAlignment="Middle"/>
-				<textFieldExpression><![CDATA[$F{montoPenalidad}]]></textFieldExpression>
-			</textField>
 		</band>
 	</pageHeader>
 	<columnHeader>
 		<band splitType="Stretch"/>
 	</columnHeader>
 	<detail>
-		<band height="78" splitType="Stretch">
+		<band height="50" splitType="Stretch">
 			<subreport>
-				<reportElement x="0" y="0" width="572" height="78" uuid="14740dd0-d193-4a77-b3d2-6f70820e0e93"/>
+				<reportElement x="0" y="0" width="572" height="25" uuid="14740dd0-d193-4a77-b3d2-6f70820e0e93"/>
 				<subreportParameter name="SUBREPORT_DIR">
 					<subreportParameterExpression><![CDATA[$P{SUBREPORT_DIR}]]></subreportParameterExpression>
 				</subreportParameter>
@@ -488,12 +443,36 @@ where idPrestamo = $P{idPrestamo}]]>
 					<subreportParameterExpression><![CDATA[$F{prestamoNumero}]]></subreportParameterExpression>
 				</subreportParameter>
 				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
-				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "ReportePrestamo_cuotas.jasper"]]></subreportExpression>
+				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "ReportePrestamo_abonos.jasper"]]></subreportExpression>
 			</subreport>
+			<rectangle>
+				<reportElement stretchType="RelativeToBandHeight" mode="Transparent" x="420" y="0" width="152" height="25" uuid="3e767a81-31fd-4619-a601-658adaf6dc07"/>
+			</rectangle>
+			<line>
+				<reportElement positionType="FixRelativeToBottom" x="0" y="44" width="572" height="1" uuid="15093935-a3de-4d3b-a416-fb77c6f3709d"/>
+				<graphicElement>
+					<pen lineStyle="Dashed" lineColor="#999999"/>
+				</graphicElement>
+			</line>
+			<staticText>
+				<reportElement positionType="FixRelativeToBottom" mode="Opaque" x="239" y="36" width="100" height="13" uuid="53451f9b-1ce8-41b1-ac4e-47eb4a8c5888"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="9"/>
+				</textElement>
+				<text><![CDATA[Última Linea]]></text>
+			</staticText>
 		</band>
 	</detail>
 	<columnFooter>
-		<band splitType="Stretch"/>
+		<band height="38" splitType="Stretch">
+			<textField>
+				<reportElement x="125" y="9" width="322" height="20" uuid="9e75ff84-0a70-4f73-9e4d-ab23850f249e"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="11"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Este préstamo se encuentra: "+$F{descEstado}]]></textFieldExpression>
+			</textField>
+		</band>
 	</columnFooter>
 	<pageFooter>
 		<band height="23" splitType="Stretch">
@@ -515,6 +494,34 @@ where idPrestamo = $P{idPrestamo}]]>
 		</band>
 	</pageFooter>
 	<summary>
-		<band splitType="Stretch"/>
+		<band height="190" splitType="Stretch">
+			<pie3DChart>
+				<chart>
+					<reportElement x="147" y="11" width="283" height="179" uuid="b8eace8f-c110-4338-94a9-66d92ca98c91"/>
+					<chartTitle/>
+					<chartSubtitle/>
+					<chartLegend position="Top"/>
+				</chart>
+				<pieDataset>
+					<pieSeries>
+						<keyExpression><![CDATA["Pagado"]]></keyExpression>
+						<valueExpression><![CDATA[$F{montoTotal} - $F{saldoActual}]]></valueExpression>
+						<labelExpression><![CDATA["Pagado"]]></labelExpression>
+					</pieSeries>
+					<pieSeries>
+						<keyExpression><![CDATA["Saldo"]]></keyExpression>
+						<valueExpression><![CDATA[$F{saldoActual}]]></valueExpression>
+						<labelExpression><![CDATA["Saldo"]]></labelExpression>
+					</pieSeries>
+				</pieDataset>
+				<pie3DPlot labelFormat="{0} ({2})" legendLabelFormat="{0} ({2})">
+					<plot>
+						<seriesColor seriesOrder="0" color="#6699FF"/>
+						<seriesColor seriesOrder="1" color="#FF3333"/>
+					</plot>
+					<itemLabel/>
+				</pie3DPlot>
+			</pie3DChart>
+		</band>
 	</summary>
 </jasperReport>

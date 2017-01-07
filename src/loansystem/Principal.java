@@ -66,7 +66,7 @@ public class Principal extends javax.swing.JFrame {
             }
         };
 
-        tabPrincipal.add("Asignación de Préstamo", new Prestamo(con, this));
+        tabPrincipal.add("Start Page", new StartPage(this, con));
 
     }
 

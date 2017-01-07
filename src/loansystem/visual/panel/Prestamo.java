@@ -6,6 +6,7 @@
 package loansystem.visual.panel;
 
 import java.awt.Color;
+import java.net.URL;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -174,6 +175,7 @@ public class Prestamo extends javax.swing.JPanel {
         jLabel30 = new javax.swing.JLabel();
         txtEstado = new javax.swing.JTextField();
         btnPagar = new javax.swing.JButton();
+        btnEstadoCuenta = new javax.swing.JButton();
 
         setBackground(new java.awt.Color(255, 255, 255));
         setLayout(new java.awt.BorderLayout());
@@ -325,12 +327,14 @@ public class Prestamo extends javax.swing.JPanel {
 
         buttonGroup1.add(rbtnFemenino);
         rbtnFemenino.setText("Femenino");
+        rbtnFemenino.setEnabled(false);
         rbtnFemenino.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         rbtnFemenino.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
         rbtnFemenino.setOpaque(false);
 
         buttonGroup1.add(rbtnMasculino);
         rbtnMasculino.setText("Masculino");
+        rbtnMasculino.setEnabled(false);
         rbtnMasculino.setOpaque(false);
 
         jLabel10.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
@@ -396,7 +400,7 @@ public class Prestamo extends javax.swing.JPanel {
                         .addGap(18, 18, 18)
                         .addGroup(pnelDatosClienteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(txtNombres)
-                            .addComponent(txtCodigo, javax.swing.GroupLayout.DEFAULT_SIZE, 301, Short.MAX_VALUE)
+                            .addComponent(txtCodigo, javax.swing.GroupLayout.DEFAULT_SIZE, 337, Short.MAX_VALUE)
                             .addComponent(txtDepartamento))
                         .addGap(18, 18, 18)
                         .addGroup(pnelDatosClienteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -406,7 +410,7 @@ public class Prestamo extends javax.swing.JPanel {
                             .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 68, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(pnelDatosClienteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(txtApellidos, javax.swing.GroupLayout.DEFAULT_SIZE, 256, Short.MAX_VALUE)
+                            .addComponent(txtApellidos, javax.swing.GroupLayout.DEFAULT_SIZE, 292, Short.MAX_VALUE)
                             .addComponent(txtMunicipio)
                             .addComponent(txtCentroLab)
                             .addComponent(txtCedula))
@@ -502,6 +506,7 @@ public class Prestamo extends javax.swing.JPanel {
 
         dtFechaFin.setToolTipText("Fecha de Fin");
         dtFechaFin.setEditable(false);
+        dtFechaFin.setEnabled(false);
 
         cboDiasFrec.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Dia", "Semana", "Mes", "Año" }));
 
@@ -811,7 +816,8 @@ public class Prestamo extends javax.swing.JPanel {
         txtEstado.setEditable(false);
 
         btnPagar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/loansystem/recursos/paneles/pago.png"))); // NOI18N
-        btnPagar.setToolTipText("Cancelar");
+        btnPagar.setToolTipText("Aplicar Pago");
+        btnPagar.setEnabled(false);
         btnPagar.setFocusable(false);
         btnPagar.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         btnPagar.setOpaque(false);
@@ -823,6 +829,20 @@ public class Prestamo extends javax.swing.JPanel {
             }
         });
 
+        btnEstadoCuenta.setIcon(new javax.swing.ImageIcon(getClass().getResource("/loansystem/recursos/paneles/estado_cuenta.png"))); // NOI18N
+        btnEstadoCuenta.setToolTipText("Estado de Cuenta");
+        btnEstadoCuenta.setEnabled(false);
+        btnEstadoCuenta.setFocusable(false);
+        btnEstadoCuenta.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        btnEstadoCuenta.setOpaque(false);
+        btnEstadoCuenta.setPreferredSize(new java.awt.Dimension(43, 43));
+        btnEstadoCuenta.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        btnEstadoCuenta.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEstadoCuentaActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
@@ -831,7 +851,7 @@ public class Prestamo extends javax.swing.JPanel {
                 .addContainerGap()
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 579, Short.MAX_VALUE)
+                        .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 625, Short.MAX_VALUE)
                         .addGap(3, 3, 3))
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addComponent(jXTitledSeparator3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -855,9 +875,11 @@ public class Prestamo extends javax.swing.JPanel {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(btnCalcular, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(btnPagar, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(btnPagar, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(btnEstadoCuenta, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addComponent(txtEstado, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addContainerGap(34, Short.MAX_VALUE))))
+                        .addContainerGap(28, Short.MAX_VALUE))))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -877,13 +899,14 @@ public class Prestamo extends javax.swing.JPanel {
                             .addComponent(jLabel23)
                             .addComponent(txtCantDias, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addComponent(btnCalcular, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnPagar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(btnPagar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnEstadoCuenta, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel30)
                     .addComponent(txtEstado, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 275, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -966,8 +989,13 @@ public class Prestamo extends javax.swing.JPanel {
 
     private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
        
-           try {
+       try {
             guardarPrestamo();
+            int idPrestamo = p.getIdPrestamo();
+            PrestamoDAO presta = new PrestamoDAO(con.getCon());
+            p = presta.obtenerPrestamosPorIdPrestamo(idPrestamo);
+            cargarDatosCliente(cliente, p);
+            
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, "Por favor complete los datos del préstamo correctamente!");
         }
@@ -983,9 +1011,15 @@ public class Prestamo extends javax.swing.JPanel {
        /* JOptionPane.showMessageDialog(prin, "Aqui va la logica para el reporte de impresion!", "Imprimir datos del Préstamo", JOptionPane.INFORMATION_MESSAGE,
                 new javax.swing.ImageIcon(getClass().getResource("/loansystem/recursos/nuevo_cliente.png")));
         */
+       String reporte =  "ReportePrestamo.jrxml";
+       URL fileName = getClass().getResource("/loansystem/reportes/"+reporte);
+                    String archivo = fileName.getPath();
+       
        HashMap<String,Object> param = new HashMap<String,Object>(); //aquí construyo un HashMap para parámetros adicionales
        param.put("idPrestamo", p.getIdPrestamo());
-       param.put("prestamoNumero", util.completarCerosID(p.getIdPrestamo(), 6));
+       //param.put("prestamoNumero", util.completarCerosID(p.getIdPrestamo(), 6));
+       param.put("SUBREPORT_DIR",archivo.replaceAll(reporte, "") );
+       System.out.println("ruta: "+archivo.replaceAll(reporte, ""));
       
        
        prin.abrirReporte("ReportePrestamo", param,"Prestamo "+util.completarCerosID(p.getIdPrestamo(), 6),"registrar_prestamo");
@@ -1027,12 +1061,28 @@ public class Prestamo extends javax.swing.JPanel {
        pago.setVisible(true);
     }//GEN-LAST:event_btnPagarActionPerformed
 
+    private void btnEstadoCuentaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEstadoCuentaActionPerformed
+       String reporte =  "EstadoCuentaPrestamo.jrxml";
+       URL fileName = getClass().getResource("/loansystem/reportes/"+reporte);
+                    String archivo = fileName.getPath();
+       
+       HashMap<String,Object> param = new HashMap<String,Object>(); //aquí construyo un HashMap para parámetros adicionales
+       param.put("idPrestamo", p.getIdPrestamo());       
+       param.put("SUBREPORT_DIR",archivo.replaceAll(reporte, "") );
+       System.out.println("ruta: "+archivo.replaceAll(reporte, ""));
+      
+       
+       prin.abrirReporte("EstadoCuentaPrestamo", param,"Estado "+util.completarCerosID(p.getIdPrestamo(), 6),"registrar_prestamo");
+    }//GEN-LAST:event_btnEstadoCuentaActionPerformed
+
     public void cargarDatosCliente(ClienteEntidad cliente, PrestamoEntidad p) {
         this.p = p;
         cargarDatosCliente(cliente);
         cargarPrestamo(p);
         cargarCuotas(p.getIdPrestamo());
         this.btnCalcular.setEnabled(false);
+        this.btnEstadoCuenta.setEnabled(true);
+        this.btnPagar.setEnabled(true);
     }
 
     public void cargarDatosCliente(ClienteEntidad cliente) {
@@ -1053,7 +1103,7 @@ public class Prestamo extends javax.swing.JPanel {
         this.txtDireccionPrin.setText(cliente.getDireccionPrincipal());
         this.txtDireccionSec.setText(cliente.getDireccionSecundaria());
 
-        if (cliente.getSexo().equals("M")) {
+        if (cliente.getSexo().equals("MASCULINO")) {
             rbtnMasculino.setSelected(true);
         } else {
             rbtnFemenino.setSelected(true);
@@ -1087,6 +1137,9 @@ public class Prestamo extends javax.swing.JPanel {
             btnGuardar.setEnabled(true);
             btnCalcular.setEnabled(true);
             
+            this.btnEstadoCuenta.setEnabled(false);
+            this.btnPagar.setEnabled(false);
+
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -1302,6 +1355,7 @@ public class Prestamo extends javax.swing.JPanel {
     private javax.swing.JButton btnCalcular;
     private javax.swing.JButton btnCancelar;
     private javax.swing.JButton btnEstado;
+    private javax.swing.JButton btnEstadoCuenta;
     private javax.swing.JButton btnGuardar;
     private javax.swing.JButton btnImprimir;
     private javax.swing.JButton btnLimpiar;
@@ -1425,7 +1479,9 @@ public class Prestamo extends javax.swing.JPanel {
 
             if (id > 0) {
                 JOptionPane.showMessageDialog(prin, "Se guardo el prestamo para el cliente [" + cliente.getNombres() + " " + cliente.getApellidos() + "]", "Insertando Prestamo", JOptionPane.INFORMATION_MESSAGE);
-
+                
+                p.setIdPrestamo(id);
+                
                 for (int i = 0; i < tabCuotas.getRowCount(); i++) {
                     c = new CuotasEntidad();
                     c.setIdPrestamo(id);
@@ -1443,6 +1499,8 @@ public class Prestamo extends javax.swing.JPanel {
                     c.setCancelado(0);
                     cDao.insertarCuota(c);
                 }
+                
+                
 
             } else {
                 JOptionPane.showMessageDialog(prin, "Hubo un error al guardar el Préstamo!!", "Insertando Prestamo", JOptionPane.INFORMATION_MESSAGE);
@@ -1529,8 +1587,8 @@ public class Prestamo extends javax.swing.JPanel {
         this.txtDireccionSec.setEnabled(activo);
         this.txtEstado.setEnabled(activo);
         
-        rbtnMasculino.setEnabled(activo);
-        rbtnFemenino.setEnabled(activo);
+       //rbtnMasculino.setEnabled(activo);
+        //rbtnFemenino.setEnabled(activo);
 
         DefaultListModel modelo = new DefaultListModel();
         this.lstTelefono.setModel(modelo);

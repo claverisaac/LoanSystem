@@ -5,8 +5,10 @@
  */
 package loansystem.visual.modal;
 
+import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.HashMap;
 import javax.swing.JOptionPane;
 import loansystem.Principal;
 import loansystem.bd.Conexion;
@@ -87,6 +89,7 @@ public class RegistroPago extends javax.swing.JDialog {
         lblTitulo = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
         btnAplicarPago = new javax.swing.JButton();
+        btnVerEstadoCuenta = new javax.swing.JButton();
         btnCancelar = new javax.swing.JButton();
         txtNombres = new javax.swing.JTextField();
         dtFechaPago = new org.jdesktop.swingx.JXDatePicker();
@@ -139,6 +142,18 @@ public class RegistroPago extends javax.swing.JDialog {
             }
         });
         jPanel2.add(btnAplicarPago);
+
+        btnVerEstadoCuenta.setIcon(new javax.swing.ImageIcon(getClass().getResource("/loansystem/recursos/paneles/estado_cuenta.png"))); // NOI18N
+        btnVerEstadoCuenta.setText("Estado de Cuenta");
+        btnVerEstadoCuenta.setToolTipText("Estado de Cuenta");
+        btnVerEstadoCuenta.setFocusable(false);
+        btnVerEstadoCuenta.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
+        btnVerEstadoCuenta.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnVerEstadoCuentaActionPerformed(evt);
+            }
+        });
+        jPanel2.add(btnVerEstadoCuenta);
 
         btnCancelar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/loansystem/recursos/paneles/cerrar.png"))); // NOI18N
         btnCancelar.setText("Cerrar");
@@ -324,16 +339,23 @@ public class RegistroPago extends javax.swing.JDialog {
             abono.setMontoAbonado(abonado);
             abono.setNuevoSaldo(getNuevoSaldo());
 
-            if (getNuevoSaldo() > 0) {
+            if (getNuevoSaldo() >= 0) {
                 abonoDao.insertarPrestamo(abono);
 
                 JOptionPane.showMessageDialog(prin, "Pago aplicado Correctamente");
                 PrestamoDAO prestamoDao = new PrestamoDAO(con.getCon());
-                p = prestamoDao.obtenerPrestamosPorIdPrestamo(p.getIdPrestamo());
                 
+                
+                if(abono.getNuevoSaldo()<=0)
+                {
+                     boolean res = prestamoDao.cambiarEstado(p.getIdPrestamo(), 2 );
+                }
+                
+                p = prestamoDao.obtenerPrestamosPorIdPrestamo(p.getIdPrestamo());
                 actualizarCuotas();
                 cargarAbonos();
                 cargarDatosGenerales();
+                
                 pres.cargarDatosCliente(cliente, p);
 
                 //this.dispose();
@@ -363,6 +385,21 @@ public class RegistroPago extends javax.swing.JDialog {
         }
 
     }//GEN-LAST:event_txtAbonoKeyReleased
+
+    private void btnVerEstadoCuentaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVerEstadoCuentaActionPerformed
+       String reporte =  "EstadoCuentaPrestamo.jrxml";
+       URL fileName = getClass().getResource("/loansystem/reportes/"+reporte);
+                    String archivo = fileName.getPath();
+       
+       HashMap<String,Object> param = new HashMap<String,Object>(); //aquí construyo un HashMap para parámetros adicionales
+       param.put("idPrestamo", p.getIdPrestamo());       
+       param.put("SUBREPORT_DIR",archivo.replaceAll(reporte, "") );
+       System.out.println("ruta: "+archivo.replaceAll(reporte, ""));
+      
+       
+       prin.abrirReporte("EstadoCuentaPrestamo", param,"Estado "+util.completarCerosID(p.getIdPrestamo(), 6),"registrar_prestamo");
+       this.dispose();
+    }//GEN-LAST:event_btnVerEstadoCuentaActionPerformed
 
     private void cargarAbonos() {
         ArrayList<AbonoEntidad> abonosArray;
@@ -426,6 +463,7 @@ public class RegistroPago extends javax.swing.JDialog {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAplicarPago;
     private javax.swing.JButton btnCancelar;
+    private javax.swing.JButton btnVerEstadoCuenta;
     private org.jdesktop.swingx.JXDatePicker dtFechaPago;
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;
